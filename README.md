@@ -1,5 +1,3 @@
-    </b></p>
-
 <p align="center">
     <img
         width="200px"
