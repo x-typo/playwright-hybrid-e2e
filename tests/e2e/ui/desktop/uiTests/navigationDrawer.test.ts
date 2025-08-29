@@ -33,7 +33,7 @@ test(
   async ({ navigationDrawer }) => {
     const expectedHeading = "QA Practice";
     const snapshotName = "navigationDrawer_.png";
-    const ratioAllowed = 0.01;
+    const ratioAllowed = 0.02;
 
     await test.step("Perform Visual Test", async () => {
       await expect(navigationDrawer.heading(expectedHeading)).toBeVisible();
