@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "licenseType": {
+              "type": "string"
+            },
+            "locations": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "locationId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["locationId", "name"]
+                }
+              ]
+            }
+          },
+          "required": ["customerId", "name", "licenseType", "locations"]
+        }
+      ]
+    },
+    "totalCount": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "limit": {
+      "type": "integer"
+    }
+  },
+  "required": ["items", "totalCount", "offset", "limit"]
+}

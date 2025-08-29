@@ -1,0 +1,191 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items":
+        {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "string"
+            },
+            "accountNum": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "displayAs": {
+              "type": "string"
+            },
+            "licenseType": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "myDealer": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "deviceCount": {
+              "type": "integer"
+            },
+            "offlineDeviceCount": {
+              "type": "integer"
+            },
+            "degradedDeviceCount": {
+              "type": "integer"
+            },
+            "onlineDeviceCount": {
+              "type": "integer"
+            },
+            "firmwareUpdateCount": {
+              "type": "integer"
+            },
+            "unverifiedLocationCount": {
+              "type": "integer"
+            },
+            "hasNotificationsEnabled": {
+              "type": "boolean"
+            },
+            "hasOfflineDevices": {
+              "type": "boolean"
+            },
+            "hasDegradedDevices": {
+              "type": "boolean"
+            },
+            "hasFirmwareUpdates": {
+              "type": "boolean"
+            },
+            "hasCommandsEnabled": {
+              "type": "boolean"
+            },
+            "hasContentFilteringEnabled": {
+              "type": "boolean"
+            },
+            "hasWirelessProfilesEnabled": {
+              "type": "boolean"
+            },
+            "isSharedIn": {
+              "type": "boolean"
+            },
+            "isSharedOut": {
+              "type": "boolean"
+            },
+            "totalLocations": {
+              "type": "integer"
+            },
+            "locations": {
+              "type": "array",
+              "items":
+                {
+                  "type": "object",
+                  "properties": {
+                    "locationId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "rescom": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "licenseType": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "hasVerifiedAddress": {
+                      "type": "boolean"
+                    },
+                    "hasNotificationsEnabled": {
+                      "type": "boolean"
+                    },
+                    "hasFirmwareUpdates": {
+                      "type": "boolean"
+                    },
+                    "jobCode": {
+                      "type": "string"
+                    },
+                    "offlineDeviceCount": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "locationId",
+                    "name",
+                    "rescom",
+                    "email",
+                    "licenseType",
+                    "address",
+                    "hasVerifiedAddress",
+                    "hasNotificationsEnabled",
+                    "hasFirmwareUpdates",
+                    "jobCode",
+                    "offlineDeviceCount"
+                  ]
+                }
+            }
+          },
+          "required": [
+            "customerId",
+            "accountNum",
+            "name",
+            "firstName",
+            "lastName",
+            "displayAs",
+            "licenseType",
+            "email",
+            "myDealer",
+            "phone",
+            "deviceCount",
+            "offlineDeviceCount",
+            "degradedDeviceCount",
+            "onlineDeviceCount",
+            "firmwareUpdateCount",
+            "unverifiedLocationCount",
+            "hasNotificationsEnabled",
+            "hasOfflineDevices",
+            "hasDegradedDevices",
+            "hasFirmwareUpdates",
+            "hasCommandsEnabled",
+            "hasContentFilteringEnabled",
+            "hasWirelessProfilesEnabled",
+            "isSharedIn",
+            "isSharedOut",
+            "totalLocations",
+            "locations"
+          ]
+        }
+    },
+    "totalCount": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "limit": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "items",
+    "totalCount",
+    "offset",
+    "limit"
+  ]
+}

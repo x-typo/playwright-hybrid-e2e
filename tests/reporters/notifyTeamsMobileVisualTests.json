@@ -1,0 +1,42 @@
+{
+  "api_key": "d2759effa3d94ddd9100ed98348adcbf",
+  "project": "Mobile Visual Tests",
+  "run": "Visual Tests",
+  "targets": [
+    {
+      "name": "teams",
+      "condition": "always",
+      "inputs": {
+        "url": "https://resideoinc.webhook.office.com/webhookb2/a6eb1755-a7a5-41eb-ab11-11bc20badf03@6ebe80ab-81af-47a1-851d-f70413b65873/IncomingWebhook/b1bb26ca661947fb9759d7a326f98f28/57e62868-02b3-4645-a235-5ffb4ba14225/V2HBqFA9hFiUuroEal-gcl3hCLqPm0cViRSeCjVaE_TKo1",
+        "publish": "test-summary-slim",
+        "title": "Visual Tests Results - iOS",
+        "title_link": "https://github.com/TBD/actions",
+        "width": "full"
+      },
+      "extensions": [
+        {
+          "name": "hyperlinks",
+          "condition": "always",
+          "inputs": {
+            "links": [
+              {
+                "text": "GitHub Repo",
+                "url": "https://github.com/TBD"
+              },
+              {
+                "text": "TestRail",
+                "url": "https://testrail.control4.com/index.php?/projects/overview/103"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "type": "junit",
+      "files": ["./../../desktop-junit-reports/*.xml"]
+    }
+  ]
+}

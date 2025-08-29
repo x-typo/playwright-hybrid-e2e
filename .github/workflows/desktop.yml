@@ -1,0 +1,72 @@
+name: UI Tests - Desktop
+on:
+  workflow_dispatch:
+    inputs:
+      typeOfTests:
+        description: "Tests"
+        default: "Regression"
+        type: choice
+        options:
+          - Regression
+          - Smoke
+          - Test
+          - Visual
+      platform:
+        description: "Desktop"
+        default: "Chrome"
+        type: choice
+        options:
+          - Chrome
+          - Firefox
+          - Safari
+          - Edge
+
+permissions:
+  id-token: write
+  contents: write
+  pages: write
+  checks: write
+
+jobs:
+  chrome:
+    name: Desktop (Chrome) Tests - Run ${{ github.run_number }}
+    timeout-minutes: 300
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test --project=chrome_Dev_UI
+        continue-on-error: true
+
+      - name: Install junit-viewer
+        run: npm install -g junit-viewer
+
+      - name: Desktop (Chrome) Test Report - Run ${{ github.run_number }}
+        id: generate_report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Desktop (Chrome) Tests Results - Run ${{ github.run_number }}
+          path: desktop-junit-reports/junit.xml
+          reporter: java-junit
+          fail-on-error: false
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.15.1
+        if: always()
+        with:
+          check_run: false
+          files: |
+            desktop-junit-reports/junit.xml

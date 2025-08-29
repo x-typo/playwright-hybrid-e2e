@@ -1,0 +1,256 @@
+import fs from "fs/promises";
+import { asUser, UserRole } from "../_authSetups/authManager";
+import {
+  test as base,
+  expect,
+  Page,
+  APIRequestContext,
+} from "@playwright/test";
+import { validateJsonSchema } from "../e2e/api/utils/validateJsonSchema";
+import AxeBuilder from "@axe-core/playwright";
+import {
+  addCustomerAPI,
+  editCustomerAPI,
+  deleteCustomerAPI,
+  toggleCustomerNotificationAPI,
+  addLocationAPI,
+  deleteLocationAPI,
+  toggleLocationNotifications,
+  setLumaReverseHandoffRequest,
+} from "../e2e/api/helpers/customersHelpers";
+import { LoginPage } from "../e2e/ui/desktop/pages/login.page";
+import { NavigationDrawer } from "../e2e/ui/desktop/pages/navigationDrawer.page";
+import { CustomersListPage } from "../e2e/ui/desktop/pages/customersList.page";
+import { NotesPage } from "../e2e/ui/desktop/pages/notes.page";
+import { ModalsPage } from "../e2e/ui/desktop/pages/modals.page";
+
+type AutomationFixtures = {
+  readFile: (path: string) => Promise<string>;
+  generateRandomText: (length?: number) => string;
+  axeBuilder: AxeBuilder;
+  apiClient: APIRequestContext;
+  schemaValidator: typeof validateJsonSchema;
+  addCustomerAPI: typeof addCustomerAPI;
+  editCustomerAPI: typeof editCustomerAPI;
+  deleteCustomerAPI: typeof deleteCustomerAPI;
+  toggleCustomerNotificationAPI: typeof toggleCustomerNotificationAPI;
+  addLocationAPI: typeof addLocationAPI;
+  deleteLocationAPI: typeof deleteLocationAPI;
+  toggleLocationNotifications: typeof toggleLocationNotifications;
+  setLumaReverseHandoffRequest: typeof setLumaReverseHandoffRequest;
+  extractCustomerIdFromUrl: (page: Page) => Promise<string>;
+  extractLocationIdFromUrl: (page: Page) => Promise<string>;
+  loginPage: LoginPage;
+  navigationDrawer: NavigationDrawer;
+  customersListPage: CustomersListPage;
+  notesPage: NotesPage;
+  modalsPage: ModalsPage;
+  performAccessibilityScan: () => Promise<any>;
+};
+
+export const test = base.extend<AutomationFixtures>({
+  readFile: async ({}, use) => {
+    async function readFile(path: string): Promise<string> {
+      return await fs.readFile(path, "utf-8");
+    }
+    await use(readFile);
+  },
+
+  apiClient: [
+    async ({ playwright }, use) => {
+      const authFile = "playwright/auth/mainAccountSetup.json";
+      const getTokenFromFile = (parsedJson: any): string => {
+        const storageStateToken = parsedJson.origins?.find(
+          (o: any) => o.origin === "https://api.dev.tbd.com"
+        )?.localStorage[0]?.value;
+
+        const token = storageStateToken || parsedJson.accessToken;
+        return token;
+      };
+
+      const content = await fs.readFile(authFile, "utf-8");
+      const parsedJson = JSON.parse(content);
+      const token = getTokenFromFile(parsedJson);
+
+      const apiContext = await playwright.request.newContext({
+        baseURL: "https://api.dev.tbd.com",
+        extraHTTPHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await use(apiContext);
+      await apiContext.dispose();
+    },
+    { scope: "worker" },
+  ],
+
+  schemaValidator: async ({}, use) => {
+    await use(validateJsonSchema);
+  },
+
+  addCustomerAPI: [
+    async ({}, use) => {
+      await use(addCustomerAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  editCustomerAPI: [
+    async ({}, use) => {
+      await use(editCustomerAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  deleteCustomerAPI: [
+    async ({}, use) => {
+      await use(deleteCustomerAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  toggleCustomerNotificationAPI: [
+    async ({}, use) => {
+      await use(toggleCustomerNotificationAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  addLocationAPI: [
+    async ({}, use) => {
+      await use(addLocationAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  deleteLocationAPI: [
+    async ({}, use) => {
+      await use(deleteLocationAPI);
+    },
+    { scope: "worker" },
+  ],
+
+  toggleLocationNotifications: [
+    async ({}, use) => {
+      await use(toggleLocationNotifications);
+    },
+    { scope: "worker" },
+  ],
+
+  setLumaReverseHandoffRequest: [
+    async ({}, use) => {
+      await use(setLumaReverseHandoffRequest);
+    },
+    { scope: "worker" },
+  ],
+
+  extractCustomerIdFromUrl: [
+    async ({}, use) => {
+      const extractFunc = async (page: Page): Promise<string> => {
+        await page.waitForURL("**/dashboard", { timeout: 2000 });
+        const url = page.url();
+        const match = url.match(/customers\/([a-f0-9]+)/);
+        expect(
+          match,
+          `Could not find customer ID pattern in URL: ${url}`
+        ).not.toBeNull();
+        const customerId = match![1];
+        expect(
+          customerId,
+          "Extracted customerId was null or empty"
+        ).toBeTruthy();
+        return customerId;
+      };
+      await use(extractFunc);
+    },
+    { scope: "worker" },
+  ],
+
+  extractLocationIdFromUrl: [
+    async ({}, use) => {
+      const extractFunc = async (page: Page): Promise<string> => {
+        await page.waitForURL("**/dashboard", { timeout: 2000 });
+        const url = page.url();
+        const match = url.match(/customers\/[a-f0-9]+\/([a-f0-9]+)/);
+        expect(
+          match,
+          `Could not find location ID pattern in URL: ${url}`
+        ).not.toBeNull();
+        const locationId = match![1];
+        expect(
+          locationId,
+          "Extracted locationId was null or empty"
+        ).toBeTruthy();
+        return locationId;
+      };
+      await use(extractFunc);
+    },
+    { scope: "worker" },
+  ],
+
+  generateRandomText: async ({}, use) => {
+    function generateRandomText(length = 10): string {
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      }
+      return result;
+    }
+    await use(generateRandomText);
+  },
+
+  performAccessibilityScan: async ({ axeBuilder }, use) => {
+    const performAccessibilityScan = async () => {
+      const accessibilityScanResults = await axeBuilder
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag143"])
+        .analyze();
+
+      const seriousToCriticalViolations =
+        accessibilityScanResults.violations.filter(
+          ({ impact }) => impact === "critical" || impact === "serious"
+        );
+
+      const readableResults = seriousToCriticalViolations.map((result) => {
+        return {
+          description: result.description,
+          nodes: result.nodes.map((node) => ({
+            html: node.html,
+            target: node.target,
+          })),
+        };
+      });
+
+      return JSON.stringify(readableResults, null, 2);
+    };
+
+    await use(performAccessibilityScan);
+  },
+
+  axeBuilder: async ({ page }, use) => {
+    const axeBuilder = new AxeBuilder({ page });
+    await use(axeBuilder);
+  },
+  loginPage: async ({ page, isMobile }, use) => {
+    await use(new LoginPage(page, isMobile));
+  },
+  navigationDrawer: async ({ page, isMobile }, use) => {
+    await use(new NavigationDrawer(page, isMobile));
+  },
+  customersListPage: async ({ page, isMobile }, use) => {
+    await use(new CustomersListPage(page, isMobile));
+  },
+  notesPage: async ({ page, isMobile }, use) => {
+    await use(new NotesPage(page, isMobile));
+  },
+  modalsPage: async ({ page, isMobile }, use) => {
+    await use(new ModalsPage(page, isMobile));
+  },
+});
+
+export { expect, asUser };
+export type { UserRole };
