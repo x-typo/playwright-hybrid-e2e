@@ -62,12 +62,12 @@ jobs:
         uses: dawidd6/action-send-mail@v3.11.0
         if: always()
         with:
-          server_address: smtp.office365.com
-          server_port: 587
+          server_address: smtp.gmail.com
+          server_port: 465
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
-          from: x-typo@outlook.com
-          to: x-typo@outlook.com
+          from: xtyponemo@gmail.com
+          to: xtyponemo@gmail.com
           subject: UI Tests Results - Chrome
           body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
