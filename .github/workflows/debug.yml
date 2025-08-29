@@ -35,7 +35,7 @@ jobs:
         env:
           MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
           MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
-        run: npx playwright test --project=chromeUI "tests/e2e/ui/desktop/uiTests/login.test.ts"
+        run: npx playwright test --project=chromeUI "tests/e2e/ui/desktop/uiTests/navigationDrawer.test.ts"
         continue-on-error: true
 
       - name: Install junit-viewer
