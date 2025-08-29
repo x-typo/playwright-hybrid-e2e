@@ -70,10 +70,10 @@ test("Credentials Error", async ({ loginPage }) => {
 });
 
 test("Successful Login", async ({ loginPage, customersListPage }) => {
-  await test.step("Select 'Log In' button", async () => {
+  await test.step("Select 'Submit' button", async () => {
     await loginPage.enterCreds(
-      process.env.main_USERNAME,
-      process.env.main_PASSWORD
+      process.env.MAIN_USERNAME,
+      process.env.MAIN_PASSWORD
     );
     await loginPage.selectButton("Submit");
   });
