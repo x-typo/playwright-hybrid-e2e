@@ -32,10 +32,8 @@ jobs:
 
       - name: Run Playwright E2E tests
         env:
-          main_USERNAME: ${{ secrets.main_USERNAME }}
-          main_PASSWORD: ${{ secrets.main_PASSWORD }}
-          mfa_USERNAME: ${{ secrets.mfa_USERNAME }}
-          mfa_PASSWORD: ${{ secrets.mfa_PASSWORD }}
+          main_USERNAME: ${{ secrets.MAIN_USERNAME }}
+          main_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
         run: npx playwright test --project=chromeUI
         continue-on-error: true
 
@@ -272,7 +270,7 @@ jobs:
           main_PASSWORD: ${{ secrets.main_PASSWORD }}
           mfa_USERNAME: ${{ secrets.mfa_USERNAME }}
           mfa_PASSWORD: ${{ secrets.mfa_PASSWORD }}
-        run: npx playwright test --project=iphoneUI
+        run: npx playwright test --project=iosUI
         continue-on-error: true
 
       - name: Install junit-viewer
