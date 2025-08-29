@@ -1,5 +1,9 @@
 import { test, expect } from "../../../../_fixtures/automation-fixtures";
 
+test.beforeAll("UNDER CONSTRUCT", async ({}) => {
+  test.skip();
+});
+
 test.beforeEach(
   "Navigate to the Customers List page",
   async ({ customersListPage }) => {
