@@ -33,8 +33,8 @@ jobs:
 
       - name: Run Playwright tests
         env:
-          main_USERNAME: ${{ secrets.MAIN_USERNAME }}
-          main_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
+          MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
+          MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
         run: npx playwright test --project=chromeUI "tests/e2e/ui/desktop/uiTests/login.test.ts"
         continue-on-error: true
 
