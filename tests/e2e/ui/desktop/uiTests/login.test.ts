@@ -6,9 +6,9 @@ import {
 
 test.use(asUser("guest"));
 
-if (!process.env.main_USERNAME || !process.env.main_PASSWORD) {
+if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
   throw new Error(
-    "Environment variables main_USERNAME and main_PASSWORD must be set for this test."
+    "Environment variables MAIN_USERNAME and MAIN_PASSWORD must be set for this test."
   );
 }
 
