@@ -33,22 +33,20 @@ jobs:
 
       - name: Run Playwright tests
         env:
-          main_USERNAME: ${{ secrets.main_USERNAME }}
-          main_PASSWORD: ${{ secrets.main_PASSWORD }}
-          mfa_USERNAME: ${{ secrets.mfa_USERNAME }}
-          mfa_PASSWORD: ${{ secrets.mfa_PASSWORD }}
-        run: npx playwright test --project=chrome_Dev_UI "tests/e2e/ui/desktop/uiTests/login.test.ts"
+          main_USERNAME: ${{ secrets.MAIN_USERNAME }}
+          main_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
+        run: npx playwright test --project=chromeUI "tests/e2e/ui/desktop/uiTests/login.test.ts"
         continue-on-error: true
 
       - name: Install junit-viewer
         run: npm install -g junit-viewer
 
-      - name: UI Tests Reports - Chrome - Run ${{ github.run_number }}
+      - name: Debug Reports - Chrome - Run ${{ github.run_number }}
         id: generate_report
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: UI Tests Results - Chrome - Run ${{ github.run_number }}
+          name: Debug Results - Chrome - Run ${{ github.run_number }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -81,8 +79,8 @@ jobs:
     needs: test
     environment:
       name: github-pages
-      url: https://fantastic-adventure-gqqrlwk.pages.github.io
+      url: https://x-typo.github.io/playwright-hybrid-e2e
     steps:
       - name: Get the URL of the deployed site
         id: get_url
-        run: echo "size=https://fantastic-adventure-gqqrlwk.pages.github.io" >> $GITHUB_OUTPUT
+        run: echo "size=https://x-typo.github.io/playwright-hybrid-e2e" >> $GITHUB_OUTPUT
