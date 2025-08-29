@@ -67,7 +67,7 @@ jobs:
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
           from: xtyponemo@gmail.com
-          to: xtyponemo@gmail.com
+          to: x-typo@outlook.com
           subject: UI Tests Results - Chrome
           body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -292,18 +292,18 @@ jobs:
           files: |
             desktop-junit-reports/junit.xml
 
-      # - name: Send Email
-      #   uses: dawidd6/action-send-mail@v3.11.0
-      #   if: always()
-      #   with:
-      #     server_address: smtp.office365.com
-      #     server_port: 587
-      #     username: ${{secrets.MAIL_USERNAME}}
-      #     password: ${{secrets.MAIL_PASSWORD}}
-      #     from: noreply@snapone.com
-      #     to: tyson.illi@adiglobal.com
-      #     subject: UI Tests Results - iOS
-      #     body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3.11.0
+        if: always()
+        with:
+          server_address: smtp.office365.com
+          server_port: 587
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          from: xtyponemo@gmail.com
+          to: x-typo@outlook.com
+          subject: UI Tests Results - iOS
+          body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       # - name: Notify MS Teams
       #   if: always()
