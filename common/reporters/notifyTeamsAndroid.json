@@ -6,7 +6,7 @@
           "name": "teams",
           "condition": "always",
           "inputs": {
-            "url": "https://wirepath.webhook.office.com/webhookb2/8337c533-0354-44df-87ce-55d9cf6219a2@b81ef037-e15d-4429-a67a-b114709fb61b/IncomingWebhook/59d85f65b4384090a1beaf000d76dff0/9b1fd0f6-e613-4e13-80c6-5a6248909d1d/V2HgX2saG9okAKnQr9f4b9SOsyr3GxYKfL-88Zo3aFe2w1",
+            "url": "https://company.webhook.office.com/webhookb2/8337c533-0354-44df-87ce-55d9cf6219a2@b81ef037-e15d-4429-a67a-b114709fb61b/IncomingWebhook/59d85f65b4384090a1beaf000d76dff0/9b1fd0f6-e613-4e13-80c6-5a6248909d1d/V2HgX2saG9okAKnQr9f4b9SOsyr3GxYKfL-88Zo3aFe2w1",
             "publish": "test-summary-slim",
             "title": "Android Tests Result",
             "title_link": "https://github.com/TBD/actions",

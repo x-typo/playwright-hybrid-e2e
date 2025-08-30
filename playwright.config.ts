@@ -42,12 +42,12 @@ export default defineConfig({
         {
           name: "chromeUI",
           testDir: "./tests/e2e/ui/desktop/uiTests/",
-          dependencies: ["uiSetup"],
+          dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "common/auth/storageStates/uiMain.json",
+            storageState: "common/auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -64,11 +64,11 @@ export default defineConfig({
         {
           name: "iosUI",
           testDir: "./tests/e2e/ui/desktop/uiTests/",
-          dependencies: ["uiSetup"],
+          dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "common/auth/storageStates/uiMain.json",
+            storageState: "common/auth/storageStates/mainAccountSetup.json",
           },
         },
       ]
