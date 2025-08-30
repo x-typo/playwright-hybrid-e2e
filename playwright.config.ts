@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: ".",
   snapshotPathTemplate:
     "tests/e2e/ui/visualTestsSnapshots/{testFileDir}/{arg}{projectName}{ext}",
   fullyParallel: true,
@@ -35,7 +35,7 @@ export default defineConfig({
 
   projects: process.env.CI
     ? [
-        { name: "uiSetup", testMatch: /uiSetup.ts/ },
+        { name: "mainAccountSetup", testMatch: /mainAccountSetup.ts/ },
         // { name: "uiStageSetup", testMatch: /uiStageSetup.ts/ },
         // },
         // },
@@ -47,7 +47,7 @@ export default defineConfig({
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "playwright/auth/uiMain.json",
+            storageState: "common/auth/storageStates/uiMain.json",
           },
         },
         // {
@@ -68,7 +68,7 @@ export default defineConfig({
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "playwright/auth/uiMain.json",
+            storageState: "common/auth/storageStates/uiMain.json",
           },
         },
       ]
@@ -97,7 +97,7 @@ export default defineConfig({
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "playwright/auth/mainAccountSetup.json",
+            storageState: "common/auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -149,7 +149,7 @@ export default defineConfig({
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "playwright/auth/mainAccountSetup.json",
+            storageState: "common/auth/storageStates/mainAccountSetup.json",
           },
         },
         // {

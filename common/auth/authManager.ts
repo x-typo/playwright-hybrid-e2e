@@ -1,7 +1,7 @@
 export type UserRole = "main" | "guest";
 
 const authFiles: Record<string, string> = {
-  main: "playwright/auth/mainAccountSetup.json",
+  main: "common/auth/storageStates/mainAccountSetup.json",
 };
 
 /**

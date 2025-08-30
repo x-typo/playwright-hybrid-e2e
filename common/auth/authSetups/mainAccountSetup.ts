@@ -1,7 +1,7 @@
 import { test as setup } from "@playwright/test";
 import fs from "fs/promises";
 
-const MainAccountFile = "playwright/auth/mainAccountSetup.json";
+const MainAccountFile = "common/auth/storageStates/mainAccountSetup.json";
 
 const mainUsername = process.env.main_USERNAME;
 const mainPassword = process.env.main_PASSWORD;
