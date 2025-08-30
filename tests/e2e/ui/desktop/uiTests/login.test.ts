@@ -28,13 +28,13 @@ test(
     tag: "@visual",
   },
   async ({ loginPage }) => {
-    const expectedInputBox = "Email";
+    const expectedButton = "Submit";
     const maskedElement = "emailHelp";
     const snapshotName = "loginPage_.png";
     const ratioAllowed = 0.01;
 
     await test.step("Perform Visual Test", async () => {
-      await expect(loginPage.inputBox(expectedInputBox)).toBeVisible();
+      await expect(loginPage.button(expectedButton)).toBeVisible();
       expect(
         await loginPage.page.screenshot({
           animations: "disabled",

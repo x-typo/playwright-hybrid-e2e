@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   test:
-    name: Debug ${{ github.run_number }}
+    name: Debug Run - ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
