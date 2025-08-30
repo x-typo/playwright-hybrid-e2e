@@ -3,8 +3,8 @@ import fs from "fs/promises";
 
 const MainAccountFile = "common/auth/storageStates/mainAccountSetup.json";
 
-const mainUsername = process.env.main_USERNAME;
-const mainPassword = process.env.main_PASSWORD;
+const mainUsername = process.env.MAIN_USERNAME;
+const mainPassword = process.env.MAIN_PASSWORD;
 
 if (!mainUsername || !mainPassword) {
   throw new Error(
