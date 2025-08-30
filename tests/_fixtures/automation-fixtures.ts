@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { asUser, UserRole } from "../_authSetups/authManager";
+import { asUser, UserRole } from "../authSetups/authManager";
 import {
   test as base,
   expect,
