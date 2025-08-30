@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   desktop-UI:
-    name: E2E Tests - Chrome - Run ${{ github.run_number }}
+    name: Chrome - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -247,7 +247,7 @@ jobs:
 
   mobile-UI:
     needs: desktop-UI
-    name: E2E Tests - iOS - Run ${{ github.run_number }}
+    name: iOS - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
