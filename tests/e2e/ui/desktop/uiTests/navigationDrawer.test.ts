@@ -73,6 +73,18 @@ test.describe("Navigations", () => {
     });
   });
 
+  test("GraphQL Testing", async ({ navigationDrawer }) => {
+    const menuList = "GraphQL Testing";
+    const expectedHeading = "GraphQL Testing";
+
+    await test.step("Select menuList", async () => {
+      await navigationDrawer.selectLink(menuList);
+    });
+    await test.step("Verify", async () => {
+      await expect(navigationDrawer.heading(expectedHeading)).toBeVisible();
+    });
+  });
+
   test("Official Website", async ({ navigationDrawer, page }) => {
     const menuList = "RV - Website";
     const expectedUrl = "https://razvanvancea.ro/";
