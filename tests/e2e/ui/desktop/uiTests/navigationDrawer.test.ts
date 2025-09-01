@@ -61,17 +61,17 @@ test.describe("Navigations", () => {
     });
   });
 
-  // test.only("Bugs Challenge", async ({ navigationDrawer, loginPage }) => {
-  //   const menuList = "Ecommerce - Login";
-  //   const expectedHeading = "Login - Shop";
+  test("Bugs Challenge", async ({ navigationDrawer }) => {
+    const menuList = "Spot the BUGS CHALLENGE";
+    const expectedHeading = "CHALLENGE - Spot the BUGS!";
 
-  //   await test.step("Select menuList", async () => {
-  //     await navigationDrawer.selectLink(menuList);
-  //   });
-  //   await test.step("Verify", async () => {
-  //     await expect(loginPage.heading(expectedHeading)).toBeVisible();
-  //   });
-  // });
+    await test.step("Select menuList", async () => {
+      await navigationDrawer.selectLink(menuList);
+    });
+    await test.step("Verify", async () => {
+      await expect(navigationDrawer.heading(expectedHeading)).toBeVisible();
+    });
+  });
 
   test("Official Website", async ({ navigationDrawer, page }) => {
     const menuList = "RV - Website";
