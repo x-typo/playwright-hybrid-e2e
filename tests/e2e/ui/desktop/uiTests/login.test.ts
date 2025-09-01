@@ -2,7 +2,7 @@ import {
   test,
   expect,
   asUser,
-} from "../../../../../common/automation-fixtures";
+} from "../../../../../fixtures/automation-fixtures";
 
 test.use(asUser("guest"));
 

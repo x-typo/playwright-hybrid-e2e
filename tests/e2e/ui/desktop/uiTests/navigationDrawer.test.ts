@@ -2,7 +2,7 @@ import {
   test,
   expect,
   asUser,
-} from "../../../../../common/automation-fixtures";
+} from "../../../../../fixtures/automation-fixtures";
 
 test.use(asUser("guest"));
 
@@ -19,7 +19,7 @@ test.beforeEach("Setup", async ({ page, navigationDrawer }) => {
   }
 });
 
-test.only("Drawer Validation", async ({ navigationDrawer }) => {
+test("Drawer Validation", async ({ navigationDrawer }) => {
   await test.step("Verify", async () => {
     await navigationDrawer.verifyDrawer();
   });
