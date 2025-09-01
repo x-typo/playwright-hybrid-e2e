@@ -49,7 +49,7 @@ test(
 );
 
 test.describe("Navigations", () => {
-  test("Ecommerce", async ({ navigationDrawer, loginPage }) => {
+  test("Ecommerce", async ({ navigationDrawer }) => {
     const menuList = "Ecommerce - Login";
     const expectedHeading = "Login - Shop";
 
@@ -57,9 +57,21 @@ test.describe("Navigations", () => {
       await navigationDrawer.selectLink(menuList);
     });
     await test.step("Verify", async () => {
-      await expect(loginPage.heading(expectedHeading)).toBeVisible();
+      await expect(navigationDrawer.heading(expectedHeading)).toBeVisible();
     });
   });
+
+  // test.only("Bugs Challenge", async ({ navigationDrawer, loginPage }) => {
+  //   const menuList = "Ecommerce - Login";
+  //   const expectedHeading = "Login - Shop";
+
+  //   await test.step("Select menuList", async () => {
+  //     await navigationDrawer.selectLink(menuList);
+  //   });
+  //   await test.step("Verify", async () => {
+  //     await expect(loginPage.heading(expectedHeading)).toBeVisible();
+  //   });
+  // });
 
   test("Official Website", async ({ navigationDrawer, page }) => {
     const menuList = "RV - Website";
