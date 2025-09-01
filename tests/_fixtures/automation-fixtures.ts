@@ -6,7 +6,6 @@ import {
   Page,
   APIRequestContext,
 } from "@playwright/test";
-import { validateJsonSchema } from "../e2e/api/utils/validateJsonSchema";
 import AxeBuilder from "@axe-core/playwright";
 import {
   addCustomerAPI,
@@ -29,7 +28,6 @@ type AutomationFixtures = {
   generateRandomText: (length?: number) => string;
   axeBuilder: AxeBuilder;
   apiClient: APIRequestContext;
-  schemaValidator: typeof validateJsonSchema;
   addCustomerAPI: typeof addCustomerAPI;
   editCustomerAPI: typeof editCustomerAPI;
   deleteCustomerAPI: typeof deleteCustomerAPI;
@@ -84,10 +82,6 @@ export const test = base.extend<AutomationFixtures>({
     },
     { scope: "worker" },
   ],
-
-  schemaValidator: async ({}, use) => {
-    await use(validateJsonSchema);
-  },
 
   addCustomerAPI: [
     async ({}, use) => {
