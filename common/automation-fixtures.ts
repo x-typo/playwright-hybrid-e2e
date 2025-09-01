@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { asUser, UserRole } from "../../common/auth/authManager";
+import { asUser, UserRole } from "./auth/authManager";
 import {
   test as base,
   expect,
@@ -16,12 +16,12 @@ import {
   deleteLocationAPI,
   toggleLocationNotifications,
   setLumaReverseHandoffRequest,
-} from "../e2e/api/helpers/customersHelpers";
-import { LoginPage } from "../e2e/ui/desktop/pages/login.page";
-import { NavigationDrawer } from "../e2e/ui/desktop/pages/navigationDrawer.page";
-import { CustomersListPage } from "../e2e/ui/desktop/pages/customersList.page";
-import { NotesPage } from "../e2e/ui/desktop/pages/notes.page";
-import { ModalsPage } from "../e2e/ui/desktop/pages/modals.page";
+} from "../tests/e2e/api/helpers/customersHelpers";
+import { LoginPage } from "../tests/e2e/ui/desktop/pages/login.page";
+import { NavigationDrawer } from "../tests/e2e/ui/desktop/pages/navigationDrawer.page";
+import { CustomersListPage } from "../tests/e2e/ui/desktop/pages/customersList.page";
+import { NotesPage } from "../tests/e2e/ui/desktop/pages/notes.page";
+import { ModalsPage } from "../tests/e2e/ui/desktop/pages/modals.page";
 
 type AutomationFixtures = {
   readFile: (path: string) => Promise<string>;
