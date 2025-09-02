@@ -17,7 +17,7 @@ export default defineConfig({
         [
           "junit",
           {
-            outputFile: "./desktop-junit-reports/junit.xml",
+            outputFile: "../desktop-junit-reports/junit.xml",
             embedAnnotationsAsProperties: true,
           },
         ],
