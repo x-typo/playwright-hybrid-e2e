@@ -19,7 +19,7 @@ test.beforeEach("Setup", async ({ page, navigationDrawer }) => {
   }
 });
 
-test("Drawer Validation", async ({ navigationDrawer }) => {
+test.only("Drawer Validation", async ({ navigationDrawer }) => {
   await test.step("Verify", async () => {
     await navigationDrawer.verifyDrawer();
   });

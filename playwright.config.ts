@@ -47,7 +47,7 @@ export default defineConfig({
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "common/auth/storageStates/mainAccountSetup.json",
+            storageState: "auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -68,7 +68,7 @@ export default defineConfig({
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "common/auth/storageStates/mainAccountSetup.json",
+            storageState: "auth/storageStates/mainAccountSetup.json",
           },
         },
       ]
@@ -97,7 +97,7 @@ export default defineConfig({
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "common/auth/storageStates/mainAccountSetup.json",
+            storageState: "auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -149,7 +149,7 @@ export default defineConfig({
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "common/auth/storageStates/mainAccountSetup.json",
+            storageState: "auth/storageStates/mainAccountSetup.json",
           },
         },
         // {

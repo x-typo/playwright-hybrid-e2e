@@ -1,0 +1,35 @@
+{
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.3.303390064.1756838003",
+      "domain": ".qa-practice.netlify.app",
+      "path": "/",
+      "expires": 1791398002.53,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.3.1684660406.1756838003",
+      "domain": ".qa-practice.netlify.app",
+      "path": "/",
+      "expires": 1756924402,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gat_gtag_UA_173643216_1",
+      "value": "1",
+      "domain": ".qa-practice.netlify.app",
+      "path": "/",
+      "expires": 1756838062,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
