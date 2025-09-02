@@ -74,7 +74,7 @@ jobs:
       - name: Notify MS Teams
         if: always()
         run: npx test-results-reporter publish -c notifyTeamsChrome.json
-        working-directory: src/reporters
+        working-directory: playwright-hybrid-e2e/reporters
 
       # - name: Execute TestRail CLI to upload results and close test run
       #   if: always()
