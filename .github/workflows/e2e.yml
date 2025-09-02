@@ -71,10 +71,10 @@ jobs:
           subject: E2E Tests Results - Chrome
           body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-      # - name: Notify MS Teams
-      #   if: always()
-      #   run: npx test-results-reporter publish -c notifyTeamsChrome.json
-      #   working-directory: src/reporters
+      - name: Notify MS Teams
+        if: always()
+        run: npx test-results-reporter publish -c notifyTeamsChrome.json
+        working-directory: src/reporters
 
       # - name: Execute TestRail CLI to upload results and close test run
       #   if: always()
