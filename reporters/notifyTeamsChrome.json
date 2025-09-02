@@ -35,7 +35,7 @@
       "results": [
         {
           "type": "junit",
-          "files": ["./../test/results/report.xml"]
+          "files": ["./../desktop-junit-reports/*.xml"]
         }
       ]
     }
