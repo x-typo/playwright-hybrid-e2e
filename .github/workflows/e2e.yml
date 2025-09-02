@@ -34,7 +34,7 @@ jobs:
         env:
           MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
           MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
-        run: npx playwright test --project=chromeUI
+        run: npx playwright test --config=./configs/playwright.config.ts --project=chromeUI
         continue-on-error: true
 
       - name: Install junit-viewer
@@ -268,7 +268,7 @@ jobs:
         env:
           MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
           MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
-        run: npx playwright test --project=iosUI
+        run: npx playwright test --config=./configs/playwright.config.ts --project=iosUI
         continue-on-error: true
 
       - name: Install junit-viewer

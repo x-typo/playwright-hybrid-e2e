@@ -4,9 +4,9 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 
 export default defineConfig({
-  testDir: ".",
+  testDir: "../tests",
   snapshotPathTemplate:
-    "tests/e2e/ui/visualTestsSnapshots/{testFileDir}/{arg}{projectName}{ext}",
+    "../visual-snapshots/{testFileDir}/{arg}{projectName}{ext}",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 0 : 0,
@@ -35,19 +35,23 @@ export default defineConfig({
 
   projects: process.env.CI
     ? [
-        { name: "mainAccountSetup", testMatch: /mainAccountSetup.ts/ },
+        {
+          name: "mainAccountSetup",
+          testDir: "../auth/authSetups/",
+          testMatch: /mainAccountSetup.ts/,
+        },
         // { name: "uiStageSetup", testMatch: /uiStageSetup.ts/ },
         // },
         // },
         {
           name: "chromeUI",
-          testDir: "./tests/e2e/ui/desktop/uiTests/",
+          testDir: "../tests/e2e/ui/desktop/uiTests/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "auth/storageStates/mainAccountSetup.json",
+            storageState: "../auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -63,18 +67,19 @@ export default defineConfig({
         // },
         {
           name: "iosUI",
-          testDir: "./tests/e2e/ui/desktop/uiTests/",
+          testDir: "../tests/e2e/ui/desktop/uiTests/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "auth/storageStates/mainAccountSetup.json",
+            storageState: "../auth/storageStates/mainAccountSetup.json",
           },
         },
       ]
     : [
         {
           name: "mainAccountSetup",
+          testDir: "../auth/authSetups/",
           testMatch: /mainAccountSetup.ts/,
           use: { viewport: { width: 640, height: 480 } },
         },
@@ -91,13 +96,13 @@ export default defineConfig({
         // },
         {
           name: "chromeUI",
-          testDir: "./tests/e2e/ui/desktop/uiTests/",
+          testDir: "../tests/e2e/ui/desktop/uiTests/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "auth/storageStates/mainAccountSetup.json",
+            storageState: "../auth/storageStates/mainAccountSetup.json",
           },
         },
         // {
@@ -144,12 +149,12 @@ export default defineConfig({
         // },
         {
           name: "iosUI",
-          testDir: "./tests/e2e/ui/desktop/uiTests/",
+          testDir: "../tests/e2e/ui/desktop/uiTests/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "auth/storageStates/mainAccountSetup.json",
+            storageState: "../auth/storageStates/mainAccountSetup.json",
           },
         },
         // {

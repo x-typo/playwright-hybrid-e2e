@@ -56,7 +56,7 @@ export const test = base.extend<AutomationFixtures>({
 
   apiClient: [
     async ({ playwright }, use) => {
-      const authFile = "playwright/auth/mainAccountSetup.json";
+      const authFile = "auth/mainAccountSetup.json";
       const getTokenFromFile = (parsedJson: any): string => {
         const storageStateToken = parsedJson.origins?.find(
           (o: any) => o.origin === "https://api.dev.tbd.com"

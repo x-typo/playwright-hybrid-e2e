@@ -7,7 +7,7 @@
   "scripts": {
     "iosUI": "npx playwright test --project=iosUI",
     "report": "npx playwright show-report",
-    "chromeDebug": "npx playwright test --project=chromeUI --debug",
+    "chromeDebug": "npx playwright test --config=./configs/playwright.config.ts --project=chromeUI --debug",
     "iosDebug": "npx playwright test --project=iosUI --debug",
     "androidDebug": "npx playwright test --project=android_Dev_UI --debug",
     "uiMode": "npx playwright test --ui",
