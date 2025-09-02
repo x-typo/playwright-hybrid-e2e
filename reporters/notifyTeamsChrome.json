@@ -1,43 +1,39 @@
 {
-  "reports": [
+  "targets": [
     {
-      "targets": [
+      "name": "teams",
+      "condition": "always",
+      "inputs": {
+        "url": "https://resideoinc.webhook.office.com/webhookb2/a6eb1755-a7a5-41eb-ab11-11bc20badf03@6ebe80ab-81af-47a1-851d-f70413b65873/IncomingWebhook/6012088a3f634057bdb33b7090c51361/57e62868-02b3-4645-a235-5ffb4ba14225/V2jZURTZ_12IbqiubD8KBY7MZfPzgdYgwf-IETR5IlUwM1",
+        "publish": "test-summary-slim",
+        "title": "E2E Tests Result",
+        "title_link": "https://github.com/TBD",
+        "width": "full"
+      },
+      "extensions": [
         {
-          "name": "teams",
+          "name": "hyperlinks",
           "condition": "always",
           "inputs": {
-            "url": "https://resideoinc.webhook.office.com/webhookb2/a6eb1755-a7a5-41eb-ab11-11bc20badf03@6ebe80ab-81af-47a1-851d-f70413b65873/IncomingWebhook/6012088a3f634057bdb33b7090c51361/57e62868-02b3-4645-a235-5ffb4ba14225/V2jZURTZ_12IbqiubD8KBY7MZfPzgdYgwf-IETR5IlUwM1",
-            "publish": "test-summary-slim",
-            "title": "E2E Tests Result",
-            "title_link": "https://github.com/TBD",
-            "width": "full"
-          },
-          "extensions": [
-            {
-              "name": "hyperlinks",
-              "condition": "always",
-              "inputs": {
-                "links": [
-                  {
-                    "text": "Playwright Hybrid E2E Project",
-                    "url": "https://github.com/TBD"
-                  },
-                  {
-                    "text": "Test Rail Results",
-                    "url": "https://testrail.com"
-                  }
-                ]
+            "links": [
+              {
+                "text": "Playwright Hybrid E2E Project",
+                "url": "https://github.com/TBD"
+              },
+              {
+                "text": "Test Rail Results",
+                "url": "https://testrail.com"
               }
-            }
-          ]
-        }
-      ],
-      "results": [
-        {
-          "type": "junit",
-          "files": ["./../desktop-junit-reports/*.xml"]
+            ]
+          }
         }
       ]
+    }
+  ],
+  "results": [
+    {
+      "type": "junit",
+      "files": ["../desktop-junit-reports/*.xml"]
     }
   ]
 }
