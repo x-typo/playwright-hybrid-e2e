@@ -10,12 +10,12 @@ export const config: Options.Testrunner = {
   autoCompileOpts: {
     autoCompile: true,
     tsNodeOpts: {
-      project: "./tsconfig.json",
+      project: "../tsconfig.json",
       transpileOnly: true,
     },
   },
 
-  specs: ["./uiTests/**/*.test.ts"],
+  specs: ["../tests/e2e/ui/mobile/uiTests/**/*.test.ts"],
 
   exclude: [],
   maxInstances: 1,
@@ -46,7 +46,7 @@ export const config: Options.Testrunner = {
         [
           "junit",
           {
-            outputDir: "./mobile-junit-reports",
+            outputDir: "../mobile-junit-reports",
             outputFileFormat: function (opts) {
               return `results-${opts.cid}.xml`;
             },
