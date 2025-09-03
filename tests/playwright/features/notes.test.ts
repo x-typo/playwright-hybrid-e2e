@@ -1,4 +1,4 @@
-import { test, expect } from "../../../../../fixtures/automation-fixtures";
+import { test, expect } from "../../../fixtures/automation-fixtures";
 
 test.beforeAll("UNDER CONSTRUCT", async ({}) => {
   test.skip();

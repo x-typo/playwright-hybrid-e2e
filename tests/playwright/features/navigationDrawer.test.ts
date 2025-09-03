@@ -1,8 +1,4 @@
-import {
-  test,
-  expect,
-  asUser,
-} from "../../../../../fixtures/automation-fixtures";
+import { test, expect, asUser } from "../../../fixtures/automation-fixtures";
 
 test.use(asUser("guest"));
 
