@@ -15,7 +15,7 @@ export const config: Options.Testrunner = {
     },
   },
 
-  specs: ["../tests/e2e/ui/appium/scenarios/*.test.ts"],
+  specs: ["../tests/appium/scenarios/*.test.ts"],
 
   exclude: [],
   maxInstances: 1,
@@ -26,7 +26,7 @@ export const config: Options.Testrunner = {
       deviceName: "iPhone 14 Pro Max",
       platformVersion: "16",
       isRealMobile: true,
-      app: "lt://APP10160572041755049324397324",
+      app: "lt://APP1016032111756863683159148",
       build: `UI Build - iOS - ${format(new Date(), "MM-dd-yyyy HH:mm:ss")}`,
       autoWebview: "true",
       autoGrantPermissions: true,

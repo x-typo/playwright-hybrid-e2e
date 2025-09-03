@@ -23,7 +23,7 @@
     "iosVisual": "npx playwright test --project=iphone_Dev_UI --grep @visual",
     "androidLambdatest": "wdio run ./configs/wdio.android.config.ts",
     "androidVisual": "wdio run ./tests/e2e/ui/mobile/androidVisual.conf.ts --spec",
-    "visual": "npx playwright test --project=chrome_Dev_UI --project=iphone_Dev_UI --grep @visual",
+    "visual": "npx playwright test --project=chromeUI --project=iosUI --grep @visual",
     "desktopVisual": "wdio run ./tests/e2e/ui/desktop/chromeVisual.conf.ts",
     "devAPI": "npx playwright test --project=api_Dev"
   },

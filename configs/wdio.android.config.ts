@@ -15,7 +15,7 @@ export const config: Options.Testrunner = {
     },
   },
 
-  specs: ["../tests/e2e/ui/appium/scenarios/*.test.ts"],
+  specs: ["../tests/appium/scenarios/*.test.ts"],
 
   exclude: [],
   maxInstances: 1,
@@ -26,7 +26,7 @@ export const config: Options.Testrunner = {
       deviceName: "Galaxy S24 Ultra",
       platformVersion: "14",
       isRealMobile: true,
-      app: "lt://APP10160572041755049322318826",
+      app: "lt://APP10160471181756863681019927",
       build: `UI Build - Android - ${format(
         new Date(),
         "MM-dd-yyyy HH:mm:ss"
