@@ -15,7 +15,7 @@ export const config: Options.Testrunner = {
     },
   },
 
-  specs: ["../tests/appium/scenarios/*.test.ts"],
+  specs: ["../tests/appium/features/**/*.test.ts"],
 
   exclude: [],
   maxInstances: 1,

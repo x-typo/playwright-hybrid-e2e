@@ -1,5 +1,5 @@
 import { expect } from "@wdio/globals";
-import loginPage from "../pages/login.page.ts";
+import loginPage from "../../pages/login.page.ts";
 
 describe("Login Page", () => {
   it("Verify 'Create Account' Button Hidden", async () => {
