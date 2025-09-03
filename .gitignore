@@ -2,7 +2,7 @@ node_modules/
 /test-results/
 /playwright-report/
 /playwright/.cache/
-/common/auth/storageStates/
+/auth/storageStates/*
 /idea/
 /.idea/workspace.xml
 .env
