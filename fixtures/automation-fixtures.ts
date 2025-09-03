@@ -17,11 +17,11 @@ import {
   toggleLocationNotifications,
   setLumaReverseHandoffRequest,
 } from "../tests/e2e/api/helpers/customersHelpers";
-import { LoginPage } from "../tests/e2e/ui/desktop/pages/login.page";
-import { NavigationDrawer } from "../tests/e2e/ui/desktop/pages/navigationDrawer.page";
-import { CustomersListPage } from "../tests/e2e/ui/desktop/pages/customersList.page";
-import { NotesPage } from "../tests/e2e/ui/desktop/pages/notes.page";
-import { ModalsPage } from "../tests/e2e/ui/desktop/pages/modals.page";
+import { LoginPage } from "../tests/e2e/ui/playwright/pages/login.page";
+import { NavigationDrawer } from "../tests/e2e/ui/playwright/pages/navigationDrawer.page";
+import { CustomersListPage } from "../tests/e2e/ui/playwright/pages/customersList.page";
+import { NotesPage } from "../tests/e2e/ui/playwright/pages/notes.page";
+import { ModalsPage } from "../tests/e2e/ui/playwright/pages/modals.page";
 
 type AutomationFixtures = {
   readFile: (path: string) => Promise<string>;

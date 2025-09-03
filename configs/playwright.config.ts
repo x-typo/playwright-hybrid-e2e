@@ -45,7 +45,7 @@ export default defineConfig({
         // },
         {
           name: "chromeUI",
-          testDir: "../tests/e2e/ui/desktop/features/",
+          testDir: "../tests/e2e/ui/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
@@ -67,7 +67,7 @@ export default defineConfig({
         // },
         {
           name: "iosUI",
-          testDir: "../tests/e2e/ui/desktop/features/",
+          testDir: "../tests/e2e/ui/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
@@ -96,7 +96,7 @@ export default defineConfig({
         // },
         {
           name: "chromeUI",
-          testDir: "../tests/e2e/ui/desktop/features/",
+          testDir: "../tests/e2e/ui/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
@@ -149,7 +149,7 @@ export default defineConfig({
         // },
         {
           name: "iosUI",
-          testDir: "../tests/e2e/ui/desktop/features/",
+          testDir: "../tests/e2e/ui/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
             baseURL: "https://qa-practice.netlify.app/",
