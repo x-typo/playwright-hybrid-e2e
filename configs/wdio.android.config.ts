@@ -15,7 +15,7 @@ export const config: Options.Testrunner = {
     },
   },
 
-  specs: ["../tests/e2e/ui/mobile/uiTests/**/*.test.ts"],
+  specs: ["../tests/e2e/ui/appium/scenarios/*.test.ts"],
 
   exclude: [],
   maxInstances: 1,
