@@ -6,6 +6,7 @@ export class LoginPage {
 
   // LOCATOR DECLARATIONS //
   idSelector: (name: string) => Locator;
+  testIdSelector: (name: string) => Locator;
   image: (name: string) => Locator;
   text: (text: string) => Locator;
   heading: (text: string) => Locator;
@@ -21,6 +22,7 @@ export class LoginPage {
     this.isMob = isMob;
 
     this.idSelector = (name) => page.locator(`#${name}`);
+    this.testIdSelector = (name) => page.getByTestId(name);
     this.image = (name) => page.getByRole("img", { name, exact: true });
     this.text = (text) => page.getByText(text);
     this.heading = (text) => page.getByRole("heading", { name: text });
@@ -33,7 +35,7 @@ export class LoginPage {
 
   // Navigations //
   async navigateLoginPage() {
-    await this.page.goto("/notes/app");
+    await this.page.goto("/notes/app/login");
   }
 
   // Interactions //
@@ -56,8 +58,10 @@ export class LoginPage {
 
   // Verifications //
   async verifyPage() {
-    await expect(this.heading("Welcome to Notes App")).toBeVisible();
-    await expect(this.image("Practice")).toBeVisible();
-    await expect(this.link("Login")).toBeVisible();
+    await expect(this.heading("Login")).toBeVisible();
+    await expect(this.idSelector("email")).toBeVisible();
+    await expect(this.link("Forgot password")).toBeVisible();
+    await expect(this.idSelector("password")).toBeVisible();
+    await expect(this.testIdSelector("login-submit")).toBeVisible();
   }
 }
