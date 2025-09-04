@@ -17,9 +17,7 @@ setup("Main Account", async ({ page, request }) => {
   await page.getByTestId("login-email").fill(mainUsername);
   await page.getByTestId("login-password").fill(mainPassword);
   await page.getByTestId("login-submit").click();
-  await expect(
-    page.getByRole("button", { name: "Toggle navigation" })
-  ).toBeVisible();
+  await expect(page.getByTestId("search-input")).toBeVisible();
   await page.context().storageState({ path: MainAccountFile });
 
   // const response = await request.post(
