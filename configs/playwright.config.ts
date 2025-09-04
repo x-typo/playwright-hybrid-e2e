@@ -48,7 +48,7 @@ export default defineConfig({
           testDir: "../tests/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
-            baseURL: "https://qa-practice.netlify.app/",
+            baseURL: "https://practice.expandtesting.com",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
             storageState: "../auth/storageStates/mainAccountSetup.json",
@@ -70,7 +70,7 @@ export default defineConfig({
           testDir: "../tests/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
-            baseURL: "https://qa-practice.netlify.app/",
+            baseURL: "https://practice.expandtesting.com",
             ...devices["iPhone 14 Pro Max"],
             storageState: "../auth/storageStates/mainAccountSetup.json",
           },
@@ -99,7 +99,7 @@ export default defineConfig({
           testDir: "../tests/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
-            baseURL: "https://qa-practice.netlify.app/",
+            baseURL: "https://practice.expandtesting.com",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
             storageState: "../auth/storageStates/mainAccountSetup.json",
@@ -152,7 +152,7 @@ export default defineConfig({
           testDir: "../tests/playwright/features/",
           dependencies: ["mainAccountSetup"],
           use: {
-            baseURL: "https://qa-practice.netlify.app/",
+            baseURL: "https://practice.expandtesting.com",
             ...devices["iPhone 14 Pro Max"],
             storageState: "../auth/storageStates/mainAccountSetup.json",
           },

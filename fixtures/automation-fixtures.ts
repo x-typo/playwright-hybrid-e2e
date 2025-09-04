@@ -23,6 +23,14 @@ import { CustomersListPage } from "../tests/playwright/pages/customersList.page"
 import { NotesPage } from "../tests/playwright/pages/notes.page";
 import { ModalsPage } from "../tests/playwright/pages/modals.page";
 
+const blockedDomains = [
+  "https://www.googleadservices.com",
+  "https://pagead2.googlesyndication.com",
+  "https://googleads.g.doubleclick.net",
+  "https://www.google.com",
+  "https://tpc.googlesyndication.com",
+];
+
 type AutomationFixtures = {
   readFile: (path: string) => Promise<string>;
   generateRandomText: (length?: number) => string;
@@ -47,6 +55,18 @@ type AutomationFixtures = {
 };
 
 export const test = base.extend<AutomationFixtures>({
+  context: async ({ context }, use) => {
+    await context.route("**/*", (route) => {
+      const url = route.request().url();
+      if (blockedDomains.some((domain) => url.startsWith(domain))) {
+        route.abort();
+      } else {
+        route.continue();
+      }
+    });
+    await use(context);
+  },
+
   readFile: async ({}, use) => {
     async function readFile(path: string): Promise<string> {
       return await fs.readFile(path, "utf-8");
