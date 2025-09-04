@@ -8,7 +8,7 @@ if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
   );
 }
 
-test.beforeEach("Navigate to Login page", async ({ loginPage }) => {
+test.beforeEach("Navigate to page", async ({ loginPage }) => {
   await loginPage.navigateLoginPage();
 });
 

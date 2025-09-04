@@ -4,12 +4,9 @@ test.beforeAll("UNDER CONSTRUCT", async ({}) => {
   test.skip();
 });
 
-test.beforeEach(
-  "Navigate to the Customers List page",
-  async ({ customersListPage }) => {
-    await customersListPage.navigateCustomersListPage();
-  }
-);
+test.beforeEach("Navigate to page", async ({ customersListPage }) => {
+  await customersListPage.navigateCustomersListPage();
+});
 
 test.describe("Table View", () => {
   const listType = "newCustomersPendingList";
