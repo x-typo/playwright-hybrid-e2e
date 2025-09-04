@@ -1,21 +1,17 @@
 import { test, expect } from "../../../fixtures/automation-fixtures";
 
-// test.beforeAll("UNDER CONSTRUCT", async ({}) => {
-//   test.skip();
-// });
-
 test.describe("My Notes Dashboard Page", () => {
   test.beforeEach("Navigate to page", async ({ myNotesDashboardPage }) => {
     await myNotesDashboardPage.navigateMyNotesDashboardPage();
   });
 
-  test.only("Page Validation", async ({ myNotesDashboardPage }) => {
+  test("Page Validation", async ({ myNotesDashboardPage }) => {
     await test.step("Verify", async () => {
       await myNotesDashboardPage.verifyMyNotesDashboardPage();
     });
   });
 
-  test("Verify Location Notes Updated", async ({
+  test.skip("Verify Location Notes Updated", async ({
     myNotesDashboardPage,
     generateRandomText,
   }) => {
