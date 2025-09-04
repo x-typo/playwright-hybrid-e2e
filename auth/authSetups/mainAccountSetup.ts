@@ -13,11 +13,11 @@ if (!mainUsername || !mainPassword) {
 }
 
 setup("Main Account", async ({ page, request }) => {
-  await page.goto("https://qa-practice.netlify.app/auth_ecommerce.html");
-  await page.getByPlaceholder("Email").fill(mainUsername);
-  await page.getByPlaceholder("Password").fill(mainPassword);
-  await page.getByRole("button", { name: "Submit" }).click();
-  await page.waitForURL("https://qa-practice.netlify.app/auth_ecommerce.html");
+  await page.goto("https://practice.expandtesting.com/notes/app/login");
+  await page.getByTestId("login-email").fill(mainUsername);
+  await page.getByTestId("login-password").fill(mainPassword);
+  await page.getByTestId("login-submit").click();
+  await page.waitForURL("https://practice.expandtesting.com/notes/app");
   await page.context().storageState({ path: MainAccountFile });
 
   // const response = await request.post(
