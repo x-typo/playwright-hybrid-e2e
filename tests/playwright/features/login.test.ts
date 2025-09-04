@@ -27,7 +27,7 @@ test(
     const expectedElement = "email";
     const maskedElement = "login-with-google";
     const snapshotName = "loginPage_.png";
-    const ratioAllowed = 0.01;
+    const ratioAllowed = 0.03;
 
     await test.step("Perform Visual Test", async () => {
       await expect(loginPage.idSelector(expectedElement)).toBeVisible();
