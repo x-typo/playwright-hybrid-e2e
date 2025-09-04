@@ -6,12 +6,15 @@ export class MyNotesDashboardPage {
 
   // LOCATOR DECLARATIONS //
   idSelector: (name: string) => Locator;
+  classSelector: (name: string) => Locator;
   testIdSelector: (name: string) => Locator;
   heading: (name: string) => Locator;
   text: (text: string) => Locator;
   link: (name: string) => Locator;
   icon: (name: string) => Locator;
   button: (name: string) => Locator;
+  img: (name: string) => Locator;
+  searchInputBox: (name: string) => Locator;
   readonly toolBar: Locator;
   readonly textBody: Locator;
   readonly deviceNotesPaperHeader: Locator;
@@ -22,12 +25,15 @@ export class MyNotesDashboardPage {
     this.isMob = isMob;
 
     this.idSelector = (name) => page.locator(`#${name}`);
+    this.classSelector = (name) => page.locator(`#core`).locator(`.${name}`);
     this.testIdSelector = (name) => page.getByTestId(name);
     this.heading = (name) => page.getByRole("heading", { name: name });
     this.text = (text) => page.getByText(text);
     this.link = (name) => page.getByRole("link", { name: name, exact: true });
     this.icon = (name) => page.getByTestId(name).first();
     this.button = (name) => page.getByRole("button", { name: name });
+    this.img = (name) => page.getByRole("img", { name });
+    this.searchInputBox = (name) => page.getByPlaceholder(name);
     this.toolBar = page.locator(".ql-toolbar");
     this.textBody = page.locator(".ql-editor");
   }
@@ -51,8 +57,26 @@ export class MyNotesDashboardPage {
     await this.button("Save").click();
   }
 
-  //Verifications//
+  // Verifications //
   async verifyMyNotesDashboardPage() {
+    if (this.isMob) {
+      await this.classSelector("navbar-toggler").click();
+    }
+    await expect(this.link("Practice")).toBeVisible();
+    await expect(
+      this.link("Home - My Notes - The App for Automation Testing Practice")
+    ).toBeVisible();
     await expect(this.testIdSelector("home")).toBeVisible();
+    await expect(this.link("Profile")).toBeVisible();
+    await expect(this.button("Logout")).toBeVisible();
+    await expect(this.searchInputBox("Search notes...")).toBeVisible();
+    await expect(this.button("Search")).toBeVisible();
+    await expect(this.button("All")).toBeVisible();
+    await expect(this.button("Home")).toBeVisible();
+    await expect(this.button("Work")).toBeVisible();
+    await expect(this.button("Personal")).toBeVisible();
+    await expect(this.button("+ Add Note")).toBeVisible();
+    await expect(this.text("You don't have any notes")).toBeVisible();
+    await expect(this.img("You don't have any notes")).toBeVisible();
   }
 }
