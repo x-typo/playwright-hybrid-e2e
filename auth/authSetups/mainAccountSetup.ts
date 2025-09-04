@@ -17,7 +17,9 @@ setup("Main Account", async ({ page, request }) => {
   await page.getByTestId("login-email").fill(mainUsername);
   await page.getByTestId("login-password").fill(mainPassword);
   await page.getByTestId("login-submit").click();
-  await page.waitForURL("https://practice.expandtesting.com/notes/app/");
+  await expect(
+    page.getByRole("button", { name: "Toggle navigation" })
+  ).toBeVisible();
   await page.context().storageState({ path: MainAccountFile });
 
   // const response = await request.post(
