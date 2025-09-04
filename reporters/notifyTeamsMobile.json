@@ -17,11 +17,15 @@
           "inputs": {
             "links": [
               {
-                "text": "Playwright Hybrid E2E Project",
+                "text": "GitHub - x-typo",
+                "url": "https://github.com/x-typo"
+              },
+              {
+                "text": "Repo - Playwright Hybrid E2E",
                 "url": "https://github.com/x-typo/playwright-hybrid-e2e"
               },
               {
-                "text": "Test Rail Results",
+                "text": "TestRail Test Reports",
                 "url": "https://testrail.com"
               }
             ]
