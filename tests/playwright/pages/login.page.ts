@@ -21,7 +21,7 @@ export class LoginPage {
     this.isMob = isMob;
 
     this.idSelector = (name) => page.locator(`#${name}`);
-    this.image = (name) => page.getByRole("img", { name: name });
+    this.image = (name) => page.getByRole("img", { name, exact: true });
     this.text = (text) => page.getByText(text);
     this.heading = (text) => page.getByRole("heading", { name: text });
     this.link = (name) => page.getByRole("link", { name: name });
@@ -33,10 +33,7 @@ export class LoginPage {
 
   // Navigations //
   async navigateLoginPage() {
-    await this.page.goto("/auth_ecommerce");
-    if (!this.isMob) {
-      await this.idSelector("sidebarCollapse").click();
-    }
+    await this.page.goto("/notes/app");
   }
 
   // Interactions //
@@ -59,18 +56,8 @@ export class LoginPage {
 
   // Verifications //
   async verifyPage() {
-    if (this.isMob) {
-      await this.button("Toggle navigation").click();
-    }
-    await expect(this.idSelector("sidebarCollapse")).toBeVisible();
-    await expect(this.link("Home")).toBeVisible();
-    await expect(this.link("Contact")).toBeVisible();
-    await expect(this.heading("Login - Shop")).toBeVisible();
-    await expect(this.idSelector("emailHelp")).toBeVisible();
-    await expect(this.text("Email").nth(1)).toBeVisible();
-    await expect(this.inputBox("Email")).toBeVisible();
-    await expect(this.text("Password").nth(2)).toBeVisible();
-    await expect(this.inputBox("Password")).toBeVisible();
-    await expect(this.button("Submit")).toBeVisible();
+    await expect(this.heading("Welcome to Notes App")).toBeVisible();
+    await expect(this.image("Practice")).toBeVisible();
+    await expect(this.link("Login")).toBeVisible();
   }
 }

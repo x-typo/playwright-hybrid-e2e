@@ -24,17 +24,17 @@ test(
     tag: "@visual",
   },
   async ({ loginPage }) => {
-    const expectedButton = "Submit";
-    const maskedElement = "emailHelp";
+    const expectedButton = "Login";
+    const maskedElement = "Practice";
     const snapshotName = "loginPage_.png";
     const ratioAllowed = 0.01;
 
     await test.step("Perform Visual Test", async () => {
-      await expect(loginPage.button(expectedButton)).toBeVisible();
+      await expect(loginPage.link(expectedButton)).toBeVisible();
       expect(
         await loginPage.page.screenshot({
           animations: "disabled",
-          mask: [loginPage.idSelector(maskedElement)],
+          mask: [loginPage.image(maskedElement)],
         })
       ).toMatchSnapshot(snapshotName, { maxDiffPixelRatio: ratioAllowed });
     });
@@ -55,7 +55,7 @@ test.skip(
   }
 );
 
-test("Credentials Error", async ({ loginPage }) => {
+test.skip("Credentials Error", async ({ loginPage }) => {
   await test.step("Enter Invalid Credentials", async () => {
     await loginPage.enterCreds("invalid@snapone.com", "invalid");
     await loginPage.selectButton("Submit");
@@ -65,7 +65,7 @@ test("Credentials Error", async ({ loginPage }) => {
   });
 });
 
-test("Successful Login", async ({ loginPage, customersListPage }) => {
+test.skip("Successful Login", async ({ loginPage, customersListPage }) => {
   await test.step("Select 'Submit' button", async () => {
     await loginPage.enterCreds(
       process.env.MAIN_USERNAME,

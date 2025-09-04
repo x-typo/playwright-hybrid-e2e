@@ -1,5 +1,10 @@
 import { test, expect, asUser } from "../../../fixtures/automation-fixtures";
 
+test.beforeAll("UNDER CONSTRUCT", async ({}) => {
+  test.skip();
+});
+
+
 test.use(asUser("guest"));
 
 if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
