@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({ quiet: true });
 
@@ -51,7 +56,10 @@ export default defineConfig({
             baseURL: "https://practice.expandtesting.com",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "../auth/storageStates/mainAccountSetup.json",
+            storageState: path.resolve(
+              __dirname,
+              "../auth/storageStates/mainAccountSetup.json"
+            ),
           },
         },
         // {
@@ -72,7 +80,10 @@ export default defineConfig({
           use: {
             baseURL: "https://practice.expandtesting.com",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "../auth/storageStates/mainAccountSetup.json",
+            storageState: path.resolve(
+              __dirname,
+              "../auth/storageStates/mainAccountSetup.json"
+            ),
           },
         },
       ]
@@ -102,7 +113,10 @@ export default defineConfig({
             baseURL: "https://practice.expandtesting.com",
             ...devices["Desktop Chrome"],
             viewport: { width: 1920, height: 1080 },
-            storageState: "../auth/storageStates/mainAccountSetup.json",
+            storageState: path.resolve(
+              __dirname,
+              "../auth/storageStates/mainAccountSetup.json"
+            ),
           },
         },
         // {
@@ -154,7 +168,10 @@ export default defineConfig({
           use: {
             baseURL: "https://practice.expandtesting.com",
             ...devices["iPhone 14 Pro Max"],
-            storageState: "../auth/storageStates/mainAccountSetup.json",
+            storageState: path.resolve(
+              __dirname,
+              "../auth/storageStates/mainAccountSetup.json"
+            ),
           },
         },
         // {
