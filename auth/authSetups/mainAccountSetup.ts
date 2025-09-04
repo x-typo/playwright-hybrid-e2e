@@ -1,4 +1,4 @@
-import { test as setup } from "@playwright/test";
+import { test as setup, expect } from "@playwright/test";
 import fs from "fs/promises";
 
 const MainAccountFile = "auth/storageStates/mainAccountSetup.json";
@@ -17,7 +17,7 @@ setup("Main Account", async ({ page, request }) => {
   await page.getByTestId("login-email").fill(mainUsername);
   await page.getByTestId("login-password").fill(mainPassword);
   await page.getByTestId("login-submit").click();
-  await page.waitForURL("https://practice.expandtesting.com/notes/app");
+  await expect(page.getByTestId("search-input")).toBeVisible();
   await page.context().storageState({ path: MainAccountFile });
 
   // const response = await request.post(
