@@ -20,7 +20,7 @@ import {
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NavigationDrawer } from "../tests/playwright/pages/navigationDrawer.page";
 import { CustomersListPage } from "../tests/playwright/pages/customersList.page";
-import { NotesPage } from "../tests/playwright/pages/notes.page";
+import { NotesPage } from "../tests/playwright/pages/myNotes.page";
 import { ModalsPage } from "../tests/playwright/pages/modals.page";
 
 const blockedDomains = [
