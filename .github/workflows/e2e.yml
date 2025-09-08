@@ -69,7 +69,7 @@ jobs:
           from: xtyponemo@gmail.com
           to: x-typo@outlook.com
           subject: Playwright E2E Tests Results - Chrome
-          body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
         if: always()
@@ -303,7 +303,7 @@ jobs:
           from: xtyponemo@gmail.com
           to: x-typo@outlook.com
           subject: Playwright E2E Tests Results - iOS
-          body: View here for detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
         if: always()
