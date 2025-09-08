@@ -6,7 +6,7 @@
       "inputs": {
         "url": "https://resideoinc.webhook.office.com/webhookb2/a6eb1755-a7a5-41eb-ab11-11bc20badf03@6ebe80ab-81af-47a1-851d-f70413b65873/IncomingWebhook/6012088a3f634057bdb33b7090c51361/57e62868-02b3-4645-a235-5ffb4ba14225/V2jZURTZ_12IbqiubD8KBY7MZfPzgdYgwf-IETR5IlUwM1",
         "publish": "test-summary-slim",
-        "title": "E2E Tests Result - Chrome",
+        "title": "Playwright E2E Tests Result - Chrome",
         "title_link": "https://github.com/x-typo/playwright-hybrid-e2e",
         "width": "full"
       },
