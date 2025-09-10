@@ -26,7 +26,7 @@ export const config: Options.Testrunner = {
       deviceName: "iPhone 14 Pro Max",
       platformVersion: "16",
       isRealMobile: true,
-      app: "lt://APP1016032111756863683159148",
+      app: "lt://APP10160461201757468751875869",
       build: `UI Build - iOS - ${format(new Date(), "MM-dd-yyyy HH:mm:ss")}`,
       autoWebview: "true",
       autoGrantPermissions: true,

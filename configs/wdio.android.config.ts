@@ -26,7 +26,7 @@ export const config: Options.Testrunner = {
       deviceName: "Galaxy S24 Ultra",
       platformVersion: "14",
       isRealMobile: true,
-      app: "lt://APP10160471181756863681019927",
+      app: "lt://APP10160261801757468749506405",
       build: `UI Build - Android - ${format(
         new Date(),
         "MM-dd-yyyy HH:mm:ss"
