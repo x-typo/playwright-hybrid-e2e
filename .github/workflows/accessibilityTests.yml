@@ -1,4 +1,4 @@
-name: Accessibility Tests
+name: Accessibility Tests (WIP)
 on:
   workflow_dispatch:
     inputs:

@@ -1,4 +1,4 @@
-name: UI Tests - Desktop
+name: UI Tests - Desktop (WIP)
 on:
   workflow_dispatch:
     inputs:

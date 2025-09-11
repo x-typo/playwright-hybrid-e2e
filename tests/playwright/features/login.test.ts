@@ -78,7 +78,7 @@ test("Invalid Password", async ({ loginPage }) => {
 });
 
 test.skip("Successful Login", async ({ loginPage, customersListPage }) => {
-  await test.step("Select 'Submit' button", async () => {
+  await test.step("Login with valid credentials", async () => {
     await loginPage.enterCreds(
       process.env.MAIN_USERNAME,
       process.env.MAIN_PASSWORD
