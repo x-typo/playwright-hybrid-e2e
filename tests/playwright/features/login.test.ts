@@ -77,7 +77,7 @@ test("Invalid Password", async ({ loginPage }) => {
   });
 });
 
-test.skip("Successful Login", async ({ loginPage, customersListPage }) => {
+test("Successful Login", async ({ loginPage, myNotesDashboardPage }) => {
   await test.step("Login with valid credentials", async () => {
     await loginPage.enterCreds(
       process.env.MAIN_USERNAME,
@@ -86,6 +86,8 @@ test.skip("Successful Login", async ({ loginPage, customersListPage }) => {
     await loginPage.selectTestIdSelector("login-submit");
   });
   await test.step("Verify", async () => {
-    await expect(customersListPage.heading("SHOPPING CART")).toBeVisible();
+    await expect(
+      myNotesDashboardPage.searchInputBox("Search notes...")
+    ).toBeVisible();
   });
 });
