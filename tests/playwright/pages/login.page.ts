@@ -13,8 +13,6 @@ export class LoginPage {
   link: (name: string) => Locator;
   button: (name: string) => Locator;
   inputBox: (name: string) => Locator;
-  checkbox: (name: string) => Locator;
-  radio: (name: string) => Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
@@ -29,8 +27,6 @@ export class LoginPage {
     this.link = (name) => page.getByRole("link", { name: name });
     this.button = (name) => page.getByRole("button", { name: name });
     this.inputBox = (name) => page.getByRole("textbox", { name: name });
-    this.checkbox = (name) => page.getByRole("checkbox", { name: name });
-    this.radio = (name) => page.getByRole("radio", { name: name });
   }
 
   // Navigations //
