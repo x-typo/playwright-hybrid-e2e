@@ -17,7 +17,6 @@ export class NotesDashboardPage {
   searchInputBox: (name: string) => Locator;
   readonly toolBar: Locator;
   readonly textBody: Locator;
-  readonly deviceNotesPaperHeader: Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
@@ -48,11 +47,11 @@ export class NotesDashboardPage {
     // }
   }
 
-  async selectButton(name) {
-    await this.button(name).click();
+  async selectButton(buttonName) {
+    await this.button(buttonName).click();
   }
 
-  async updateNotes(notes: string) {
+  async updateNotes(notes) {
     await this.textBody.fill(notes);
     await this.button("Save").click();
   }

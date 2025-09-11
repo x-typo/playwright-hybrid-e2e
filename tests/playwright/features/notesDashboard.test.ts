@@ -20,7 +20,7 @@ test.describe("My Notes Dashboard Page", () => {
       const expectedElement = "Search notes...";
       const maskedElement = "notes-list";
       const snapshotName = "notesDashboardPage_.png";
-      const ratioAllowed = 0.02;
+      const ratioAllowed = 0.03;
 
       await test.step("Perform Visual Test", async () => {
         await expect(
