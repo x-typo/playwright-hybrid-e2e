@@ -65,7 +65,7 @@ test("Invalid Email Address", async ({ loginPage }) => {
   });
 });
 
-test.skip("Invalid Password", async ({ loginPage }) => {
+test("Invalid Password", async ({ loginPage }) => {
   await test.step("Enter invalid password", async () => {
     await loginPage.enterCreds("email@email.com", "pass");
     await loginPage.selectTestIdSelector("login-submit");
