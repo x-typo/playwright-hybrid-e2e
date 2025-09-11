@@ -43,6 +43,10 @@ export class LoginPage {
     await this.button(name).click();
   }
 
+  async selectTestIdSelector(name) {
+    await this.testIdSelector(name).click();
+  }
+
   async selectLink(name) {
     await this.link(name).click();
   }
