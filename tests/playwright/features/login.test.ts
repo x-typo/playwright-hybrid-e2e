@@ -55,13 +55,25 @@ test.skip(
   }
 );
 
-test.skip("Credentials Error", async ({ loginPage }) => {
-  await test.step("Enter Invalid Credentials", async () => {
-    await loginPage.enterCreds("invalid@snapone.com", "invalid");
-    await loginPage.selectButton("Submit");
+test("Invalid Email Address", async ({ loginPage }) => {
+  await test.step("Enter invalid email address", async () => {
+    await loginPage.enterCreds("invalidAddress", "password12345!");
+    await loginPage.selectTestIdSelector("login-submit");
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text("Bad credentials")).toBeVisible();
+    await expect(loginPage.text("Email address is invalid")).toBeVisible();
+  });
+});
+
+test.skip("Invalid Password", async ({ loginPage }) => {
+  await test.step("Enter invalid password", async () => {
+    await loginPage.enterCreds("email@email.com", "pass");
+    await loginPage.selectTestIdSelector("login-submit");
+  });
+  await test.step("Verify", async () => {
+    await expect(
+      loginPage.text("Password should be between 6 and 30 characters")
+    ).toBeVisible();
   });
 });
 
@@ -71,7 +83,7 @@ test.skip("Successful Login", async ({ loginPage, customersListPage }) => {
       process.env.MAIN_USERNAME,
       process.env.MAIN_PASSWORD
     );
-    await loginPage.selectButton("Submit");
+    await loginPage.selectTestIdSelector("login-submit");
   });
   await test.step("Verify", async () => {
     await expect(customersListPage.heading("SHOPPING CART")).toBeVisible();
