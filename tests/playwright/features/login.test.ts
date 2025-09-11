@@ -77,7 +77,7 @@ test("Invalid Password", async ({ loginPage }) => {
   });
 });
 
-test("Successful Login", async ({ loginPage, myNotesDashboardPage }) => {
+test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
   await test.step("Login with valid credentials", async () => {
     await loginPage.enterCreds(
       process.env.MAIN_USERNAME,
@@ -87,7 +87,7 @@ test("Successful Login", async ({ loginPage, myNotesDashboardPage }) => {
   });
   await test.step("Verify", async () => {
     await expect(
-      myNotesDashboardPage.searchInputBox("Search notes...")
+      notesDashboardPage.searchInputBox("Search notes...")
     ).toBeVisible();
   });
 });

@@ -20,7 +20,7 @@ import {
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NavigationDrawer } from "../tests/playwright/pages/navigationDrawer.page";
 import { CustomersListPage } from "../tests/playwright/pages/customersList.page";
-import { MyNotesDashboardPage } from "../tests/playwright/pages/myNotesDashboard.page";
+import { NotesDashboardPage } from "../tests/playwright/pages/notesDashboard.page";
 import { ModalsPage } from "../tests/playwright/pages/modals.page";
 
 const blockedDomains = [
@@ -49,7 +49,7 @@ type AutomationFixtures = {
   loginPage: LoginPage;
   navigationDrawer: NavigationDrawer;
   customersListPage: CustomersListPage;
-  myNotesDashboardPage: MyNotesDashboardPage;
+  notesDashboardPage: NotesDashboardPage;
   modalsPage: ModalsPage;
   performAccessibilityScan: () => Promise<any>;
 };
@@ -258,8 +258,8 @@ export const test = base.extend<AutomationFixtures>({
   customersListPage: async ({ page, isMobile }, use) => {
     await use(new CustomersListPage(page, isMobile));
   },
-  myNotesDashboardPage: async ({ page, isMobile }, use) => {
-    await use(new MyNotesDashboardPage(page, isMobile));
+  notesDashboardPage: async ({ page, isMobile }, use) => {
+    await use(new NotesDashboardPage(page, isMobile));
   },
   modalsPage: async ({ page, isMobile }, use) => {
     await use(new ModalsPage(page, isMobile));

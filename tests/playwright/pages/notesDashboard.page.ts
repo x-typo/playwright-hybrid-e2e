@@ -1,6 +1,6 @@
 import { type Locator, type Page, expect } from "@playwright/test";
 
-export class MyNotesDashboardPage {
+export class NotesDashboardPage {
   readonly page: Page;
   readonly isMob: boolean | undefined;
 
@@ -39,7 +39,7 @@ export class MyNotesDashboardPage {
   }
 
   // Interactions //
-  async navigateMyNotesDashboardPage() {
+  async navigateNotesDashboardPage() {
     await this.page.goto("/notes/app");
     // if (this.page.url().includes("dev")) {
     //   await this.page.goto("#/notes/app/");
