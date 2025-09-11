@@ -11,7 +11,7 @@ test.describe("My Notes Dashboard Page", () => {
     });
   });
 
-  test(
+  test.only(
     "Visual Test",
     {
       tag: "@visual",
