@@ -5,8 +5,6 @@ on:
 
   workflow_dispatch:
 
-  run-name: E2E Tests - Run ${{ github.run_number }}
-
 permissions:
   id-token: write
   contents: write
