@@ -40,23 +40,23 @@ export class NavigationDrawer {
   }
 
   // Interactions //
-  async selectIdSelector(name) {
+  async selectIdSelector(name: string) {
     await this.idSelector(name).click();
   }
 
-  async selectMenuList(name) {
+  async selectMenuList(name: string) {
     await this.menuItem(name).click();
   }
 
-  async selectIcon(name) {
+  async selectIcon(name: string) {
     await this.icon(name).click();
   }
 
-  async selectText(name) {
+  async selectText(name: string) {
     await this.text(name).click();
   }
 
-  async selectLink(name) {
+  async selectLink(name: string) {
     await this.link(name).click();
   }
 

@@ -47,11 +47,11 @@ export class NotesDashboardPage {
     // }
   }
 
-  async selectButton(buttonName) {
+  async selectButton(buttonName: string) {
     await this.button(buttonName).click();
   }
 
-  async updateNotes(notes) {
+  async updateNotes(notes: string) {
     await this.textBody.fill(notes);
     await this.button("Save").click();
   }

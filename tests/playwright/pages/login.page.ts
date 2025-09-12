@@ -35,24 +35,24 @@ export class LoginPage {
   }
 
   // Interactions //
-  async selectButton(name) {
+  async selectButton(name: string) {
     await this.button(name).click();
   }
 
-  async selectTestIdSelector(name) {
+  async selectTestIdSelector(name: string) {
     await this.testIdSelector(name).click();
   }
 
-  async selectLink(name) {
+  async selectLink(name: string) {
     await this.link(name).click();
   }
 
-  async enterCreds(email, password) {
+  async enterCreds(email: string, password: string) {
     await this.inputBox("Email").fill(email);
     await this.inputBox("Password").fill(password);
   }
 
-  async enterInputBox(name, value) {
+  async enterInputBox(name: string, value: string) {
     await this.inputBox(name).fill(value);
   }
 
