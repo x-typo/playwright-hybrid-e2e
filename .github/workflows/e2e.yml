@@ -39,12 +39,16 @@ jobs:
       - name: Install junit-viewer
         run: npm install -g junit-viewer
 
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+
       - name: Generate Tests Reports
         id: generate_report
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Results - Chrome - ID ${{ github.run_id }}
+          name: Results - Chrome - ID ${{ steps.date.outputs.date }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -272,12 +276,16 @@ jobs:
       - name: Install junit-viewer
         run: npm install -g junit-viewer
 
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+
       - name: Generate Tests Reports
         id: generate_report
         uses: dorny/test-reporter@v1.9.1
         if: success() || failure()
         with:
-          name: Results - iOS - ID ${{ github.run_id }}
+          name: Results - iOS - ID ${{ steps.date.outputs.date }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
