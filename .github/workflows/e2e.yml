@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   desktop-UI:
-    name: Chrome - ID ${{ github.run_id }}
+    name: Chrome - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -39,16 +39,12 @@ jobs:
       - name: Install junit-viewer
         run: npm install -g junit-viewer
 
-      - name: Get current date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
-
       - name: Generate Tests Reports
         id: generate_report
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: E2E Playwright Results (Chrome) - ${{ steps.date.outputs.date }}
+          name: Results (Chrome) - ${{ github.run_number }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -250,7 +246,7 @@ jobs:
 
   mobile-UI:
     needs: desktop-UI
-    name: iOS - ID ${{ github.run_id }}
+    name: iOS - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -276,16 +272,12 @@ jobs:
       - name: Install junit-viewer
         run: npm install -g junit-viewer
 
-      - name: Get current date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
-
       - name: Generate Tests Reports
         id: generate_report
         uses: dorny/test-reporter@v1.9.1
         if: success() || failure()
         with:
-          name: E2E Playwright Results (Mobile) - ${{ steps.date.outputs.date }}
+          name: Results (Mobile) - ${{ github.run_number }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
