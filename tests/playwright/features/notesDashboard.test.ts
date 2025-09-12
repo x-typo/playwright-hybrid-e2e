@@ -1,6 +1,6 @@
 import { test, expect } from "../../../fixtures/automation-fixtures";
 
-test.describe("My Notes Dashboard Page", () => {
+test.describe("Notes Dashboard Page", () => {
   test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
     await notesDashboardPage.navigateNotesDashboardPage();
   });
@@ -36,13 +36,11 @@ test.describe("My Notes Dashboard Page", () => {
     }
   );
 
-  test.skip("Verify Location Notes Updated", async ({
-    notesDashboardPage,
-    generateRandomText,
-  }) => {
-    await test.step("Update the location's notes", async () => {
-      await notesDashboardPage.updateNotes(generateRandomText());
+  test("No Notes Displayed", async ({ notesDashboardPage }) => {
+    await test.step("Verify", async () => {
+      await expect(
+        notesDashboardPage.text("You don't have any notes in all categories")
+      ).toBeVisible();
     });
-    await test.step("Verify location's notes is updated", async () => {});
   });
 });
