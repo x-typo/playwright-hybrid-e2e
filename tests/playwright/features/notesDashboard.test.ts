@@ -17,15 +17,13 @@ test.describe("Notes Dashboard Page", () => {
       tag: "@visual",
     },
     async ({ notesDashboardPage }) => {
-      const expectedElement = "Search notes...";
+      const expectedElement = "You don't have any notes";
       const maskedElement = "notes-list";
       const snapshotName = "notesDashboardPage_.png";
       const ratioAllowed = 0.03;
 
       await test.step("Perform Visual Test", async () => {
-        await expect(
-          notesDashboardPage.searchInputBox(expectedElement)
-        ).toBeVisible();
+        await expect(notesDashboardPage.img(expectedElement)).toBeVisible();
         expect(
           await notesDashboardPage.page.screenshot({
             animations: "disabled",
