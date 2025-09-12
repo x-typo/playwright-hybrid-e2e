@@ -48,7 +48,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Results - Chrome - ID ${{ steps.date.outputs.date }}
+          name: E2E Playwright Results (Chrome) - ${{ steps.date.outputs.date }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -71,7 +71,7 @@ jobs:
           password: ${{secrets.MAIL_PASSWORD}}
           from: xtyponemo@gmail.com
           to: x-typo@outlook.com
-          subject: Playwright E2E Tests Results - Chrome
+          subject: Playwright E2E Tests Results (Chrome)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
@@ -285,7 +285,7 @@ jobs:
         uses: dorny/test-reporter@v1.9.1
         if: success() || failure()
         with:
-          name: Results - iOS - ID ${{ steps.date.outputs.date }}
+          name: E2E Playwright Results (Mobile) - ${{ steps.date.outputs.date }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -308,7 +308,7 @@ jobs:
           password: ${{secrets.MAIL_PASSWORD}}
           from: xtyponemo@gmail.com
           to: x-typo@outlook.com
-          subject: Playwright E2E Tests Results - iOS
+          subject: Playwright E2E Tests Results (iOS)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
