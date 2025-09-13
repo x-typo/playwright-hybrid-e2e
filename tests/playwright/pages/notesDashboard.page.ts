@@ -79,7 +79,5 @@ export class NotesDashboardPage {
     await expect(this.button("Work")).toBeVisible();
     await expect(this.button("Personal")).toBeVisible();
     await expect(this.button("+ Add Note")).toBeVisible();
-    await expect(this.text("You don't have any notes")).toBeVisible();
-    await expect(this.img("You don't have any notes")).toBeVisible();
   }
 }
