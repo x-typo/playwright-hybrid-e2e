@@ -51,6 +51,10 @@ export class NotesDashboardPage {
     await this.button(buttonName).click();
   }
 
+  async selectTestIdSelector(element: string) {
+    await this.testIdSelector(element).click();
+  }
+
   async updateNotes(notes: string) {
     await this.textBody.fill(notes);
     await this.button("Save").click();
