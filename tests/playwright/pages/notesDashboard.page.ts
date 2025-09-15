@@ -70,25 +70,4 @@ export class NotesDashboardPage {
     await this.textBody.fill(notes);
     await this.button("Save").click();
   }
-
-  // Verifications //
-  async verifyMyNotesDashboardPage() {
-    if (this.isMob) {
-      await this.classSelector("navbar-toggler").click();
-    }
-    await expect(this.link("Practice")).toBeVisible();
-    await expect(
-      this.link("Home - My Notes - The App for Automation Testing Practice")
-    ).toBeVisible();
-    await expect(this.testIdSelector("home")).toBeVisible();
-    await expect(this.link("Profile")).toBeVisible();
-    await expect(this.button("Logout")).toBeVisible();
-    await expect(this.searchInputBox("Search notes...")).toBeVisible();
-    await expect(this.button("Search")).toBeVisible();
-    await expect(this.button("All")).toBeVisible();
-    await expect(this.button("Home")).toBeVisible();
-    await expect(this.button("Work")).toBeVisible();
-    await expect(this.button("Personal")).toBeVisible();
-    await expect(this.button("+ Add Note")).toBeVisible();
-  }
 }

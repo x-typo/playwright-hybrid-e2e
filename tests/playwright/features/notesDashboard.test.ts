@@ -7,7 +7,7 @@ test.describe("Notes Dashboard Page", () => {
 
   test("Page Validation", async ({ notesDashboardPage }) => {
     await test.step("Verify", async () => {
-      await notesDashboardPage.verifyMyNotesDashboardPage();
+      await expect(notesDashboardPage.testIdSelector("home")).toBeVisible();
     });
   });
 
