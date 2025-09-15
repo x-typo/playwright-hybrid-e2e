@@ -29,12 +29,12 @@ export class LoginPage {
     this.inputBox = (name) => page.getByRole("textbox", { name: name });
   }
 
-  // Navigations //
+  // NAVIGATIONS //
   async navigateLoginPage() {
     await this.page.goto("/notes/app/login");
   }
 
-  // Interactions //
+  // INTERACTIONS //
   async selectButton(name: string) {
     await this.button(name).click();
   }
@@ -54,14 +54,5 @@ export class LoginPage {
 
   async enterInputBox(name: string, value: string) {
     await this.inputBox(name).fill(value);
-  }
-
-  // Verifications //
-  async verifyPage() {
-    await expect(this.heading("Login")).toBeVisible();
-    await expect(this.idSelector("email")).toBeVisible();
-    await expect(this.link("Forgot password")).toBeVisible();
-    await expect(this.idSelector("password")).toBeVisible();
-    await expect(this.testIdSelector("login-submit")).toBeVisible();
   }
 }

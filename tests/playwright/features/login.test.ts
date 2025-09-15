@@ -14,7 +14,7 @@ test.beforeEach("Navigate to page", async ({ loginPage }) => {
 
 test("Page Validation", async ({ loginPage }) => {
   await test.step("Verify", async () => {
-    await loginPage.verifyPage();
+    await expect(loginPage.heading("Login")).toBeVisible();
   });
 });
 
@@ -80,8 +80,8 @@ test("Invalid Password", async ({ loginPage }) => {
 test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
   await test.step("Login with valid credentials", async () => {
     await loginPage.enterCreds(
-      process.env.MAIN_USERNAME,
-      process.env.MAIN_PASSWORD
+      process.env.MAIN_USERNAME!,
+      process.env.MAIN_PASSWORD!
     );
     await loginPage.selectTestIdSelector("login-submit");
   });
