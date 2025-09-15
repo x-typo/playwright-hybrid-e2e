@@ -14,13 +14,18 @@ export class NotesDashboardPage {
   icon: (name: string) => Locator;
   button: (name: string) => Locator;
   img: (name: string) => Locator;
-  readonly searchInputBox: Locator;
   readonly toolBar: Locator;
   readonly textBody: Locator;
   noteCardTitle: (name: string) => Locator;
+
   readonly addNoteButton: Locator;
-  readonly addNoteCategoryButton: Locator;
+  readonly submitButton: Locator;
+
+  readonly addNoteCategoryDropdown: Locator;
+
   readonly addNoteCompletedStatusCheckbox: Locator;
+
+  readonly searchInputBox: Locator;
   readonly addNoteTitleInputBox: Locator;
   readonly addNoteDescriptionInputBox: Locator;
 
@@ -38,7 +43,6 @@ export class NotesDashboardPage {
     this.icon = (name) => page.getByTestId(name).first();
     this.button = (name) => page.getByRole("button", { name: name });
     this.img = (name) => page.getByRole("img", { name });
-    this.searchInputBox = page.getByPlaceholder("Search notes...");
     this.toolBar = page.locator(".ql-toolbar");
     this.textBody = page.locator(".ql-editor");
     this.noteCardTitle = (name) =>
@@ -46,9 +50,15 @@ export class NotesDashboardPage {
         .getByTestId("note-card")
         .getByTestId("note-card-title")
         .filter({ hasText: name });
+
     this.addNoteButton = page.getByTestId("add-new-note");
-    this.addNoteCategoryButton = page.getByTestId("note-category");
+    this.submitButton = page.getByTestId("note-submit");
+
+    this.addNoteCategoryDropdown = page.getByTestId("note-category");
+
     this.addNoteCompletedStatusCheckbox = page.getByTestId("note-completed");
+
+    this.searchInputBox = page.getByPlaceholder("Search notes...");
     this.addNoteTitleInputBox = page.getByTestId("note-title");
     this.addNoteDescriptionInputBox = page.getByTestId("note-description");
   }
@@ -85,5 +95,6 @@ export class NotesDashboardPage {
     await this.addNoteButton.click();
     await this.addNoteTitleInputBox.fill(title);
     await this.addNoteDescriptionInputBox.fill(description);
+    await this.testIdSelector("note-submit").click();
   }
 }
