@@ -62,15 +62,13 @@ test("Invalid Email Address", async ({ loginPage }) => {
     email: "invalidAddress",
     password: "password12345!",
   };
-  const buttonName = "login-submit";
-  const expectedElement = "Email address is invalid";
+  const expectedText = "Email address is invalid";
 
   await test.step("Enter invalid email address", async () => {
-    await loginPage.enterCreds(credentials.email, credentials.password);
-    await loginPage.selectTestIdSelector(buttonName);
+    await loginPage.login(credentials.email, credentials.password);
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text(expectedElement)).toBeVisible();
+    await expect(loginPage.text(expectedText)).toBeVisible();
   });
 });
 
@@ -79,15 +77,13 @@ test("Invalid Password", async ({ loginPage }) => {
     email: "email@email.com",
     password: "pass",
   };
-  const buttonName = "login-submit";
-  const expectedElement = "Password should be between 6 and 30 characters";
+  const expectedText = "Password should be between 6 and 30 characters";
 
   await test.step("Enter invalid password", async () => {
-    await loginPage.enterCreds(credentials.email, credentials.password);
-    await loginPage.selectTestIdSelector(buttonName);
+    await loginPage.login(credentials.email, credentials.password);
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text(expectedElement)).toBeVisible();
+    await expect(loginPage.text(expectedText)).toBeVisible();
   });
 });
 
@@ -98,12 +94,9 @@ test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
   };
 
   await test.step("Login with valid credentials", async () => {
-    await loginPage.enterCreds(credentials.email, credentials.password);
-    await loginPage.selectTestIdSelector("login-submit");
+    await loginPage.login(credentials.email, credentials.password);
   });
   await test.step("Verify", async () => {
-    await expect(
-      notesDashboardPage.searchInputBox("Search notes...")
-    ).toBeVisible();
+    await expect(notesDashboardPage.searchInputBox).toBeVisible();
   });
 });
