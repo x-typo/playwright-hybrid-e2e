@@ -43,7 +43,7 @@ export class NotesDashboardPage {
         .filter({ hasText: name });
   }
 
-  // Interactions //
+  // INTERACTIONS //
   async navigateNotesDashboardPage() {
     await this.page.goto("/notes/app");
     // if (this.page.url().includes("dev")) {
