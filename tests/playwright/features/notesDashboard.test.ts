@@ -67,4 +67,20 @@ test.describe("Notes Dashboard Page", () => {
       ).toBeHidden();
     });
   });
+
+  test.fixme("Add New Note", async ({ notesDashboardPage }) => {
+    const tab = "category-home";
+    const noteTitle = "addNoteTest";
+    const noteDescription = "addNoteDescriptionTest";
+
+    await test.step("Select tab", async () => {
+      await notesDashboardPage.selectTestIdSelector(tab);
+    });
+    await test.step("Add new note", async () => {
+      await notesDashboardPage.addNewNote(noteTitle, noteDescription);
+    });
+    await test.step("Verify", async () => {
+      await expect(notesDashboardPage.noteCardTitle(noteTitle)).toBeVisible();
+    });
+  });
 });
