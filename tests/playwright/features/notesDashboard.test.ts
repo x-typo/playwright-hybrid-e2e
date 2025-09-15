@@ -34,7 +34,7 @@ test.describe("Notes Dashboard Page", () => {
     }
   );
 
-  test.fixme("No Notes Displayed", async ({ notesDashboardPage }) => {
+  test("No Notes Displayed", async ({ notesDashboardPage }) => {
     const tab = "category-personal";
     const expectedText = "You don't have any notes in";
 
