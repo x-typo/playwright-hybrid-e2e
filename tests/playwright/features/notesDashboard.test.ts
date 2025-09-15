@@ -68,7 +68,7 @@ test.describe("Notes Dashboard Page", () => {
     });
   });
 
-  test.fixme("Add New Note", async ({ notesDashboardPage }) => {
+  test.skip("Add New Note", async ({ notesDashboardPage }) => {
     const tab = "category-home";
     const noteTitle = "addNoteTest";
     const noteDescription = "addNoteDescriptionTest";
@@ -82,5 +82,6 @@ test.describe("Notes Dashboard Page", () => {
     await test.step("Verify", async () => {
       await expect(notesDashboardPage.noteCardTitle(noteTitle)).toBeVisible();
     });
+    await test.step("Teardown", async () => {});
   });
 });
