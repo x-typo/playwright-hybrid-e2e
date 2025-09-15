@@ -13,8 +13,10 @@ test.beforeEach("Navigate to page", async ({ loginPage }) => {
 });
 
 test("Page Validation", async ({ loginPage }) => {
+  const expectedElement = "Login";
+
   await test.step("Verify", async () => {
-    await expect(loginPage.heading("Login")).toBeVisible();
+    await expect(loginPage.heading(expectedElement)).toBeVisible();
   });
 });
 
@@ -56,33 +58,47 @@ test.skip(
 );
 
 test("Invalid Email Address", async ({ loginPage }) => {
+  const credentials = {
+    email: "invalidAddress",
+    password: "password12345!",
+  };
+  const buttonName = "login-submit";
+  const expectedElement = "Email address is invalid";
+
   await test.step("Enter invalid email address", async () => {
-    await loginPage.enterCreds("invalidAddress", "password12345!");
-    await loginPage.selectTestIdSelector("login-submit");
+    await loginPage.enterCreds(credentials.email, credentials.password);
+    await loginPage.selectTestIdSelector(buttonName);
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text("Email address is invalid")).toBeVisible();
+    await expect(loginPage.text(expectedElement)).toBeVisible();
   });
 });
 
 test("Invalid Password", async ({ loginPage }) => {
+  const credentials = {
+    email: "email@email.com",
+    password: "pass",
+  };
+  const buttonName = "login-submit";
+  const expectedElement = "Password should be between 6 and 30 characters";
+
   await test.step("Enter invalid password", async () => {
-    await loginPage.enterCreds("email@email.com", "pass");
-    await loginPage.selectTestIdSelector("login-submit");
+    await loginPage.enterCreds(credentials.email, credentials.password);
+    await loginPage.selectTestIdSelector(buttonName);
   });
   await test.step("Verify", async () => {
-    await expect(
-      loginPage.text("Password should be between 6 and 30 characters")
-    ).toBeVisible();
+    await expect(loginPage.text(expectedElement)).toBeVisible();
   });
 });
 
 test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
+  const credentials = {
+    email: process.env.MAIN_USERNAME!,
+    password: process.env.MAIN_PASSWORD!,
+  };
+
   await test.step("Login with valid credentials", async () => {
-    await loginPage.enterCreds(
-      process.env.MAIN_USERNAME!,
-      process.env.MAIN_PASSWORD!
-    );
+    await loginPage.enterCreds(credentials.email, credentials.password);
     await loginPage.selectTestIdSelector("login-submit");
   });
   await test.step("Verify", async () => {
