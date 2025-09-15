@@ -45,4 +45,26 @@ test.describe("Notes Dashboard Page", () => {
       await expect(notesDashboardPage.text(expectedText)).toBeVisible();
     });
   });
+
+  test("Search Notes", async ({ notesDashboardPage }) => {
+    const tab = "category-work";
+    const searchText = "work1";
+    const expectedNoteCard = "work1";
+    const notExpectedNoteCard = "work2";
+
+    await test.step("Select tab", async () => {
+      await notesDashboardPage.selectTestIdSelector(tab);
+    });
+    await test.step("Perform search", async () => {
+      await notesDashboardPage.searchNotes(searchText);
+    });
+    await test.step("Verify", async () => {
+      await expect(
+        notesDashboardPage.noteCardTitle(expectedNoteCard)
+      ).toBeVisible();
+      await expect(
+        notesDashboardPage.noteCardTitle(notExpectedNoteCard)
+      ).toBeHidden();
+    });
+  });
 });
