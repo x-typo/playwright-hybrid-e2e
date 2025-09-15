@@ -14,7 +14,7 @@ export class NotesDashboardPage {
   icon: (name: string) => Locator;
   button: (name: string) => Locator;
   img: (name: string) => Locator;
-  searchInputBox: (name: string) => Locator;
+  readonly searchInputBox: Locator;
   readonly toolBar: Locator;
   readonly textBody: Locator;
   noteCardTitle: (name: string) => Locator;
@@ -33,7 +33,7 @@ export class NotesDashboardPage {
     this.icon = (name) => page.getByTestId(name).first();
     this.button = (name) => page.getByRole("button", { name: name });
     this.img = (name) => page.getByRole("img", { name });
-    this.searchInputBox = (name) => page.getByPlaceholder(name);
+    this.searchInputBox = page.getByPlaceholder("Search notes...");
     this.toolBar = page.locator(".ql-toolbar");
     this.textBody = page.locator(".ql-editor");
     this.noteCardTitle = (name) =>
@@ -62,7 +62,7 @@ export class NotesDashboardPage {
   }
 
   async searchNotes(note: string) {
-    await this.searchInputBox("Search notes...").fill(note);
+    await this.searchInputBox.fill(note);
     await this.testIdSelector("search-btn").click();
   }
 

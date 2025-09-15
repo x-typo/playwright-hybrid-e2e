@@ -13,6 +13,7 @@ export class LoginPage {
   link: (name: string) => Locator;
   button: (name: string) => Locator;
   inputBox: (name: string) => Locator;
+  readonly loginButton: Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
@@ -27,6 +28,7 @@ export class LoginPage {
     this.link = (name) => page.getByRole("link", { name: name });
     this.button = (name) => page.getByRole("button", { name: name });
     this.inputBox = (name) => page.getByRole("textbox", { name: name });
+    this.loginButton = page.getByTestId("login-submit");
   }
 
   // NAVIGATIONS //
@@ -47,12 +49,13 @@ export class LoginPage {
     await this.link(name).click();
   }
 
-  async enterCreds(email: string, password: string) {
-    await this.inputBox("Email").fill(email);
-    await this.inputBox("Password").fill(password);
+  async selectLoginButton() {
+    await this.loginButton.click();
   }
 
-  async enterInputBox(name: string, value: string) {
-    await this.inputBox(name).fill(value);
+  async login(email: string, password: string) {
+    await this.inputBox("Email").fill(email);
+    await this.inputBox("Password").fill(password);
+    await this.loginButton.click();
   }
 }
