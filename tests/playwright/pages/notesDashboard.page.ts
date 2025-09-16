@@ -1,4 +1,4 @@
-import { type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page, expect } from "@playwright/test";
 
 export class NotesDashboardPage {
   readonly page: Page;
@@ -95,6 +95,6 @@ export class NotesDashboardPage {
     await this.addNoteButton.click();
     await this.addNoteTitleInputBox.fill(title);
     await this.addNoteDescriptionInputBox.fill(description);
-    await this.testIdSelector("note-submit").click();
+    await this.submitButton.click();
   }
 }
