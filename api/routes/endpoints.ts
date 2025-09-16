@@ -8,6 +8,6 @@ export const API_ENDPOINTS = {
     profile: "/users/profile",
   },
   notes: {
-    deleteById: (noteId: string) => "/notes/${noteId}",
+    deleteById: (noteId: string) => `/notes/${noteId}`,
   },
 } as const;
