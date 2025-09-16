@@ -7,4 +7,7 @@ export const API_ENDPOINTS = {
     logout: "/users/logout",
     profile: "/users/profile",
   },
-};
+  notes: {
+    deleteById: (noteId: string) => "/notes/${noteId}",
+  },
+} as const;
