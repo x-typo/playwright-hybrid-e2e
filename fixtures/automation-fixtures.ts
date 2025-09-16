@@ -15,7 +15,7 @@ import {
   addLocationAPI,
   deleteLocationAPI,
   toggleLocationNotifications,
-} from "../clients/customers";
+} from "../api/clients/customers";
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NavigationDrawer } from "../tests/playwright/pages/navigationDrawer.page";
 import { CustomersListPage } from "../tests/playwright/pages/customersList.page";
