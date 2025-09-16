@@ -68,7 +68,11 @@ test.describe("Notes Dashboard Page", () => {
     });
   });
 
-  test.fixme("Add New Note", async ({ notesDashboardPage, apiClient }) => {
+  test.only("Add New Note", async ({
+    notesDashboardPage,
+    apiClient,
+    notesClient,
+  }) => {
     const tab = "category-home";
     const noteData = {
       title: "addNoteTest",
@@ -90,6 +94,15 @@ test.describe("Notes Dashboard Page", () => {
         notesDashboardPage.noteCardTitle(noteData.title)
       ).toBeVisible();
     });
-    await test.step("Teardown", async () => {});
+    await test.step("Teardown", async () => {
+      expect(
+        noteId,
+        "Cannot perform teardown because noteId is null."
+      ).not.toBeNull();
+      const response = await notesClient.deleteNoteById(noteId!);
+      expect(response.ok(), `API teardown failed for note ID ${noteId}.`).toBe(
+        true
+      );
+    });
   });
 });
