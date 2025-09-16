@@ -92,7 +92,11 @@ export class NotesDashboardPage {
   }
 
   async addNewNote(title: string, description: string): Promise<string> {
-    const responsePromise = this.page.waitForResponse("**/api/notes");
+    const responsePromise = this.page.waitForResponse(
+      (response) =>
+        response.url().includes("/api/notes") &&
+        response.request().method() === "POST"
+    );
 
     await this.addNoteButton.click();
     await this.addNoteTitleInputBox.fill(title);
@@ -102,8 +106,10 @@ export class NotesDashboardPage {
     const response = await responsePromise;
     expect(response.ok(), "The 'create note' API call failed.").toBe(true);
 
-    const responseBody = await response.json();
-    const noteId = responseBody.data.id;
+    const {
+      data: { id: noteId },
+    } = await response.json();
+
     expect(
       noteId,
       "Could not find 'id' in the API response body."
