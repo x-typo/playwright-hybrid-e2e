@@ -15,7 +15,6 @@ import {
   addLocationAPI,
   deleteLocationAPI,
   toggleLocationNotifications,
-  setLumaReverseHandoffRequest,
 } from "../clients/customers";
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NavigationDrawer } from "../tests/playwright/pages/navigationDrawer.page";
@@ -43,9 +42,6 @@ type AutomationFixtures = {
   addLocationAPI: typeof addLocationAPI;
   deleteLocationAPI: typeof deleteLocationAPI;
   toggleLocationNotifications: typeof toggleLocationNotifications;
-  setLumaReverseHandoffRequest: typeof setLumaReverseHandoffRequest;
-  extractCustomerIdFromUrl: (page: Page) => Promise<string>;
-  extractLocationIdFromUrl: (page: Page) => Promise<string>;
   loginPage: LoginPage;
   navigationDrawer: NavigationDrawer;
   customersListPage: CustomersListPage;
@@ -149,57 +145,6 @@ export const test = base.extend<AutomationFixtures>({
   toggleLocationNotifications: [
     async ({}, use) => {
       await use(toggleLocationNotifications);
-    },
-    { scope: "worker" },
-  ],
-
-  setLumaReverseHandoffRequest: [
-    async ({}, use) => {
-      await use(setLumaReverseHandoffRequest);
-    },
-    { scope: "worker" },
-  ],
-
-  extractCustomerIdFromUrl: [
-    async ({}, use) => {
-      const extractFunc = async (page: Page): Promise<string> => {
-        await page.waitForURL("**/dashboard", { timeout: 2000 });
-        const url = page.url();
-        const match = url.match(/customers\/([a-f0-9]+)/);
-        expect(
-          match,
-          `Could not find customer ID pattern in URL: ${url}`
-        ).not.toBeNull();
-        const customerId = match![1];
-        expect(
-          customerId,
-          "Extracted customerId was null or empty"
-        ).toBeTruthy();
-        return customerId;
-      };
-      await use(extractFunc);
-    },
-    { scope: "worker" },
-  ],
-
-  extractLocationIdFromUrl: [
-    async ({}, use) => {
-      const extractFunc = async (page: Page): Promise<string> => {
-        await page.waitForURL("**/dashboard", { timeout: 2000 });
-        const url = page.url();
-        const match = url.match(/customers\/[a-f0-9]+\/([a-f0-9]+)/);
-        expect(
-          match,
-          `Could not find location ID pattern in URL: ${url}`
-        ).not.toBeNull();
-        const locationId = match![1];
-        expect(
-          locationId,
-          "Extracted locationId was null or empty"
-        ).toBeTruthy();
-        return locationId;
-      };
-      await use(extractFunc);
     },
     { scope: "worker" },
   ],
