@@ -131,7 +131,6 @@ test.describe("Table View", () => {
     customersListPage,
     apiClient,
     deleteCustomerAPI,
-    extractCustomerIdFromUrl,
   }) => {
     const linkButtonName = "Add Customer";
     const locationName = "unverifiedNewLocation";
