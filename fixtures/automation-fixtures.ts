@@ -16,6 +16,7 @@ import {
   deleteLocationAPI,
   toggleLocationNotifications,
 } from "../api/clients/customers";
+import { NotesClient } from "../api/clients/notes.client";
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NavigationDrawer } from "../tests/playwright/pages/navigationDrawer.page";
 import { CustomersListPage } from "../tests/playwright/pages/customersList.page";
@@ -42,6 +43,7 @@ type AutomationFixtures = {
   addLocationAPI: typeof addLocationAPI;
   deleteLocationAPI: typeof deleteLocationAPI;
   toggleLocationNotifications: typeof toggleLocationNotifications;
+  notesClient: NotesClient;
   loginPage: LoginPage;
   navigationDrawer: NavigationDrawer;
   customersListPage: CustomersListPage;
@@ -194,6 +196,9 @@ export const test = base.extend<AutomationFixtures>({
   axeBuilder: async ({ page }, use) => {
     const axeBuilder = new AxeBuilder({ page });
     await use(axeBuilder);
+  },
+  notesClient: async ({ apiClient }, use) => {
+    await use(new NotesClient(apiClient));
   },
   loginPage: async ({ page, isMobile }, use) => {
     await use(new LoginPage(page, isMobile));
