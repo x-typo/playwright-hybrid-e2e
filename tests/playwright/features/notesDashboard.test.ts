@@ -68,16 +68,23 @@ test.describe("Notes Dashboard Page", () => {
     });
   });
 
-  test.skip("Add New Note", async ({ notesDashboardPage }) => {
+  test.skip("Add New Note", async ({ page, notesDashboardPage, apiClient }) => {
     const tab = "category-home";
     const noteTitle = "addNoteTest";
     const noteDescription = "addNoteDescriptionTest";
+    let noteId: string | null = null;
 
     await test.step("Select tab", async () => {
       await notesDashboardPage.selectTestIdSelector(tab);
     });
     await test.step("Add new note", async () => {
       await notesDashboardPage.addNewNote(noteTitle, noteDescription);
+    });
+    await test.step("Capture note ID from URL", async () => {
+      await expect(notesDashboardPage.noteCardTitle(noteTitle)).toBeVisible();
+      noteId = await extractNoteIdFromUrl(page);
+      expect(noteId, `noteId was null or empty: ${page.url()}`).not.toBeNull();
+      console.log(`Successfully captured Note ID: ${noteId}`);
     });
     await test.step("Verify", async () => {
       await expect(notesDashboardPage.noteCardTitle(noteTitle)).toBeVisible();
