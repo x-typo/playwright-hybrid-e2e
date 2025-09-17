@@ -8,8 +8,8 @@ if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
   );
 }
 
-test.beforeEach("Navigate to page", async ({ loginPage }) => {
-  await loginPage.navigateLoginPage();
+test.beforeEach("Navigate to page", async ({ basePage }) => {
+  await basePage.navigatePage("/notes/app/login");
 });
 
 test(

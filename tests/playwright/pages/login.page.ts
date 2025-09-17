@@ -1,4 +1,4 @@
-import { type Locator, type Page, expect } from "@playwright/test";
+import { type Locator, type Page } from "@playwright/test";
 
 export class LoginPage {
   readonly page: Page;
@@ -29,11 +29,6 @@ export class LoginPage {
     this.button = (name) => page.getByRole("button", { name: name });
     this.inputBox = (name) => page.getByRole("textbox", { name: name });
     this.loginButton = page.getByTestId("login-submit");
-  }
-
-  // NAVIGATIONS //
-  async navigateLoginPage() {
-    await this.page.goto("/notes/app/login");
   }
 
   // INTERACTIONS //
