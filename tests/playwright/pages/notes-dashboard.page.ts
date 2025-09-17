@@ -26,21 +26,18 @@ export class NotesDashboardPage extends BasePage {
     this.toolBar = page.locator(".ql-toolbar");
     this.textBody = page.locator(".ql-editor");
     this.noteCardTitle = (name) =>
-      page
-        .getByTestId("note-card")
-        .getByTestId("note-card-title")
-        .filter({ hasText: name });
+      this.testIdSelector("note-card-title").filter({ hasText: name });
 
-    this.addNoteButton = page.getByTestId("add-new-note");
-    this.submitButton = page.getByTestId("note-submit");
+    this.addNoteButton = this.testIdSelector("add-new-note");
+    this.submitButton = this.testIdSelector("note-submit");
 
-    this.addNoteCategoryDropdown = page.getByTestId("note-category");
+    this.addNoteCategoryDropdown = this.testIdSelector("note-category");
 
-    this.addNoteCompletedStatusCheckbox = page.getByTestId("note-completed");
+    this.addNoteCompletedStatusCheckbox = this.testIdSelector("note-completed");
 
-    this.searchInputBox = page.getByPlaceholder("Search notes...");
-    this.addNoteTitleInputBox = page.getByTestId("note-title");
-    this.addNoteDescriptionInputBox = page.getByTestId("note-description");
+    this.searchInputBox = this.testIdSelector("search-notes");
+    this.addNoteTitleInputBox = this.testIdSelector("note-title");
+    this.addNoteDescriptionInputBox = this.testIdSelector("note-description");
   }
 
   // INTERACTIONS //

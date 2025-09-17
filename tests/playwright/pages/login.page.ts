@@ -3,20 +3,24 @@ import { BasePage } from "./base.page";
 
 export class LoginPage extends BasePage {
   // LOCATOR DECLARATIONS //
-  readonly loginButton: Locator;
   readonly loginPageHeading: Locator;
+
   readonly emailInptutBox: Locator;
   readonly passwordInputBox: Locator;
+
+  readonly loginButton: Locator;
   readonly googleLoginButton: Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
     super(page, isMob);
 
-    this.loginButton = this.testIdSelector("login-submit");
     this.loginPageHeading = this.heading("Login");
+
     this.emailInptutBox = this.inputBox("Email");
     this.passwordInputBox = this.inputBox("Password");
+
+    this.loginButton = this.testIdSelector("login-submit");
     this.googleLoginButton = this.testIdSelector("login-with-google");
   }
 
