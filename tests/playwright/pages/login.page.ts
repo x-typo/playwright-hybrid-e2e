@@ -4,12 +4,14 @@ import { BasePage } from "./base.page";
 export class LoginPage extends BasePage {
   // LOCATOR DECLARATIONS //
   readonly loginButton: Locator;
+  readonly loginPageHeading: Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
     super(page, isMob);
 
-    this.loginButton = page.getByTestId("login-submit");
+    this.loginButton = this.testIdSelector("login-submit");
+    this.loginPageHeading = this.heading("Login");
   }
 
   // INTERACTIONS //

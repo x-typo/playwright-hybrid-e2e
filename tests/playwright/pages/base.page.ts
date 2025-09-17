@@ -6,10 +6,12 @@ export class BasePage {
 
   // LOCATOR DECLARATIONS //
   idSelector: (name: string) => Locator;
+  classSelector: (name: string) => Locator;
   testIdSelector: (name: string) => Locator;
-  image: (name: string) => Locator;
-  text: (text: string) => Locator;
   heading: (text: string) => Locator;
+  text: (text: string) => Locator;
+  image: (name: string) => Locator;
+  icon: (name: string) => Locator;
   link: (name: string) => Locator;
   button: (name: string) => Locator;
   inputBox: (name: string) => Locator;
@@ -20,10 +22,12 @@ export class BasePage {
     this.isMob = isMob;
 
     this.idSelector = (name) => page.locator(`#${name}`);
+    this.classSelector = (name) => page.locator(`#core`).locator(`.${name}`);
     this.testIdSelector = (name) => page.getByTestId(name);
-    this.image = (name) => page.getByRole("img", { name });
-    this.text = (text) => page.getByText(text);
     this.heading = (text) => page.getByRole("heading", { name: text });
+    this.text = (text) => page.getByText(text);
+    this.image = (name) => page.getByRole("img", { name });
+    this.icon = (name) => page.getByTestId(name);
     this.link = (name) => page.getByRole("link", { name: name });
     this.button = (name) => page.getByRole("button", { name: name });
     this.inputBox = (name) => page.getByRole("textbox", { name: name });
