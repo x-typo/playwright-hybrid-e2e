@@ -1,13 +1,14 @@
 export const API_ENDPOINTS = {
   health: {
-    check: "/health-check",
+    check: "/notes/api/health-check",
   },
   user: {
-    login: "/users/login",
-    logout: "/users/logout",
-    profile: "/users/profile",
+    login: "/notes/api/users/login",
+    logout: "/notes/api/users/logout",
+    profile: "/notes/api/users/profile",
   },
   notes: {
-    deleteById: (noteId: string) => `/notes/${noteId}`,
+    create: "/notes/api/notes",
+    delete: (noteId: string) => `/notes/api/notes/${noteId}`,
   },
 } as const;
