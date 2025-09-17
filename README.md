@@ -5,6 +5,18 @@
         />
     </p>
 
+# Playwright E2E Hybrid Framework
+
+A robust end‑to‑end testing solution that seamlessly combines UI and API testing capabilities. Designed for scalability, maintainability, speed, and efficiency, it empowers teams to build reliable automated test suites that deliver fast feedback and adapt easily to evolving project needs.
+
+## 📋 Overview
+
+TBD
+
+## 🌟 Key Features
+
+TBD
+
 # Hybrid Automation Tests
 
 This repository features UI automation framework using Playwright with TypeScript.
@@ -30,3 +42,11 @@ This repository features UI automation framework using Playwright with TypeScrip
 ```
 $ npm install
 ```
+
+## 📁 Repository Structure
+
+TBD
+
+### Running Tests
+
+TBD
