@@ -12,16 +12,16 @@ test.beforeEach("Navigate to page", async ({ basePage }) => {
   await basePage.navigatePage("/notes/app/login");
 });
 
-test(
+test.only(
   "Page Validation",
   {
     tag: ["@smoke", "@regression"],
   },
-  async ({ loginPage }) => {
+  async ({ basePage }) => {
     const expectedElement = "Login";
 
     await test.step("Verify", async () => {
-      await expect(loginPage.heading(expectedElement)).toBeVisible();
+      await expect(basePage.heading(expectedElement)).toBeVisible();
     });
   }
 );
@@ -31,18 +31,18 @@ test(
   {
     tag: ["@visual", "@smoke", "@regression"],
   },
-  async ({ loginPage }) => {
+  async ({ basePage }) => {
     const expectedElement = "email";
     const maskedElement = "login-with-google";
     const snapshotName = "loginPage_.png";
     const ratioAllowed = 0.03;
 
     await test.step("Perform Visual Test", async () => {
-      await expect(loginPage.idSelector(expectedElement)).toBeVisible();
+      await expect(basePage.idSelector(expectedElement)).toBeVisible();
       expect(
-        await loginPage.page.screenshot({
+        await basePage.page.screenshot({
           animations: "disabled",
-          mask: [loginPage.testIdSelector(maskedElement)],
+          mask: [basePage.testIdSelector(maskedElement)],
         })
       ).toMatchSnapshot(snapshotName, { maxDiffPixelRatio: ratioAllowed });
     });
