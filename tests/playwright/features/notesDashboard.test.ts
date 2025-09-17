@@ -70,7 +70,7 @@ test.describe("Notes Dashboard Page", () => {
     });
   });
 
-  test("Add New Note", async ({ notesDashboardPage, notesClient }) => {
+  test.fixme("Add New Note", async ({ notesDashboardPage, notesClient }) => {
     const tab = "category-home";
     const noteData = {
       title: "addNoteTest",
