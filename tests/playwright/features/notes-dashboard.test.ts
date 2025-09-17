@@ -3,8 +3,8 @@ import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 import { CreateNewNoteApiResponse } from "../../../api/models/notes.models";
 
 test.describe("Notes Dashboard Page", () => {
-  test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
-    await notesDashboardPage.navigateNotesDashboardPage();
+  test.beforeEach("Navigate to page", async ({ basePage }) => {
+    await basePage.navigatePage("/notes/app");
   });
 
   test(
