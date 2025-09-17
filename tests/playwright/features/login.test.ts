@@ -64,13 +64,12 @@ test("Invalid Email Address", async ({ loginPage }) => {
     email: "invalidAddress",
     password: "password12345!",
   };
-  const expectedText = "Email address is invalid";
 
   await test.step("Enter invalid email address", async () => {
     await loginPage.login(credentials.email, credentials.password);
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text(expectedText)).toBeVisible();
+    await expect(loginPage.text("Email address is invalid")).toBeVisible();
   });
 });
 
@@ -79,13 +78,14 @@ test("Invalid Password", async ({ loginPage }) => {
     email: "email@email.com",
     password: "pass",
   };
-  const expectedText = "Password should be between 6 and 30 characters";
 
   await test.step("Enter invalid password", async () => {
     await loginPage.login(credentials.email, credentials.password);
   });
   await test.step("Verify", async () => {
-    await expect(loginPage.text(expectedText)).toBeVisible();
+    await expect(
+      loginPage.text("Password should be between 6 and 30 characters")
+    ).toBeVisible();
   });
 });
 
