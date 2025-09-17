@@ -16,6 +16,23 @@ if (!mainUsername || !mainPassword) {
 }
 
 setup("Hybrid UI and API Authentication", async ({ page, request }) => {
+  const blockedDomains = [
+    "https://www.googleadservices.com",
+    "https://pagead2.googlesyndication.com",
+    "https://googleads.g.doubleclick.net",
+    "https://www.google.com",
+    "https://tpc.googlesyndication.com",
+  ];
+
+  await page.context().route("**/*", (route) => {
+    const url = route.request().url();
+    if (blockedDomains.some((domain) => url.startsWith(domain))) {
+      route.abort();
+    } else {
+      route.continue();
+    }
+  });
+
   await page.goto(`${baseURL}/notes/app/login`);
   await page.getByTestId("login-email").fill(mainUsername);
   await page.getByTestId("login-password").fill(mainPassword);
