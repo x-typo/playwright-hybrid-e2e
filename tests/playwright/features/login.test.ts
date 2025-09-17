@@ -18,10 +18,8 @@ test(
     tag: ["@smoke", "@regression"],
   },
   async ({ loginPage }) => {
-    const expectedElement = "Login";
-
     await test.step("Verify", async () => {
-      await expect(loginPage.heading(expectedElement)).toBeVisible();
+      await expect(loginPage.loginPageHeading).toBeVisible();
     });
   }
 );
