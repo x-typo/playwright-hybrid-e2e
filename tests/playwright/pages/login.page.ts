@@ -15,8 +15,8 @@ export class LoginPage extends BasePage {
 
     this.loginButton = this.testIdSelector("login-submit");
     this.loginPageHeading = this.heading("Login");
-    this.emailInptutBox = this.testIdSelector("login-email");
-    this.passwordInputBox = this.testIdSelector("login-password");
+    this.emailInptutBox = this.inputBox("Email");
+    this.passwordInputBox = this.inputBox("Password");
     this.googleLoginButton = this.testIdSelector("login-with-google");
   }
 
@@ -26,8 +26,8 @@ export class LoginPage extends BasePage {
   }
 
   async login(email: string, password: string) {
-    await this.inputBox("Email").fill(email);
-    await this.inputBox("Password").fill(password);
+    await this.emailInptutBox.fill(email);
+    await this.passwordInputBox.fill(password);
     await this.loginButton.click();
   }
 }
