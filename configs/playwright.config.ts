@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the base URL directly in config
-const BASE_URL = "https://practice.expandtesting.com/notes/app";
+const BASE_URL = "https://practice.expandtesting.com";
 const BASE_API_URL = "https://practice.expandtesting.com/notes/api";
 
 // Load other environment variables
