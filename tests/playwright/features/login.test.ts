@@ -12,18 +12,24 @@ test.beforeEach("Navigate to page", async ({ loginPage }) => {
   await loginPage.navigateLoginPage();
 });
 
-test("Page Validation", async ({ loginPage }) => {
-  const expectedElement = "Login";
+test(
+  "Page Validation",
+  {
+    tag: ["@smoke", "@regression"],
+  },
+  async ({ loginPage }) => {
+    const expectedElement = "Login";
 
-  await test.step("Verify", async () => {
-    await expect(loginPage.heading(expectedElement)).toBeVisible();
-  });
-});
+    await test.step("Verify", async () => {
+      await expect(loginPage.heading(expectedElement)).toBeVisible();
+    });
+  }
+);
 
 test(
   "Visual Test",
   {
-    tag: "@visual",
+    tag: ["@visual", "@smoke", "@regression"],
   },
   async ({ loginPage }) => {
     const expectedElement = "email";
