@@ -13,8 +13,12 @@ test.describe("Notes Dashboard Page", () => {
       tag: ["@smoke", "@regression"],
     },
     async ({ notesDashboardPage }) => {
+      const expectedElement = "home";
+
       await test.step("Verify", async () => {
-        await expect(notesDashboardPage.testIdSelector("home")).toBeVisible();
+        await expect(
+          notesDashboardPage.testIdSelector(expectedElement)
+        ).toBeVisible();
       });
     }
   );
@@ -87,7 +91,7 @@ test.describe("Notes Dashboard Page", () => {
     {
       tag: ["@smoke", "@regression"],
     },
-    async ({ notesDashboardPage, notesClient }) => {
+    async ({ basePage, notesDashboardPage, notesClient }) => {
       const tab = "category-home";
       const noteData = {
         title: "addNoteTest",
@@ -96,7 +100,7 @@ test.describe("Notes Dashboard Page", () => {
       let noteId: string | null = null;
 
       await test.step("Navigate to the dashboard", async () => {
-        await notesDashboardPage.navigateNotesDashboardPage();
+        await basePage.navigatePage("/notes/app");
       });
       await test.step("Add new note and capture its ID", async () => {
         await notesDashboardPage.selectTestIdSelector(tab);
