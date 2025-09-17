@@ -30,17 +30,15 @@ test(
     tag: ["@visual", "@smoke", "@regression"],
   },
   async ({ loginPage }) => {
-    const expectedElement = "email";
-    const maskedElement = "login-with-google";
     const snapshotName = "loginPage_.png";
     const ratioAllowed = 0.03;
 
     await test.step("Perform Visual Test", async () => {
-      await expect(loginPage.idSelector(expectedElement)).toBeVisible();
+      await expect(loginPage.emailInptutBox).toBeVisible();
       expect(
         await loginPage.page.screenshot({
           animations: "disabled",
-          mask: [loginPage.testIdSelector(maskedElement)],
+          mask: [loginPage.googleLoginButton],
         })
       ).toMatchSnapshot(snapshotName, { maxDiffPixelRatio: ratioAllowed });
     });

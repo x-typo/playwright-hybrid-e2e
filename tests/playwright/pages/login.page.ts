@@ -5,6 +5,9 @@ export class LoginPage extends BasePage {
   // LOCATOR DECLARATIONS //
   readonly loginButton: Locator;
   readonly loginPageHeading: Locator;
+  readonly emailInptutBox: Locator;
+  readonly passwordInputBox: Locator;
+  readonly googleLoginButton: Locator;
 
   // LOCATOR INITIALIZATIONS //
   constructor(page: Page, isMob: boolean | undefined) {
@@ -12,6 +15,9 @@ export class LoginPage extends BasePage {
 
     this.loginButton = this.testIdSelector("login-submit");
     this.loginPageHeading = this.heading("Login");
+    this.emailInptutBox = this.testIdSelector("login-email");
+    this.passwordInputBox = this.testIdSelector("login-password");
+    this.googleLoginButton = this.testIdSelector("login-with-google");
   }
 
   // INTERACTIONS //
