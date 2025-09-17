@@ -1,4 +1,6 @@
 import { test, expect } from "../../../fixtures/automation-fixtures";
+import { API_ENDPOINTS } from "../../../api/routes/endpoints";
+import { CreateNewNoteApiResponse } from "../../../api/models/notes.models";
 
 test.describe("Notes Dashboard Page", () => {
   test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
@@ -68,11 +70,7 @@ test.describe("Notes Dashboard Page", () => {
     });
   });
 
-  test.only("Add New Note", async ({
-    notesDashboardPage,
-    apiClient,
-    notesClient,
-  }) => {
+  test("Add New Note", async ({ notesDashboardPage, notesClient }) => {
     const tab = "category-home";
     const noteData = {
       title: "addNoteTest",
@@ -80,6 +78,9 @@ test.describe("Notes Dashboard Page", () => {
     };
     let noteId: string | null = null;
 
+    await test.step("Navigate to the dashboard", async () => {
+      await notesDashboardPage.navigateNotesDashboardPage();
+    });
     await test.step("Add new note and capture its ID", async () => {
       await notesDashboardPage.selectTestIdSelector(tab);
       noteId = await notesDashboardPage.addNewNote(

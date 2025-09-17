@@ -1,4 +1,5 @@
 import { type Locator, type Page, expect } from "@playwright/test";
+import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 
 export class NotesDashboardPage {
   readonly page: Page;
@@ -94,7 +95,7 @@ export class NotesDashboardPage {
   async addNewNote(title: string, description: string): Promise<string> {
     const responsePromise = this.page.waitForResponse(
       (response) =>
-        response.url().includes("/api/notes") &&
+        response.url().endsWith(API_ENDPOINTS.notes.create) &&
         response.request().method() === "POST"
     );
 
@@ -104,11 +105,12 @@ export class NotesDashboardPage {
     await this.submitButton.click();
 
     const response = await responsePromise;
-    expect(response.ok(), "The 'create note' API call failed.").toBe(true);
+    const responseBody = await response.json();
 
+    expect(response.ok(), "The 'create note' API call failed.").toBe(true);
     const {
       data: { id: noteId },
-    } = await response.json();
+    } = responseBody;
 
     expect(
       noteId,

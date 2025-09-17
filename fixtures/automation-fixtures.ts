@@ -75,25 +75,9 @@ export const test = base.extend<AutomationFixtures>({
   apiClient: [
     async ({ playwright }, use) => {
       const authFile = "auth/storageStates/mainAccountSetup.json";
-      const getTokenFromFile = (parsedJson: any): string => {
-        const storageStateToken = parsedJson.origins?.find(
-          (o: any) =>
-            o.origin === "https://practice.expandtesting.com/notes/api"
-        )?.localStorage[0]?.value;
-
-        const token = storageStateToken || parsedJson.accessToken;
-        return token;
-      };
-
-      const content = await fs.readFile(authFile, "utf-8");
-      const parsedJson = JSON.parse(content);
-      const token = getTokenFromFile(parsedJson);
-
       const apiContext = await playwright.request.newContext({
-        baseURL: "https://practice.expandtesting.com/notes/api",
-        extraHTTPHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
+        baseURL: "https://practice.expandtesting.com",
+        storageState: authFile,
       });
 
       await use(apiContext);
