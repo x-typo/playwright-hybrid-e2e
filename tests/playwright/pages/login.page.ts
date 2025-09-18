@@ -19,8 +19,8 @@ export class LoginPage extends BasePage {
   }
 
   // ===== NAVIGATION =====
-  async goto() {
-    await this.navigatePage("/login");
+  async navigateLoginPage() {
+    await this.navigatePage("/notes/app/login");
   }
 
   // ===== INTERACTIONS =====
