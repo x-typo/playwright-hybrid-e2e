@@ -108,6 +108,12 @@ export default async function globalSetup(config: FullConfig) {
     });
   }
 
+  // Keep only auth/session cookies
+  const authCookies = ["express:sess", "express:sess.sig", "io"];
+  storageState.cookies = storageState.cookies.filter((cookie) =>
+    authCookies.includes(cookie.name)
+  );
+
   await fs.writeFile(MainAccountFile, JSON.stringify(storageState, null, 2));
 
   // Post-merge token verification
@@ -132,5 +138,5 @@ export default async function globalSetup(config: FullConfig) {
   console.log(
     `✅ Global setup complete. Storage state written to: ${MainAccountFile}`
   );
-  ////////////////////////////////////////
+  ///////////////////////////////////////////////
 }
