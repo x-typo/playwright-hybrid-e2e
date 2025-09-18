@@ -2,29 +2,28 @@ import { type Locator, type Page } from "@playwright/test";
 import { BasePage } from "./base.page";
 
 export class LoginPage extends BasePage {
-  // LOCATOR DECLARATIONS //
   readonly loginPageHeading: Locator;
-
   readonly emailInputBox: Locator;
   readonly passwordInputBox: Locator;
-
   readonly loginButton: Locator;
   readonly googleLoginButton: Locator;
 
-  // LOCATOR INITIALIZATIONS //
-  constructor(page: Page, isMob: boolean | undefined) {
-    super(page, isMob);
+  constructor(page: Page, isMobile: boolean | undefined) {
+    super(page, isMobile);
 
     this.loginPageHeading = this.heading("Login");
-
     this.emailInputBox = this.inputBox("Email");
     this.passwordInputBox = this.inputBox("Password");
-
     this.loginButton = this.testIdSelector("login-submit");
     this.googleLoginButton = this.testIdSelector("login-with-google");
   }
 
-  // INTERACTIONS //
+  // ===== NAVIGATION =====
+  async goto() {
+    await this.navigatePage("/login");
+  }
+
+  // ===== INTERACTIONS =====
   async selectLoginButton() {
     await this.loginButton.click();
   }
