@@ -14,9 +14,7 @@ test.beforeEach("Navigate to page", async ({ loginPage }) => {
 
 test(
   "Page Validation",
-  {
-    tag: ["@smoke", "@regression"],
-  },
+  { tag: ["@smoke", "@regression"] },
   async ({ loginPage }) => {
     await test.step("Verify", async () => {
       await expect(loginPage.loginPageHeading).toBeVisible();
@@ -26,14 +24,12 @@ test(
 
 test(
   "Visual Test",
-  {
-    tag: ["@visual", "@smoke", "@regression"],
-  },
+  { tag: ["@visual", "@smoke", "@regression"] },
   async ({ loginPage }) => {
     const snapshotName = "loginPage_.png";
     const ratioAllowed = 0.03;
 
-    await test.step("Perform Visual Test", async () => {
+    await test.step("Perform visual comparison", async () => {
       await expect(loginPage.emailInputBox).toBeVisible();
       expect(
         await loginPage.page.screenshot({
@@ -47,11 +43,9 @@ test(
 
 test.skip(
   "Accessibility Test",
-  {
-    tag: "@accessibility",
-  },
+  { tag: "@accessibility" },
   async ({ loginPage, performAccessibilityScan }) => {
-    await test.step("Perform Accessibility Test", async () => {
+    await test.step("Run accessibility scan", async () => {
       await expect(loginPage.inputBox("Email")).toBeVisible();
       const results = await performAccessibilityScan();
       await expect.soft(results).toEqual(0);
@@ -60,26 +54,26 @@ test.skip(
 );
 
 test("Invalid Email Address", async ({ loginPage }) => {
-  await test.step("Enter invalid email address", async () => {
-    await test.step("Enter invalid password", async () => {
-      await loginPage.login({
-        emailAddress: "invalidAddress",
-        password: "password12345!",
-      });
+  await test.step("Submit invalid email address", async () => {
+    await loginPage.login({
+      emailAddress: "invalidAddress",
+      password: "password12345!",
     });
   });
+
   await test.step("Verify", async () => {
     await expect(loginPage.text("Email address is invalid")).toBeVisible();
   });
 });
 
 test("Invalid Password", async ({ loginPage }) => {
-  await test.step("Enter invalid password", async () => {
+  await test.step("Submit invalid password", async () => {
     await loginPage.login({
       emailAddress: "email@email.com",
       password: "pass",
     });
   });
+
   await test.step("Verify", async () => {
     await expect(
       loginPage.text("Password should be between 6 and 30 characters")
