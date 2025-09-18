@@ -4,7 +4,6 @@ test.beforeAll("UNDER CONSTRUCT", async ({}) => {
   test.skip();
 });
 
-
 test.use(asUser("guest"));
 
 if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
@@ -13,14 +12,14 @@ if (!process.env.MAIN_USERNAME || !process.env.MAIN_PASSWORD) {
   );
 }
 
-test.beforeEach("Setup", async ({ page, navigationDrawer }) => {
+test.beforeEach("Setup", async ({ page }) => {
   await page.goto("/");
   if (navigationDrawer.isMob) {
     await navigationDrawer.selectIdSelector("sidebarCollapse");
   }
 });
 
-test("Drawer Validation", async ({ navigationDrawer }) => {
+test("Drawer Validation", async ({}) => {
   await test.step("Verify", async () => {
     await navigationDrawer.verifyDrawer();
   });
@@ -31,7 +30,7 @@ test(
   {
     tag: "@visual",
   },
-  async ({ navigationDrawer }) => {
+  async ({}) => {
     const expectedHeading = "QA Practice";
     const snapshotName = "navigationDrawer_.png";
     const ratioAllowed = 0.02;
@@ -50,7 +49,7 @@ test(
 );
 
 test.describe("Navigations", () => {
-  test("Ecommerce", async ({ navigationDrawer }) => {
+  test("Ecommerce", async ({}) => {
     const menuList = "Ecommerce - Login";
     const expectedHeading = "Login - Shop";
 
@@ -62,7 +61,7 @@ test.describe("Navigations", () => {
     });
   });
 
-  test("Bugs Challenge", async ({ navigationDrawer }) => {
+  test("Bugs Challenge", async ({}) => {
     const menuList = "Spot the BUGS CHALLENGE";
     const expectedHeading = "CHALLENGE - Spot the BUGS!";
 
@@ -74,7 +73,7 @@ test.describe("Navigations", () => {
     });
   });
 
-  test("GraphQL Testing", async ({ navigationDrawer }) => {
+  test("GraphQL Testing", async ({}) => {
     const menuList = "GraphQL Testing";
     const expectedHeading = "GraphQL Testing";
 
@@ -86,7 +85,7 @@ test.describe("Navigations", () => {
     });
   });
 
-  test("Official Website", async ({ navigationDrawer, page }) => {
+  test("Official Website", async ({ page }) => {
     const menuList = "RV - Website";
     const expectedUrl = "https://razvanvancea.ro/";
     let page1Promise;
