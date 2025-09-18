@@ -49,7 +49,6 @@ export class NotesDashboardPage extends BasePage {
   }
 
   async updateNotes(description: string) {
-    await this.textBody.fill(description);
     await this.button("Save").click();
   }
 
