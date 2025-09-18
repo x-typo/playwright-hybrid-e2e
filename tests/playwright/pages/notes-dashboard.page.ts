@@ -3,26 +3,34 @@ import { BasePage } from "./base.page";
 import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 
 export class NotesDashboardPage extends BasePage {
-  readonly myNotesLinkButton: Locator;
-  readonly addNoteButton: Locator;
-  readonly submitButton: Locator;
-  readonly addNoteCategoryDropdown: Locator;
-  readonly addNoteCompletedStatusCheckbox: Locator;
-  readonly searchInputBox: Locator;
-  readonly addNoteTitleInputBox: Locator;
-  readonly addNoteDescriptionInputBox: Locator;
-
   constructor(page: Page, isMobile: boolean | undefined) {
     super(page, isMobile);
+  }
 
-    this.myNotesLinkButton = this.testIdSelector("home");
-    this.addNoteButton = this.testIdSelector("add-new-note");
-    this.submitButton = this.testIdSelector("note-submit");
-    this.addNoteCategoryDropdown = this.testIdSelector("note-category");
-    this.addNoteCompletedStatusCheckbox = this.testIdSelector("note-completed");
-    this.searchInputBox = this.testIdSelector("search-input");
-    this.addNoteTitleInputBox = this.testIdSelector("note-title");
-    this.addNoteDescriptionInputBox = this.testIdSelector("note-description");
+  // ===== LOCATOR GETTERS =====
+  get myNotesLinkButton(): Locator {
+    return this.testIdSelector("home");
+  }
+  get addNoteButton(): Locator {
+    return this.testIdSelector("add-new-note");
+  }
+  get submitButton(): Locator {
+    return this.testIdSelector("note-submit");
+  }
+  get addNoteCategoryDropdown(): Locator {
+    return this.testIdSelector("note-category");
+  }
+  get addNoteCompletedStatusCheckbox(): Locator {
+    return this.testIdSelector("note-completed");
+  }
+  get searchInputBox(): Locator {
+    return this.testIdSelector("search-input");
+  }
+  get addNoteTitleInputBox(): Locator {
+    return this.testIdSelector("note-title");
+  }
+  get addNoteDescriptionInputBox(): Locator {
+    return this.testIdSelector("note-description");
   }
 
   // ===== LOCATOR METHODS =====
@@ -33,7 +41,7 @@ export class NotesDashboardPage extends BasePage {
     return this.testIdSelector(name);
   }
 
-  // ===== GETTERS =====
+  // Tabs
   get allTab(): Locator {
     return this.tabButton("category-all");
   }
@@ -48,7 +56,7 @@ export class NotesDashboardPage extends BasePage {
   }
 
   // ===== NAVIGATION =====
-  async navigateNotesDashboardPage() {
+  async navigateNotesDashboardPage(): Promise<void> {
     await this.navigatePage("/notes/app");
   }
 
