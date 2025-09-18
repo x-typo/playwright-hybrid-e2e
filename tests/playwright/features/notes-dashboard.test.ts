@@ -14,7 +14,7 @@ test.describe("Notes Dashboard Page", () => {
     },
     async ({ notesDashboardPage }) => {
       await test.step("Verify", async () => {
-        await expect(notesDashboardPage.myNotesHomeLinkButton).toBeVisible();
+        await expect(notesDashboardPage.myNotesLinkButton).toBeVisible();
       });
     }
   );
@@ -57,24 +57,15 @@ test.describe("Notes Dashboard Page", () => {
       tag: ["@smoke", "@regression"],
     },
     async ({ notesDashboardPage }) => {
-      const tab = "category-work";
-      const searchText = "work1";
-      const expectedNoteCard = "work1";
-      const notExpectedNoteCard = "work2";
-
       await test.step("Select tab", async () => {
-        await notesDashboardPage.selectTestIdSelector(tab);
+        await notesDashboardPage.selectTab("category-work");
       });
       await test.step("Perform search", async () => {
-        await notesDashboardPage.searchNotes(searchText);
+        await notesDashboardPage.searchNotes("work1");
       });
       await test.step("Verify", async () => {
-        await expect(
-          notesDashboardPage.noteCardTitle(expectedNoteCard)
-        ).toBeVisible();
-        await expect(
-          notesDashboardPage.noteCardTitle(notExpectedNoteCard)
-        ).toBeHidden();
+        await expect(notesDashboardPage.noteCardTitle("work1")).toBeVisible();
+        await expect(notesDashboardPage.noteCardTitle("work2")).toBeHidden();
       });
     }
   );

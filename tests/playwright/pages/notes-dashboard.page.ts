@@ -4,11 +4,9 @@ import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 
 export class NotesDashboardPage extends BasePage {
   // LOCATOR DECLARATIONS //
-  readonly toolBar: Locator;
-  readonly textBody: Locator;
   noteCardTitle: (name: string) => Locator;
 
-  readonly myNotesHomeLinkButton: Locator;
+  readonly myNotesLinkButton: Locator;
 
   tabButton: (name: string) => Locator;
   readonly addNoteButton: Locator;
@@ -26,12 +24,10 @@ export class NotesDashboardPage extends BasePage {
   constructor(page: Page, isMob: boolean | undefined) {
     super(page, isMob);
 
-    this.toolBar = page.locator(".ql-toolbar");
-    this.textBody = page.locator(".ql-editor");
     this.noteCardTitle = (name) =>
       this.testIdSelector("note-card-title").filter({ hasText: name });
 
-    this.myNotesHomeLinkButton = this.testIdSelector("home");
+    this.myNotesLinkButton = this.testIdSelector("home");
 
     this.tabButton = (name) => this.testIdSelector(name);
     this.addNoteButton = this.testIdSelector("add-new-note");
@@ -41,7 +37,7 @@ export class NotesDashboardPage extends BasePage {
 
     this.addNoteCompletedStatusCheckbox = this.testIdSelector("note-completed");
 
-    this.searchInputBox = this.testIdSelector("search-notes");
+    this.searchInputBox = this.testIdSelector("search-input");
     this.addNoteTitleInputBox = this.testIdSelector("note-title");
     this.addNoteDescriptionInputBox = this.testIdSelector("note-description");
   }
