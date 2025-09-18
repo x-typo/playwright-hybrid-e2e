@@ -41,14 +41,13 @@ test.describe("Notes Dashboard Page", () => {
   );
 
   test("No Notes Displayed", async ({ notesDashboardPage }) => {
-    const tab = "category-personal";
-    const expectedText = "You don't have any notes in";
-
     await test.step("Select tab", async () => {
-      await notesDashboardPage.selectTestIdSelector(tab);
+      await notesDashboardPage.selectTab("category-personal");
     });
     await test.step("Verify", async () => {
-      await expect(notesDashboardPage.text(expectedText)).toBeVisible();
+      await expect(
+        notesDashboardPage.text("You don't have any notes in")
+      ).toBeVisible();
     });
   });
 

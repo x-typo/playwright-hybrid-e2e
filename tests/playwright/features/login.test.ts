@@ -74,13 +74,11 @@ test("Invalid Email Address", async ({ loginPage }) => {
 });
 
 test("Invalid Password", async ({ loginPage }) => {
-  const credentials = {
-    email: "email@email.com",
-    password: "pass",
-  };
-
   await test.step("Enter invalid password", async () => {
-    await loginPage.login(credentials.email, credentials.password);
+    await loginPage.login({
+      emailAddress: "email@email.com",
+      password: "pass",
+    });
   });
   await test.step("Verify", async () => {
     await expect(
@@ -90,15 +88,16 @@ test("Invalid Password", async ({ loginPage }) => {
 });
 
 test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
-  const credentials = {
-    email: process.env.MAIN_USERNAME!,
+  const validCreds = {
+    emailAddress: process.env.MAIN_USERNAME!,
     password: process.env.MAIN_PASSWORD!,
   };
 
   await test.step("Login with valid credentials", async () => {
-    await loginPage.login(credentials.email, credentials.password);
+    await loginPage.login(validCreds);
   });
+
   await test.step("Verify", async () => {
-    await expect(notesDashboardPage.searchInputBox).toBeVisible();
+    await expect(notesDashboardPage.myNotesHomeLinkButton).toBeVisible();
   });
 });
