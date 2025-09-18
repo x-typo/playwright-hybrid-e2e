@@ -91,4 +91,28 @@ export default async function globalSetup(config: FullConfig) {
   }
 
   await fs.writeFile(MainAccountFile, JSON.stringify(storageState, null, 2));
+
+  // Post-merge token verification
+  const verifyContext = await request.newContext({
+    baseURL: apiOrigin,
+    extraHTTPHeaders: {
+      "x-auth-token": accessToken,
+    },
+  });
+
+  const verifyResponse = await verifyContext.get(API_ENDPOINTS.user.profile);
+
+  console.log("🔍 Verification status:", verifyResponse.status());
+  console.log("🔍 Verification body:", await verifyResponse.text());
+
+  expect(
+    verifyResponse.ok(),
+    `Token verification failed with status ${verifyResponse.status()}`
+  ).toBe(true);
+
+  console.log(`✅ Token verified for user: ${mainUsername}`);
+  console.log(
+    `✅ Global setup complete. Storage state written to: ${MainAccountFile}`
+  );
+  ////////////////////////////////////////
 }
