@@ -9,9 +9,7 @@ test.describe("Notes Dashboard Page", () => {
 
   test(
     "Page Validation",
-    {
-      tag: ["@smoke", "@regression"],
-    },
+    { tag: ["@smoke", "@regression"] },
     async ({ notesDashboardPage }) => {
       await test.step("Verify", async () => {
         await expect(notesDashboardPage.myNotesLinkButton).toBeVisible();
@@ -21,14 +19,12 @@ test.describe("Notes Dashboard Page", () => {
 
   test(
     "Visual Test",
-    {
-      tag: ["@visual", "@smoke", "@regression"],
-    },
+    { tag: ["@visual", "@smoke", "@regression"] },
     async ({ notesDashboardPage }) => {
       const snapshotName = "notesDashboardPage_.png";
       const ratioAllowed = 0.03;
 
-      await test.step("Perform Visual Test", async () => {
+      await test.step("Perform visual comparison", async () => {
         await expect(notesDashboardPage.text("notes completed")).toBeVisible();
         expect(
           await notesDashboardPage.page.screenshot({
@@ -53,14 +49,12 @@ test.describe("Notes Dashboard Page", () => {
 
   test(
     "Search Notes",
-    {
-      tag: ["@smoke", "@regression"],
-    },
+    { tag: ["@smoke", "@regression"] },
     async ({ notesDashboardPage }) => {
       await test.step("Select tab", async () => {
         await notesDashboardPage.workTab.click();
       });
-      await test.step("Perform search", async () => {
+      await test.step("Search for notes", async () => {
         await notesDashboardPage.searchNotes("work1");
       });
       await test.step("Verify", async () => {
@@ -72,35 +66,35 @@ test.describe("Notes Dashboard Page", () => {
 
   test.fixme(
     "Add New Note",
-    {
-      tag: ["@smoke", "@regression"],
-    },
+    { tag: ["@smoke", "@regression"] },
     async ({ basePage, notesDashboardPage, notesClient }) => {
-      const tab = "category-home";
       const noteData = {
         title: "addNoteTest",
         description: "addNoteDescriptionTest",
       };
       let noteId: string | null = null;
 
-      await test.step("Navigate to the dashboard", async () => {
+      await test.step("Navigate to dashboard", async () => {
         await basePage.navigatePage("/notes/app");
       });
-      await test.step("Add new note and capture its ID", async () => {
-        await notesDashboardPage.selectTestIdSelector(tab);
+
+      await test.step("Add new note and capture ID", async () => {
+        await notesDashboardPage.homeTab.click();
         noteId = await notesDashboardPage.addNewNote(
           noteData.title,
           noteData.description
         );
       });
-      await test.step("Verify", async () => {
+
+      await test.step("Verify note creation", async () => {
         await expect(noteId, "should return a valid note ID").toBeDefined();
         await expect(typeof noteId).toBe("string");
         await expect(
           notesDashboardPage.noteCardTitle(noteData.title)
         ).toBeVisible();
       });
-      await test.step("Teardown", async () => {
+
+      await test.step("Teardown - delete created note", async () => {
         expect(
           noteId,
           "Cannot perform teardown because noteId is null."
