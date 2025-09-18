@@ -17,10 +17,9 @@ import {
   toggleLocationNotifications,
 } from "../api/clients/customers";
 import { NotesClient } from "../api/clients/notes.client";
+import { PageFactory } from "../tests/playwright/pages/page-Factory.page";
 import { BasePage } from "../tests/playwright/pages/base.page";
 import { LoginPage } from "../tests/playwright/pages/login.page";
-import { NavigationDrawer } from "../tests/playwright/pages/navigation-drawer.page";
-import { CustomersListPage } from "../tests/playwright/pages/customers-list.page";
 import { NotesDashboardPage } from "../tests/playwright/pages/notes-dashboard.page";
 import { ModalsPage } from "../tests/playwright/pages/modals.page";
 
@@ -45,10 +44,9 @@ type AutomationFixtures = {
   deleteLocationAPI: typeof deleteLocationAPI;
   toggleLocationNotifications: typeof toggleLocationNotifications;
   notesClient: NotesClient;
+  pageFactory: PageFactory;
   basePage: BasePage;
   loginPage: LoginPage;
-  navigationDrawer: NavigationDrawer;
-  customersListPage: CustomersListPage;
   notesDashboardPage: NotesDashboardPage;
   modalsPage: ModalsPage;
   performAccessibilityScan: () => Promise<any>;
@@ -94,42 +92,36 @@ export const test = base.extend<AutomationFixtures>({
     },
     { scope: "worker" },
   ],
-
   editCustomerAPI: [
     async ({}, use) => {
       await use(editCustomerAPI);
     },
     { scope: "worker" },
   ],
-
   deleteCustomerAPI: [
     async ({}, use) => {
       await use(deleteCustomerAPI);
     },
     { scope: "worker" },
   ],
-
   toggleCustomerNotificationAPI: [
     async ({}, use) => {
       await use(toggleCustomerNotificationAPI);
     },
     { scope: "worker" },
   ],
-
   addLocationAPI: [
     async ({}, use) => {
       await use(addLocationAPI);
     },
     { scope: "worker" },
   ],
-
   deleteLocationAPI: [
     async ({}, use) => {
       await use(deleteLocationAPI);
     },
     { scope: "worker" },
   ],
-
   toggleLocationNotifications: [
     async ({}, use) => {
       await use(toggleLocationNotifications);
@@ -179,30 +171,26 @@ export const test = base.extend<AutomationFixtures>({
     await use(performAccessibilityScan);
   },
 
-  axeBuilder: async ({ page }, use) => {
-    const axeBuilder = new AxeBuilder({ page });
-    await use(axeBuilder);
-  },
-  notesClient: async ({ apiClient }, use) => {
-    await use(new NotesClient(apiClient));
+  pageFactory: async ({ page, isMobile }, use) => {
+    await use(new PageFactory(page, isMobile));
   },
   basePage: async ({ page, isMobile }, use) => {
     await use(new BasePage(page, isMobile));
   },
-  loginPage: async ({ page, isMobile }, use) => {
-    await use(new LoginPage(page, isMobile));
+  loginPage: async ({ pageFactory }, use) => {
+    await use(pageFactory.getLoginPage());
   },
-  navigationDrawer: async ({ page, isMobile }, use) => {
-    await use(new NavigationDrawer(page, isMobile));
+  notesDashboardPage: async ({ pageFactory }, use) => {
+    await use(pageFactory.getNotesDashboardPage());
   },
-  customersListPage: async ({ page, isMobile }, use) => {
-    await use(new CustomersListPage(page, isMobile));
+  notesClient: async ({ apiClient }, use) => {
+    await use(new NotesClient(apiClient));
   },
-  notesDashboardPage: async ({ page, isMobile }, use) => {
-    await use(new NotesDashboardPage(page, isMobile));
-  },
-  modalsPage: async ({ page, isMobile }, use) => {
-    await use(new ModalsPage(page, isMobile));
+
+  // Accessibility tooling
+  axeBuilder: async ({ page }, use) => {
+    const axeBuilder = new AxeBuilder({ page });
+    await use(axeBuilder);
   },
 });
 
