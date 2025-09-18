@@ -98,6 +98,6 @@ test("Successful Login", async ({ loginPage, notesDashboardPage }) => {
   });
 
   await test.step("Verify", async () => {
-    await expect(notesDashboardPage.myNotesHomeLinkButton).toBeVisible();
+    await expect(notesDashboardPage.myNotesLinkButton).toBeVisible();
   });
 });
