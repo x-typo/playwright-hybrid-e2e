@@ -6,6 +6,8 @@ import { API_ENDPOINTS } from "../../api/routes/endpoints";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Path to storage state file
 const MainAccountFile = path.resolve(
   __dirname,
   "../storageStates/mainAccountSetup.json"
@@ -13,6 +15,23 @@ const MainAccountFile = path.resolve(
 
 const baseURL = "https://practice.expandtesting.com";
 const apiOrigin = `${baseURL}/notes/api`;
+
+type MyStorageState = {
+  cookies: {
+    name: string;
+    value: string;
+    domain: string;
+    path: string;
+    expires: number;
+    httpOnly: boolean;
+    secure: boolean;
+    sameSite: "Strict" | "Lax" | "None";
+  }[];
+  origins: {
+    origin: string;
+    localStorage: { name: string; value: string }[];
+  }[];
+};
 
 export default async function globalSetup(config: FullConfig) {
   const mainUsername = process.env.MAIN_USERNAME;
@@ -49,11 +68,15 @@ export default async function globalSetup(config: FullConfig) {
     response.ok(),
     `API login failed with status ${response.status()}`
   ).toBe(true);
+
   const { data } = await response.json();
   const accessToken = data.token;
 
   // Merge API token into storageState
-  const storageState = JSON.parse(await fs.readFile(MainAccountFile, "utf-8"));
+  const storageState: MyStorageState = JSON.parse(
+    await fs.readFile(MainAccountFile, "utf-8")
+  );
+
   const existingOrigin = storageState.origins.find(
     (o) => o.origin === apiOrigin
   );
