@@ -10,6 +10,7 @@ export class NotesDashboardPage extends BasePage {
 
   readonly myNotesHomeLinkButton: Locator;
 
+  tabButton: (name: string) => Locator;
   readonly addNoteButton: Locator;
   readonly submitButton: Locator;
 
@@ -32,6 +33,7 @@ export class NotesDashboardPage extends BasePage {
 
     this.myNotesHomeLinkButton = this.testIdSelector("home");
 
+    this.tabButton = (name) => this.testIdSelector(name);
     this.addNoteButton = this.testIdSelector("add-new-note");
     this.submitButton = this.testIdSelector("note-submit");
 
@@ -53,6 +55,10 @@ export class NotesDashboardPage extends BasePage {
   async updateNotes(description: string) {
     await this.textBody.fill(description);
     await this.button("Save").click();
+  }
+
+  async selectTab(name: string) {
+    await this.tabButton(name).click();
   }
 
   async addNewNote(title: string, description: string): Promise<string> {

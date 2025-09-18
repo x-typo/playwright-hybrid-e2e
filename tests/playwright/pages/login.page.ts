@@ -5,7 +5,7 @@ export class LoginPage extends BasePage {
   // LOCATOR DECLARATIONS //
   readonly loginPageHeading: Locator;
 
-  readonly emailInptutBox: Locator;
+  readonly emailInputBox: Locator;
   readonly passwordInputBox: Locator;
 
   readonly loginButton: Locator;
@@ -17,7 +17,7 @@ export class LoginPage extends BasePage {
 
     this.loginPageHeading = this.heading("Login");
 
-    this.emailInptutBox = this.inputBox("Email");
+    this.emailInputBox = this.inputBox("Email");
     this.passwordInputBox = this.inputBox("Password");
 
     this.loginButton = this.testIdSelector("login-submit");
@@ -29,8 +29,14 @@ export class LoginPage extends BasePage {
     await this.loginButton.click();
   }
 
-  async login(email: string, password: string) {
-    await this.emailInptutBox.fill(email);
+  async login({
+    emailAddress,
+    password,
+  }: {
+    emailAddress: string;
+    password: string;
+  }) {
+    await this.emailInputBox.fill(emailAddress);
     await this.passwordInputBox.fill(password);
     await this.loginButton.click();
   }
