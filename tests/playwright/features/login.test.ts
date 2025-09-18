@@ -34,7 +34,7 @@ test(
     const ratioAllowed = 0.03;
 
     await test.step("Perform Visual Test", async () => {
-      await expect(loginPage.emailInptutBox).toBeVisible();
+      await expect(loginPage.emailInputBox).toBeVisible();
       expect(
         await loginPage.page.screenshot({
           animations: "disabled",
