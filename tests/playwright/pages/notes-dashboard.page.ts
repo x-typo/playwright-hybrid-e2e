@@ -3,56 +3,70 @@ import { BasePage } from "./base.page";
 import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 
 export class NotesDashboardPage extends BasePage {
-  // LOCATOR DECLARATIONS //
-  noteCardTitle: (name: string) => Locator;
-
   readonly myNotesLinkButton: Locator;
-
-  tabButton: (name: string) => Locator;
   readonly addNoteButton: Locator;
   readonly submitButton: Locator;
-
   readonly addNoteCategoryDropdown: Locator;
-
   readonly addNoteCompletedStatusCheckbox: Locator;
-
   readonly searchInputBox: Locator;
   readonly addNoteTitleInputBox: Locator;
   readonly addNoteDescriptionInputBox: Locator;
 
-  // LOCATOR INITIALIZATIONS //
-  constructor(page: Page, isMob: boolean | undefined) {
-    super(page, isMob);
-
-    this.noteCardTitle = (name) =>
-      this.testIdSelector("note-card-title").filter({ hasText: name });
+  constructor(page: Page, isMobile: boolean | undefined) {
+    super(page, isMobile);
 
     this.myNotesLinkButton = this.testIdSelector("home");
-
-    this.tabButton = (name) => this.testIdSelector(name);
     this.addNoteButton = this.testIdSelector("add-new-note");
     this.submitButton = this.testIdSelector("note-submit");
-
     this.addNoteCategoryDropdown = this.testIdSelector("note-category");
-
     this.addNoteCompletedStatusCheckbox = this.testIdSelector("note-completed");
-
     this.searchInputBox = this.testIdSelector("search-input");
     this.addNoteTitleInputBox = this.testIdSelector("note-title");
     this.addNoteDescriptionInputBox = this.testIdSelector("note-description");
   }
 
-  // INTERACTIONS //
-  async searchNotes(note: string) {
+  // ===== LOCATOR METHODS =====
+  noteCardTitle(name: string): Locator {
+    return this.testIdSelector("note-card-title").filter({ hasText: name });
+  }
+  tabButton(name: string): Locator {
+    return this.testIdSelector(name);
+  }
+
+  // ===== GETTERS =====
+  get allTab(): Locator {
+    return this.tabButton("category-all");
+  }
+  get workTab(): Locator {
+    return this.tabButton("category-work");
+  }
+  get homeTab(): Locator {
+    return this.tabButton("category-home");
+  }
+  get personalTab(): Locator {
+    return this.tabButton("category-personal");
+  }
+
+  // ===== NAVIGATION =====
+  async navigateNotesDashboardPage() {
+    await this.navigatePage("/notes/app");
+  }
+
+  async expectOnDashboard(): Promise<void> {
+    await this.expectVisible(this.myNotesLinkButton);
+  }
+
+  // ===== INTERACTIONS =====
+  async searchNotes(note: string): Promise<void> {
     await this.searchInputBox.fill(note);
     await this.testIdSelector("search-btn").click();
   }
 
-  async updateNotes(description: string) {
+  async updateNotes(description: string): Promise<void> {
     await this.button("Save").click();
   }
 
-  async selectTab(name: string) {
+  async selectTab(name: string): Promise<void> {
     await this.tabButton(name).click();
   }
 
@@ -72,6 +86,7 @@ export class NotesDashboardPage extends BasePage {
     const responseBody = await response.json();
 
     expect(response.ok(), "The 'create note' API call failed.").toBe(true);
+
     const {
       data: { id: noteId },
     } = responseBody;

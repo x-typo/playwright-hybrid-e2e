@@ -3,8 +3,8 @@ import { API_ENDPOINTS } from "../../../api/routes/endpoints";
 import { CreateNewNoteApiResponse } from "../../../api/models/notes.models";
 
 test.describe("Notes Dashboard Page", () => {
-  test.beforeEach("Navigate to page", async ({ basePage }) => {
-    await basePage.navigatePage("/notes/app");
+  test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
+    await notesDashboardPage.navigateNotesDashboardPage();
   });
 
   test(
@@ -42,7 +42,7 @@ test.describe("Notes Dashboard Page", () => {
 
   test("No Notes Displayed", async ({ notesDashboardPage }) => {
     await test.step("Select tab", async () => {
-      await notesDashboardPage.selectTab("category-personal");
+      await notesDashboardPage.personalTab.click();
     });
     await test.step("Verify", async () => {
       await expect(
@@ -58,7 +58,7 @@ test.describe("Notes Dashboard Page", () => {
     },
     async ({ notesDashboardPage }) => {
       await test.step("Select tab", async () => {
-        await notesDashboardPage.selectTab("category-work");
+        await notesDashboardPage.workTab.click();
       });
       await test.step("Perform search", async () => {
         await notesDashboardPage.searchNotes("work1");
