@@ -22,7 +22,7 @@ export default async function globalSetup(config: FullConfig) {
     throw new Error("MAIN_USERNAME and MAIN_PASSWORD must be set.");
   }
 
-  // Login via UI to get cookies and localStorage
+  // Login via UI to get cookies and storageState
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
