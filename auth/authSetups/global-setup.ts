@@ -41,10 +41,28 @@ export default async function globalSetup(config: FullConfig) {
     throw new Error("MAIN_USERNAME and MAIN_PASSWORD must be set.");
   }
 
-  // Login via UI to get cookies and storageState
+  // Launch browser and create page
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
+  // Block ad/tracker domains before navigation
+  const blockedDomains = [
+    "https://www.googleadservices.com",
+    "https://pagead2.googlesyndication.com",
+    "https://googleads.g.doubleclick.net",
+    "https://www.google.com",
+    "https://tpc.googlesyndication.com",
+  ];
+
+  await page.context().route("**/*", (route) => {
+    const url = route.request().url();
+    if (blockedDomains.some((domain) => url.startsWith(domain))) {
+      return route.abort();
+    }
+    return route.continue();
+  });
+
+  // Login via UI to get cookies and storageState
   await page.goto(`${baseURL}/notes/app/login`);
   await page.getByTestId("login-email").fill(mainUsername);
   await page.getByTestId("login-password").fill(mainPassword);
