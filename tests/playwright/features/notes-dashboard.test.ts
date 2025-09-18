@@ -13,12 +13,8 @@ test.describe("Notes Dashboard Page", () => {
       tag: ["@smoke", "@regression"],
     },
     async ({ notesDashboardPage }) => {
-      const expectedElement = "home";
-
       await test.step("Verify", async () => {
-        await expect(
-          notesDashboardPage.testIdSelector(expectedElement)
-        ).toBeVisible();
+        await expect(notesDashboardPage.myNotesHomeLinkButton).toBeVisible();
       });
     }
   );
@@ -29,17 +25,15 @@ test.describe("Notes Dashboard Page", () => {
       tag: ["@visual", "@smoke", "@regression"],
     },
     async ({ notesDashboardPage }) => {
-      const expectedElement = "notes completed";
-      const maskedElement = "notes-list";
       const snapshotName = "notesDashboardPage_.png";
       const ratioAllowed = 0.03;
 
       await test.step("Perform Visual Test", async () => {
-        await expect(notesDashboardPage.text(expectedElement)).toBeVisible();
+        await expect(notesDashboardPage.text("notes completed")).toBeVisible();
         expect(
           await notesDashboardPage.page.screenshot({
             animations: "disabled",
-            mask: [notesDashboardPage.testIdSelector(maskedElement)],
+            mask: [notesDashboardPage.testIdSelector("notes-list")],
           })
         ).toMatchSnapshot(snapshotName, { maxDiffPixelRatio: ratioAllowed });
       });

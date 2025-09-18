@@ -8,6 +8,8 @@ export class NotesDashboardPage extends BasePage {
   readonly textBody: Locator;
   noteCardTitle: (name: string) => Locator;
 
+  readonly myNotesHomeLinkButton: Locator;
+
   readonly addNoteButton: Locator;
   readonly submitButton: Locator;
 
@@ -27,6 +29,8 @@ export class NotesDashboardPage extends BasePage {
     this.textBody = page.locator(".ql-editor");
     this.noteCardTitle = (name) =>
       this.testIdSelector("note-card-title").filter({ hasText: name });
+
+    this.myNotesHomeLinkButton = this.testIdSelector("home");
 
     this.addNoteButton = this.testIdSelector("add-new-note");
     this.submitButton = this.testIdSelector("note-submit");
