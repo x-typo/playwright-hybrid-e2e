@@ -60,13 +60,13 @@ test.skip(
 );
 
 test("Invalid Email Address", async ({ loginPage }) => {
-  const credentials = {
-    email: "invalidAddress",
-    password: "password12345!",
-  };
-
   await test.step("Enter invalid email address", async () => {
-    await loginPage.login(credentials.email, credentials.password);
+    await test.step("Enter invalid password", async () => {
+      await loginPage.login({
+        emailAddress: "invalidAddress",
+        password: "password12345!",
+      });
+    });
   });
   await test.step("Verify", async () => {
     await expect(loginPage.text("Email address is invalid")).toBeVisible();
