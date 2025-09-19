@@ -2,7 +2,7 @@ import { chromium, request, expect, FullConfig } from "@playwright/test";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { API_ENDPOINTS } from "../../api/routes/endpoints";
+import { USERS_ENDPOINTS } from "../../api/endpoints/users-Endpoints";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,11 +34,14 @@ type MyStorageState = {
 };
 
 export default async function globalSetup(config: FullConfig) {
+  // Early environment variable check
   const mainUsername = process.env.MAIN_USERNAME;
   const mainPassword = process.env.MAIN_PASSWORD;
 
   if (!mainUsername || !mainPassword) {
-    throw new Error("MAIN_USERNAME and MAIN_PASSWORD must be set.");
+    throw new Error(
+      "MAIN_USERNAME and MAIN_PASSWORD must be set before running tests."
+    );
   }
 
   // Launch browser and create page
@@ -77,7 +80,7 @@ export default async function globalSetup(config: FullConfig) {
 
   // Login via API to get token
   const apiContext = await request.newContext({ baseURL });
-  const response = await apiContext.post(API_ENDPOINTS.user.login, {
+  const response = await apiContext.post(USERS_ENDPOINTS.LOGIN, {
     data: { email: mainUsername, password: mainPassword },
     headers: { "User-Agent": "Mobile" },
   });
@@ -124,10 +127,7 @@ export default async function globalSetup(config: FullConfig) {
     },
   });
 
-  const verifyResponse = await verifyContext.get(API_ENDPOINTS.user.profile);
-
-  console.log("🔍 Verification status:", verifyResponse.status());
-  console.log("🔍 Verification body:", await verifyResponse.text());
+  const verifyResponse = await verifyContext.get(USERS_ENDPOINTS.PROFILE);
 
   expect(
     verifyResponse.ok(),
@@ -138,5 +138,4 @@ export default async function globalSetup(config: FullConfig) {
   console.log(
     `✅ Global setup complete. Storage state written to: ${MainAccountFile}`
   );
-  ///////////////////////////////////////////////
 }
