@@ -1,44 +1,28 @@
-import { APIRequestContext, APIResponse, request } from "@playwright/test";
+import { APIRequestContext, APIResponse } from "@playwright/test";
 
 export abstract class BaseApiClient {
-  protected apiContext!: APIRequestContext;
-  protected baseURL: string;
+  protected apiContext: APIRequestContext;
 
-  constructor(baseURL?: string) {
-    this.baseURL = baseURL || process.env.API_BASE_URL || "";
-    if (!this.baseURL) {
-      throw new Error(
-        "API_BASE_URL is not set. Please configure it in .env or CI/CD variables."
-      );
+  constructor(apiContext: APIRequestContext) {
+    if (!apiContext) {
+      throw new Error("APIRequestContext is required for BaseApiClient");
     }
-  }
-
-  async init(): Promise<this> {
-    if (!this.apiContext) {
-      this.apiContext = await request.newContext({
-        baseURL: this.baseURL,
-      });
-    }
-    return this;
+    this.apiContext = apiContext;
   }
 
   protected async get(url: string, options?: any): Promise<APIResponse> {
-    await this.ensureContext();
     return this.apiContext.get(url, options);
   }
 
   protected async post(url: string, options?: any): Promise<APIResponse> {
-    await this.ensureContext();
     return this.apiContext.post(url, options);
   }
 
   protected async put(url: string, options?: any): Promise<APIResponse> {
-    await this.ensureContext();
     return this.apiContext.put(url, options);
   }
 
   protected async delete(url: string, options?: any): Promise<APIResponse> {
-    await this.ensureContext();
     return this.apiContext.delete(url, options);
   }
 
@@ -68,12 +52,6 @@ export abstract class BaseApiClient {
   async dispose(): Promise<void> {
     if (this.apiContext) {
       await this.apiContext.dispose();
-    }
-  }
-
-  private async ensureContext(): Promise<void> {
-    if (!this.apiContext) {
-      await this.init();
     }
   }
 }
