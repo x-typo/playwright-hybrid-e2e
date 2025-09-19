@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
+dotenv.config({ quiet: true });
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -44,7 +46,7 @@ export default defineConfig({
       ]
     : [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: BASE_URL,
+    baseURL: process.env.UI_BASE_URL,
     headless: true,
     trace: "retain-on-failure",
   },

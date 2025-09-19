@@ -17,6 +17,8 @@ import {
   toggleLocationNotifications,
 } from "../api/clients/customers";
 import { NotesClient } from "../api/clients/notes.client";
+import { ApiClientFactory } from "../api/clients/api-client-factory";
+import { HealthApiClient } from "../api/clients/health.api-client";
 import { PageFactory } from "../tests/playwright/pages/page-Factory.page";
 import { BasePage } from "../tests/playwright/pages/base.page";
 import { LoginPage } from "../tests/playwright/pages/login.page";
@@ -44,6 +46,8 @@ type AutomationFixtures = {
   deleteLocationAPI: typeof deleteLocationAPI;
   toggleLocationNotifications: typeof toggleLocationNotifications;
   notesClient: NotesClient;
+  apiClientFactory: ApiClientFactory;
+  healthClient: HealthApiClient;
   pageFactory: PageFactory;
   basePage: BasePage;
   loginPage: LoginPage;
@@ -171,6 +175,16 @@ export const test = base.extend<AutomationFixtures>({
     await use(performAccessibilityScan);
   },
 
+  apiClientFactory: async ({}, use) => {
+    const factory = new ApiClientFactory(process.env.API_BASE_URL || "");
+    await use(factory);
+  },
+  healthClient: async ({ apiClientFactory }, use) => {
+    const client = apiClientFactory.getHealthClient();
+    await client.init();
+    await use(client);
+    await client.dispose();
+  },
   pageFactory: async ({ page, isMobile }, use) => {
     await use(new PageFactory(page, isMobile));
   },
