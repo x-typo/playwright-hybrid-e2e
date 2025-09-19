@@ -11,7 +11,7 @@ permissions:
   pages: write
   checks: write
 
-  env:
+env:
   MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
   MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
   API_BASE_URL: ${{ secrets.API_BASE_URL }}
