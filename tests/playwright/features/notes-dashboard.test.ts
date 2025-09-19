@@ -1,6 +1,4 @@
 import { test, expect } from "../../../fixtures/automation-fixtures";
-import { API_ENDPOINTS } from "../../../api/routes/endpoints";
-import { CreateNewNoteApiResponse } from "../../../api/models/notes.models";
 
 test.describe("Notes Dashboard Page", () => {
   test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
@@ -64,47 +62,47 @@ test.describe("Notes Dashboard Page", () => {
     }
   );
 
-  test.fixme(
-    "Add New Note",
-    { tag: ["@smoke", "@regression"] },
-    async ({ basePage, notesDashboardPage, notesClient }) => {
-      const noteData = {
-        title: "addNoteTest",
-        description: "addNoteDescriptionTest",
-      };
-      let noteId: string | null = null;
+  // test.fixme(
+  //   "Add New Note",
+  //   { tag: ["@smoke", "@regression"] },
+  //   async ({ basePage, notesDashboardPage, notesClient }) => {
+  //     const noteData = {
+  //       title: "addNoteTest",
+  //       description: "addNoteDescriptionTest",
+  //     };
+  //     let noteId: string | null = null;
 
-      await test.step("Navigate to dashboard", async () => {
-        await basePage.navigatePage("/notes/app");
-      });
+  //     await test.step("Navigate to dashboard", async () => {
+  //       await basePage.navigatePage("/notes/app");
+  //     });
 
-      await test.step("Add new note and capture ID", async () => {
-        await notesDashboardPage.homeTab.click();
-        noteId = await notesDashboardPage.addNewNote(
-          noteData.title,
-          noteData.description
-        );
-      });
+  //     await test.step("Add new note and capture ID", async () => {
+  //       await notesDashboardPage.homeTab.click();
+  //       noteId = await notesDashboardPage.addNewNote(
+  //         noteData.title,
+  //         noteData.description
+  //       );
+  //     });
 
-      await test.step("Verify note creation", async () => {
-        await expect(noteId, "should return a valid note ID").toBeDefined();
-        await expect(typeof noteId).toBe("string");
-        await expect(
-          notesDashboardPage.noteCardTitle(noteData.title)
-        ).toBeVisible();
-      });
+  //     await test.step("Verify note creation", async () => {
+  //       await expect(noteId, "should return a valid note ID").toBeDefined();
+  //       await expect(typeof noteId).toBe("string");
+  //       await expect(
+  //         notesDashboardPage.noteCardTitle(noteData.title)
+  //       ).toBeVisible();
+  //     });
 
-      await test.step("Teardown - delete created note", async () => {
-        expect(
-          noteId,
-          "Cannot perform teardown because noteId is null."
-        ).not.toBeNull();
-        const response = await notesClient.deleteNoteById(noteId!);
-        expect(
-          response.ok(),
-          `API teardown failed for note ID ${noteId}.`
-        ).toBe(true);
-      });
-    }
-  );
+  //     await test.step("Teardown - delete created note", async () => {
+  //       expect(
+  //         noteId,
+  //         "Cannot perform teardown because noteId is null."
+  //       ).not.toBeNull();
+  //       const response = await notesClient.deleteNoteById(noteId!);
+  //       expect(
+  //         response.ok(),
+  //         `API teardown failed for note ID ${noteId}.`
+  //       ).toBe(true);
+  //     });
+  //   }
+  // );
 });
