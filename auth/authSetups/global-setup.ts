@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints.js";
+import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints.ts";
 
 dotenv.config();
 
