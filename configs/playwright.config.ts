@@ -1,4 +1,8 @@
-import { defineConfig, devices } from "@playwright/test";
+import {
+  defineConfig,
+  devices,
+  type PlaywrightTestConfig,
+} from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -13,25 +17,17 @@ const MainAccountFile = path.resolve(
   "../auth/storageStates/mainAccountSetup.json"
 );
 
-const BASE_URL = "https://practice.expandtesting.com";
-
-dotenv.config({ quiet: true });
-
-/**
- * Playwright configuration
- * - Global setup logs in via UI + API and stores auth state
- * - Supports Chrome desktop and iOS mobile viewports
- * - CI and local runs share the same storage state for efficiency
- */
-export default defineConfig({
+const config: PlaywrightTestConfig = defineConfig({
   globalSetup: path.resolve(__dirname, "../auth/authSetups/global-setup.ts"),
   testDir: "../tests/playwright/features",
   snapshotPathTemplate:
     "../visual-snapshots/{testFileDir}/{arg}{projectName}{ext}",
+
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
   workers: 2,
+
   reporter: process.env.CI
     ? [
         ["list"],
@@ -45,13 +41,16 @@ export default defineConfig({
         ["html"],
       ]
     : [["list"], ["html", { open: "never" }]],
+
   use: {
     baseURL: process.env.UI_BASE_URL,
     headless: true,
     trace: "retain-on-failure",
   },
-  timeout: 60000,
-  expect: { timeout: 30000 },
+
+  timeout: 60_000,
+  expect: { timeout: 30_000 },
+
   projects: [
     {
       name: "chromeUI",
@@ -70,3 +69,5 @@ export default defineConfig({
     },
   ],
 });
+
+export default config;
