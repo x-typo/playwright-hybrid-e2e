@@ -267,7 +267,6 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright E2E tests
-        env:
         run: npx playwright test --config=./configs/playwright.config.ts --project=iosUI
 
       - name: Install junit-viewer
