@@ -41,17 +41,17 @@ test(
   }
 );
 
-test.skip(
-  "Accessibility Test",
-  { tag: "@accessibility" },
-  async ({ loginPage, performAccessibilityScan }) => {
-    await test.step("Run accessibility scan", async () => {
-      await expect(loginPage.inputBox("Email")).toBeVisible();
-      const results = await performAccessibilityScan();
-      await expect.soft(results).toEqual(0);
-    });
-  }
-);
+// test.skip(
+//   "Accessibility Test",
+//   { tag: "@accessibility" },
+//   async ({ loginPage, performAccessibilityScan }) => {
+//     await test.step("Run accessibility scan", async () => {
+//       await expect(loginPage.inputBox("Email")).toBeVisible();
+//       const results = await performAccessibilityScan();
+//       await expect.soft(results).toEqual(0);
+//     });
+//   }
+// );
 
 test("Invalid Email Address", async ({ loginPage }) => {
   await test.step("Submit invalid email address", async () => {
