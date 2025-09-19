@@ -2,17 +2,19 @@ import { chromium, request, expect, FullConfig } from "@playwright/test";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const storageStateDir = path.resolve(__dirname, "../../auth/storageStates");
 const storageStatePath = path.join(storageStateDir, "mainAccountSetup.json");
-const apiEnvPath = path.resolve(__dirname, "../../auth/api-env.json");
 
-const baseURL = "https://practice.expandtesting.com";
-const apiOrigin = `${baseURL}/notes/api`;
+const baseURL = process.env.UI_BASE_URL!;
+const apiOrigin = process.env.API_BASE_URL!;
 
 type MyStorageState = {
   cookies: {
@@ -35,14 +37,12 @@ export default async function globalSetup(config: FullConfig) {
   const { MAIN_USERNAME, MAIN_PASSWORD } = process.env;
 
   if (!MAIN_USERNAME || !MAIN_PASSWORD) {
-    throw new Error(
-      "MAIN_USERNAME and MAIN_PASSWORD must be set before running tests."
-    );
+    throw new Error("MAIN_USERNAME and MAIN_PASSWORD must be set");
   }
 
   await fs.mkdir(storageStateDir, { recursive: true });
 
-  // --- UI login to create storage state ---
+  // UI login to create storage state
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
@@ -72,7 +72,7 @@ export default async function globalSetup(config: FullConfig) {
   await page.context().storageState({ path: storageStatePath });
   await browser.close();
 
-  // --- API login to get token ---
+  // API login to get token
   const apiContext = await request.newContext({ baseURL });
   const response = await apiContext.post(USERS_ENDPOINTS.LOGIN, {
     data: { email: MAIN_USERNAME, password: MAIN_PASSWORD },
@@ -86,7 +86,7 @@ export default async function globalSetup(config: FullConfig) {
   const { data } = await response.json();
   const accessToken = data.token;
 
-  // --- Merge token into storage state for UI context ---
+  // Merge token into storage state for UI context
   const storageState: MyStorageState = JSON.parse(
     await fs.readFile(storageStatePath, "utf-8")
   );
@@ -110,8 +110,5 @@ export default async function globalSetup(config: FullConfig) {
 
   await fs.writeFile(storageStatePath, JSON.stringify(storageState, null, 2));
 
-  await fs.writeFile(
-    apiEnvPath,
-    JSON.stringify({ API_TOKEN: accessToken, API_BASE_URL: apiOrigin }, null, 2)
-  );
+  process.env.API_TOKEN = accessToken;
 }
