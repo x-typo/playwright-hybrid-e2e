@@ -6,6 +6,11 @@ export abstract class BaseApiClient {
 
   constructor(baseURL?: string) {
     this.baseURL = baseURL || process.env.API_BASE_URL || "";
+    if (!this.baseURL) {
+      throw new Error(
+        "API_BASE_URL is not set. Please configure it in .env or CI/CD variables."
+      );
+    }
   }
 
   async init(): Promise<this> {
