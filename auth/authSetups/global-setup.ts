@@ -7,11 +7,9 @@ import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path to storage state file
-const MainAccountFile = path.resolve(
-  __dirname,
-  "../storageStates/mainAccountSetup.json"
-);
+const storageStateDir = path.resolve(__dirname, "../../auth/storageStates");
+const storageStatePath = path.join(storageStateDir, "mainAccountSetup.json");
+const apiEnvPath = path.resolve(__dirname, "../../auth/api-env.json");
 
 const baseURL = "https://practice.expandtesting.com";
 const apiOrigin = `${baseURL}/notes/api`;
@@ -34,21 +32,20 @@ type MyStorageState = {
 };
 
 export default async function globalSetup(config: FullConfig) {
-  // Early environment variable check
-  const mainUsername = process.env.MAIN_USERNAME;
-  const mainPassword = process.env.MAIN_PASSWORD;
+  const { MAIN_USERNAME, MAIN_PASSWORD } = process.env;
 
-  if (!mainUsername || !mainPassword) {
+  if (!MAIN_USERNAME || !MAIN_PASSWORD) {
     throw new Error(
       "MAIN_USERNAME and MAIN_PASSWORD must be set before running tests."
     );
   }
 
-  // Launch browser and create page
+  await fs.mkdir(storageStateDir, { recursive: true });
+
+  // --- UI login to create storage state ---
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  // Block ad/tracker domains before navigation
   const blockedDomains = [
     "https://www.googleadservices.com",
     "https://pagead2.googlesyndication.com",
@@ -56,32 +53,29 @@ export default async function globalSetup(config: FullConfig) {
     "https://www.google.com",
     "https://tpc.googlesyndication.com",
   ];
-
   await page.context().route("**/*", (route) => {
     const url = route.request().url();
-    if (blockedDomains.some((domain) => url.startsWith(domain))) {
-      return route.abort();
-    }
-    return route.continue();
+    blockedDomains.some((domain) => url.startsWith(domain))
+      ? route.abort()
+      : route.continue();
   });
 
-  // Login via UI to get cookies and storageState
   await page.goto(`${baseURL}/notes/app/login`);
-  await page.getByTestId("login-email").fill(mainUsername);
-  await page.getByTestId("login-password").fill(mainPassword);
+  await page.getByTestId("login-email").fill(MAIN_USERNAME);
+  await page.getByTestId("login-password").fill(MAIN_PASSWORD);
 
   await Promise.all([
     page.waitForURL("**/notes/app"),
     page.getByTestId("login-submit").click(),
   ]);
 
-  await page.context().storageState({ path: MainAccountFile });
+  await page.context().storageState({ path: storageStatePath });
   await browser.close();
 
-  // Login via API to get token
+  // --- API login to get token ---
   const apiContext = await request.newContext({ baseURL });
   const response = await apiContext.post(USERS_ENDPOINTS.LOGIN, {
-    data: { email: mainUsername, password: mainPassword },
+    data: { email: MAIN_USERNAME, password: MAIN_PASSWORD },
     headers: { "User-Agent": "Mobile" },
   });
 
@@ -89,19 +83,13 @@ export default async function globalSetup(config: FullConfig) {
     response.ok(),
     `API login failed with status ${response.status()}`
   ).toBe(true);
-
   const { data } = await response.json();
   const accessToken = data.token;
 
-  // Make token & base URL available to ApiClientFactory
-  process.env.API_TOKEN = accessToken;
-  process.env.API_BASE_URL = apiOrigin;
-
-  // Merge API token into storageState for UI context
+  // --- Merge token into storage state for UI context ---
   const storageState: MyStorageState = JSON.parse(
-    await fs.readFile(MainAccountFile, "utf-8")
+    await fs.readFile(storageStatePath, "utf-8")
   );
-
   const existingOrigin = storageState.origins.find(
     (o) => o.origin === apiOrigin
   );
@@ -115,31 +103,15 @@ export default async function globalSetup(config: FullConfig) {
     });
   }
 
-  // Keep only auth/session cookies
   const authCookies = ["express:sess", "express:sess.sig", "io"];
   storageState.cookies = storageState.cookies.filter((cookie) =>
     authCookies.includes(cookie.name)
   );
 
-  await fs.writeFile(MainAccountFile, JSON.stringify(storageState, null, 2));
+  await fs.writeFile(storageStatePath, JSON.stringify(storageState, null, 2));
 
-  // Post-merge token verification
-  const verifyContext = await request.newContext({
-    baseURL: apiOrigin,
-    extraHTTPHeaders: {
-      "x-auth-token": accessToken,
-    },
-  });
-
-  const verifyResponse = await verifyContext.get(USERS_ENDPOINTS.PROFILE);
-
-  expect(
-    verifyResponse.ok(),
-    `Token verification failed with status ${verifyResponse.status()}`
-  ).toBe(true);
-
-  console.log(`✅ Token verified for user: ${mainUsername}`);
-  console.log(
-    `✅ Global setup complete. Storage state written to: ${MainAccountFile}`
+  await fs.writeFile(
+    apiEnvPath,
+    JSON.stringify({ API_TOKEN: accessToken, API_BASE_URL: apiOrigin }, null, 2)
   );
 }
