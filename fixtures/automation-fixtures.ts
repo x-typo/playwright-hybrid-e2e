@@ -1,13 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import { asUser, UserRole } from "../auth/authManager";
-import {
-  test as base,
-  expect,
-  Page,
-  APIRequestContext,
-} from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { NotesClient } from "../api/clients/notes.client";
 import { ApiClientFactory } from "../api/clients/api-client-factory";
@@ -17,18 +13,29 @@ import { BasePage } from "../tests/playwright/pages/base.page";
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NotesDashboardPage } from "../tests/playwright/pages/notes-dashboard.page";
 
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const apiEnvPath = path.resolve(__dirname, "../auth/api-env.json");
-if (fs.existsSync(apiEnvPath)) {
-  const { API_TOKEN, API_BASE_URL } = JSON.parse(
-    fs.readFileSync(apiEnvPath, "utf-8")
-  );
-  process.env.API_TOKEN = API_TOKEN;
-  process.env.API_BASE_URL = API_BASE_URL;
+// Load API token from storage state
+const storageStatePath = path.resolve(
+  __dirname,
+  "../auth/storageStates/mainAccountSetup.json"
+);
+if (fs.existsSync(storageStatePath)) {
+  const storageState = JSON.parse(fs.readFileSync(storageStatePath, "utf-8"));
+  const apiOrigin = process.env.API_BASE_URL!;
+  const token = storageState.origins
+    ?.find((o: any) => o.origin === apiOrigin)
+    ?.localStorage.find((l: any) => l.name === "token")?.value;
+
+  if (token) {
+    process.env.API_TOKEN = token;
+  }
 }
 
+// Domains to block in UI tests
 const blockedDomains = [
   "https://www.googleadservices.com",
   "https://pagead2.googlesyndication.com",
@@ -38,93 +45,61 @@ const blockedDomains = [
 ];
 
 type AutomationFixtures = {
+  // Utilities
   readFile: (path: string) => Promise<string>;
   generateRandomText: (length?: number) => string;
-  axeBuilder: AxeBuilder;
-  apiClient: APIRequestContext;
+  performAccessibilityScan: () => Promise<any>;
+
+  // API
   notesClient: NotesClient;
   apiClientFactory: typeof ApiClientFactory;
   healthClient: HealthApiClient;
+
+  // Pages
   pageFactory: PageFactory;
   basePage: BasePage;
   loginPage: LoginPage;
   notesDashboardPage: NotesDashboardPage;
-  performAccessibilityScan: () => Promise<any>;
 };
 
 export const test = base.extend<AutomationFixtures>({
+  // Ads block setup
   context: async ({ context }, use) => {
     await context.route("**/*", (route) => {
       const url = route.request().url();
-      if (blockedDomains.some((domain) => url.startsWith(domain))) {
-        route.abort();
-      } else {
-        route.continue();
-      }
+      blockedDomains.some((domain) => url.startsWith(domain))
+        ? route.abort()
+        : route.continue();
     });
     await use(context);
   },
 
+  // Utilities
   readFile: async ({}, use) => {
-    async function readFile(path: string): Promise<string> {
-      return await fs.promises.readFile(path, "utf-8");
-    }
-    await use(readFile);
+    await use((path: string) => fs.promises.readFile(path, "utf-8"));
   },
-
   generateRandomText: async ({}, use) => {
-    function generateRandomText(length = 10): string {
-      const characters =
+    await use((length = 10) => {
+      const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      let result = "";
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(
-          Math.floor(Math.random() * characters.length)
-        );
-      }
-      return result;
-    }
-    await use(generateRandomText);
+      return Array.from({ length }, () =>
+        chars.charAt(Math.floor(Math.random() * chars.length))
+      ).join("");
+    });
   },
 
-  performAccessibilityScan: async ({ axeBuilder }, use) => {
-    const performAccessibilityScan = async () => {
-      const accessibilityScanResults = await axeBuilder
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag143"])
-        .analyze();
-
-      const seriousToCriticalViolations =
-        accessibilityScanResults.violations.filter(
-          ({ impact }) => impact === "critical" || impact === "serious"
-        );
-
-      const readableResults = seriousToCriticalViolations.map((result) => {
-        return {
-          description: result.description,
-          nodes: result.nodes.map((node) => ({
-            html: node.html,
-            target: node.target,
-          })),
-        };
-      });
-
-      return JSON.stringify(readableResults, null, 2);
-    };
-
-    await use(performAccessibilityScan);
-  },
-
+  // --- API ---
   apiClientFactory: async ({}, use) => {
     await use(ApiClientFactory);
   },
   healthClient: async ({}, use) => {
-    const client = await ApiClientFactory.getHealthClient();
-    await use(client);
+    await use(await ApiClientFactory.getHealthClient());
   },
   notesClient: async ({}, use) => {
-    const client = await ApiClientFactory.getNotesClient();
-    await use(client);
+    await use(await ApiClientFactory.getNotesClient());
   },
+
+  // --- Pages ---
   pageFactory: async ({ page, isMobile }, use) => {
     await use(new PageFactory(page, isMobile));
   },
@@ -138,10 +113,9 @@ export const test = base.extend<AutomationFixtures>({
     await use(pageFactory.getNotesDashboardPage());
   },
 
-  axeBuilder: async ({ page }, use) => {
-    const axeBuilder = new AxeBuilder({ page });
-    await use(axeBuilder);
-  },
+  // Accessibility tools (optional)
+  // performAccessibilityScan: async ({ axeBuilder }, use) => { ... }
+  // axeBuilder: async ({ page }, use) => { ... }
 });
 
 export { expect, asUser };
