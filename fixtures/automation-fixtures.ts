@@ -1,4 +1,6 @@
-import fs from "fs/promises";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { asUser, UserRole } from "../auth/authManager";
 import {
   test as base,
@@ -7,15 +9,6 @@ import {
   APIRequestContext,
 } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import {
-  addCustomerAPI,
-  editCustomerAPI,
-  deleteCustomerAPI,
-  toggleCustomerNotificationAPI,
-  addLocationAPI,
-  deleteLocationAPI,
-  toggleLocationNotifications,
-} from "../api/clients/customers";
 import { NotesClient } from "../api/clients/notes.client";
 import { ApiClientFactory } from "../api/clients/api-client-factory";
 import { HealthApiClient } from "../api/clients/health.api-client";
@@ -23,7 +16,18 @@ import { PageFactory } from "../tests/playwright/pages/page-Factory.page";
 import { BasePage } from "../tests/playwright/pages/base.page";
 import { LoginPage } from "../tests/playwright/pages/login.page";
 import { NotesDashboardPage } from "../tests/playwright/pages/notes-dashboard.page";
-import { ModalsPage } from "../tests/playwright/pages/modals.page";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const apiEnvPath = path.resolve(__dirname, "../auth/api-env.json");
+if (fs.existsSync(apiEnvPath)) {
+  const { API_TOKEN, API_BASE_URL } = JSON.parse(
+    fs.readFileSync(apiEnvPath, "utf-8")
+  );
+  process.env.API_TOKEN = API_TOKEN;
+  process.env.API_BASE_URL = API_BASE_URL;
+}
 
 const blockedDomains = [
   "https://www.googleadservices.com",
@@ -38,21 +42,13 @@ type AutomationFixtures = {
   generateRandomText: (length?: number) => string;
   axeBuilder: AxeBuilder;
   apiClient: APIRequestContext;
-  addCustomerAPI: typeof addCustomerAPI;
-  editCustomerAPI: typeof editCustomerAPI;
-  deleteCustomerAPI: typeof deleteCustomerAPI;
-  toggleCustomerNotificationAPI: typeof toggleCustomerNotificationAPI;
-  addLocationAPI: typeof addLocationAPI;
-  deleteLocationAPI: typeof deleteLocationAPI;
-  toggleLocationNotifications: typeof toggleLocationNotifications;
   notesClient: NotesClient;
-  apiClientFactory: ApiClientFactory;
+  apiClientFactory: typeof ApiClientFactory;
   healthClient: HealthApiClient;
   pageFactory: PageFactory;
   basePage: BasePage;
   loginPage: LoginPage;
   notesDashboardPage: NotesDashboardPage;
-  modalsPage: ModalsPage;
   performAccessibilityScan: () => Promise<any>;
 };
 
@@ -71,67 +67,10 @@ export const test = base.extend<AutomationFixtures>({
 
   readFile: async ({}, use) => {
     async function readFile(path: string): Promise<string> {
-      return await fs.readFile(path, "utf-8");
+      return await fs.promises.readFile(path, "utf-8");
     }
     await use(readFile);
   },
-
-  apiClient: [
-    async ({ playwright }, use) => {
-      const authFile = "auth/storageStates/mainAccountSetup.json";
-      const apiContext = await playwright.request.newContext({
-        baseURL: "https://practice.expandtesting.com",
-        storageState: authFile,
-      });
-
-      await use(apiContext);
-      await apiContext.dispose();
-    },
-    { scope: "worker" },
-  ],
-
-  addCustomerAPI: [
-    async ({}, use) => {
-      await use(addCustomerAPI);
-    },
-    { scope: "worker" },
-  ],
-  editCustomerAPI: [
-    async ({}, use) => {
-      await use(editCustomerAPI);
-    },
-    { scope: "worker" },
-  ],
-  deleteCustomerAPI: [
-    async ({}, use) => {
-      await use(deleteCustomerAPI);
-    },
-    { scope: "worker" },
-  ],
-  toggleCustomerNotificationAPI: [
-    async ({}, use) => {
-      await use(toggleCustomerNotificationAPI);
-    },
-    { scope: "worker" },
-  ],
-  addLocationAPI: [
-    async ({}, use) => {
-      await use(addLocationAPI);
-    },
-    { scope: "worker" },
-  ],
-  deleteLocationAPI: [
-    async ({}, use) => {
-      await use(deleteLocationAPI);
-    },
-    { scope: "worker" },
-  ],
-  toggleLocationNotifications: [
-    async ({}, use) => {
-      await use(toggleLocationNotifications);
-    },
-    { scope: "worker" },
-  ],
 
   generateRandomText: async ({}, use) => {
     function generateRandomText(length = 10): string {
@@ -176,14 +115,15 @@ export const test = base.extend<AutomationFixtures>({
   },
 
   apiClientFactory: async ({}, use) => {
-    const factory = new ApiClientFactory(process.env.API_BASE_URL || "");
-    await use(factory);
+    await use(ApiClientFactory);
   },
-  healthClient: async ({ apiClientFactory }, use) => {
-    const client = apiClientFactory.getHealthClient();
-    await client.init();
+  healthClient: async ({}, use) => {
+    const client = await ApiClientFactory.getHealthClient();
     await use(client);
-    await client.dispose();
+  },
+  notesClient: async ({}, use) => {
+    const client = await ApiClientFactory.getNotesClient();
+    await use(client);
   },
   pageFactory: async ({ page, isMobile }, use) => {
     await use(new PageFactory(page, isMobile));
@@ -197,11 +137,7 @@ export const test = base.extend<AutomationFixtures>({
   notesDashboardPage: async ({ pageFactory }, use) => {
     await use(pageFactory.getNotesDashboardPage());
   },
-  notesClient: async ({ apiClient }, use) => {
-    await use(new NotesClient(apiClient));
-  },
 
-  // Accessibility tooling
   axeBuilder: async ({ page }, use) => {
     const axeBuilder = new AxeBuilder({ page });
     await use(axeBuilder);
