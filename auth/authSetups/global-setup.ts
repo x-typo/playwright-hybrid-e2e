@@ -2,7 +2,7 @@ import { chromium, request, expect, FullConfig } from "@playwright/test";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { USERS_ENDPOINTS } from "../../api/endpoints/users-Endpoints";
+import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -93,7 +93,11 @@ export default async function globalSetup(config: FullConfig) {
   const { data } = await response.json();
   const accessToken = data.token;
 
-  // Merge API token into storageState
+  // Make token & base URL available to ApiClientFactory
+  process.env.API_TOKEN = accessToken;
+  process.env.API_BASE_URL = apiOrigin;
+
+  // Merge API token into storageState for UI context
   const storageState: MyStorageState = JSON.parse(
     await fs.readFile(MainAccountFile, "utf-8")
   );
