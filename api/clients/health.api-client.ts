@@ -1,5 +1,5 @@
 import { BaseApiClient } from "./base.api-client";
-import { HEALTH_ENDPOINTS } from "../endpoints/health-Endpoints";
+import { HEALTH_ENDPOINTS } from "../endpoints/health-endpoints";
 
 export class HealthApiClient extends BaseApiClient {
   async checkHealth() {

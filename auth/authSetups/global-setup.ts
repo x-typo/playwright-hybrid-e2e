@@ -5,7 +5,10 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { USERS_ENDPOINTS } from "../../api/endpoints/users-endpoints";
 
-dotenv.config();
+dotenv.config({
+  path: ".env",
+  quiet: true,
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
