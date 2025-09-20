@@ -16,6 +16,7 @@ env:
   MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
   API_BASE_URL: ${{ secrets.API_BASE_URL }}
   UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
+  DOTENV_CONFIG_QUIET: true
 
 jobs:
   desktop-UI:
