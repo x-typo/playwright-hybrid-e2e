@@ -56,7 +56,7 @@ $ npm install
 ├── package.json            # Lists project dependencies and defines run scripts
 ├── playwright.config.ts    # Main configuration for Playwright (timeouts, browsers, etc.)
 ├── README.md               # Main project documentation
-└── tsconfig.json           # TypeScript compiler options
+└── tsconfig.json           # TypeScript compiler options TEST
 ```
 
 ### Running Tests
