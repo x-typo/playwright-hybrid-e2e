@@ -1,0 +1,177 @@
+name: E2E Tests
+on:
+  schedule:
+    - cron: "0 7 * * *"
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+  pages: write
+  checks: write
+
+env:
+  MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
+  MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
+  API_BASE_URL: ${{ secrets.API_BASE_URL }}
+  UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
+  DOTENV_CONFIG_QUIET: true
+
+jobs:
+  desktop-UI:
+    name: Chrome - Run ${{ github.run_number }}
+    timeout-minutes: 300
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E tests
+        run: npx playwright test --config=./configs/playwright.config.ts --project=chromeUI
+
+      - name: Install junit-viewer
+        run: npm install -g junit-viewer
+
+      - name: Generate Tests Reports
+        id: generate_report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Results (Chrome) - ${{ github.run_number }}
+          path: desktop-junit-reports/junit.xml
+          reporter: java-junit
+          fail-on-error: false
+
+      - name: Publish Results to Summary
+        uses: EnricoMi/publish-unit-test-result-action@v2.15.1
+        if: always()
+        with:
+          check_run: false
+          files: |
+            desktop-junit-reports/junit.xml
+
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3.11.0
+        if: always()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          from: xtyponemo@gmail.com
+          to: x-typo@outlook.com
+          subject: Playwright E2E Tests Results (Chrome)
+          body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Notify MS Teams
+        if: always()
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          npx test-results-reporter publish -c notifyTeamsChrome.cjs
+        working-directory: reporters
+
+      # - name: Execute TestRail CLI to upload results and close test run
+      #   if: always()
+      #   run: |
+      #     pip install trcli
+      #     trcli -y \
+      #       -h "https://testrail.com" \
+      #       --project "Automation Test Results" \
+      #       --username "${{secrets.TEST_RAIL_EMAIL}}" \
+      #       --password "${{secrets.TEST_RAIL_PASSWORD}}" \
+      #       parse_junit \
+      #       --title "UI Tests - Chrome - Run ${{ github.run_number }} - Dev Env" \
+      #       --suite-name "UI Tests - Chrome" \
+      #       --close-run \
+      #       -f "desktop-junit-reports/junit.xml"
+
+  mobile-UI:
+    needs: desktop-UI
+    name: iOS - Run ${{ github.run_number }}
+    timeout-minutes: 300
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E tests
+        run: npx playwright test --config=./configs/playwright.config.ts --project=iosUI
+
+      - name: Install junit-viewer
+        run: npm install -g junit-viewer
+
+      - name: Generate Tests Reports
+        id: generate_report
+        uses: dorny/test-reporter@v1.9.1
+        if: success() || failure()
+        with:
+          name: Results (Mobile) - ${{ github.run_number }}
+          path: desktop-junit-reports/junit.xml
+          reporter: java-junit
+          fail-on-error: false
+
+      - name: Publish Results to Summary
+        uses: EnricoMi/publish-unit-test-result-action@v2.16.1
+        if: always()
+        with:
+          check_run: false
+          files: |
+            desktop-junit-reports/junit.xml
+
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3.11.0
+        if: always()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          from: xtyponemo@gmail.com
+          to: x-typo@outlook.com
+          subject: Playwright E2E Tests Results (iOS)
+          body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Notify MS Teams
+        if: always()
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          npx test-results-reporter publish -c notifyTeamsMobile.cjs
+        working-directory: reporters
+
+      # - name: Execute TestRail CLI to upload results and close test run
+      #   if: always()
+      #   run: |
+      #     pip install trcli
+      #     trcli -y \
+      #       -h "https://testrail.com" \
+      #       --project "Automation Test Results" \
+      #       --username "${{secrets.TEST_RAIL_EMAIL}}" \
+      #       --password "${{secrets.TEST_RAIL_PASSWORD}}" \
+      #       parse_junit \
+      #       --title "UI Tests - iOS - Run ${{ github.run_number }} - Dev Env" \
+      #       --suite-name "UI Tests - iOS" \
+      #       --close-run \
+      #       -f "desktop-junit-reports/junit.xml"
