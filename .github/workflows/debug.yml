@@ -77,13 +77,13 @@ jobs:
         if: always()
         uses: actions/deploy-pages@v4
 
-      - workflowcard-link:
-        name: Test Result Page
-        runs-on: ubuntu-latest
-        needs: test
-        environment:
-        name: github-pages
-        url: https://x-typo.github.io/playwright-hybrid-e2e
-        steps:
+  workflowcard-link:
+    name: Test Result Page
+    runs-on: ubuntu-latest
+    needs: test
+    environment:
+      name: github-pages
+      url: https://x-typo.github.io/playwright-hybrid-e2e
+    steps:
       - name: Output deployed site URL
-        run: echo "size=https://x-typo.github.io/playwright-hybrid-e2e" >> $GITHUB_OUTPUT
+        run: echo "Deployed report available at https://x-typo.github.io/playwright-hybrid-e2e"
