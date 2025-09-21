@@ -1,4 +1,5 @@
 name: Debug
+
 on:
   workflow_dispatch:
 
@@ -17,7 +18,7 @@ jobs:
 
     environment:
       name: Test
-      url: ${{ steps.outputs.page_url }}
+      url: https://x-typo.github.io/playwright-hybrid-e2e
 
     steps:
       - uses: actions/checkout@v3
@@ -35,6 +36,8 @@ jobs:
         env:
           MAIN_USERNAME: ${{ secrets.MAIN_USERNAME }}
           MAIN_PASSWORD: ${{ secrets.MAIN_PASSWORD }}
+          UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: npx playwright test --config=./configs/playwright.config.ts --project=chromeUI "tests/playwright/features/notes-dashboard.test.ts"
         continue-on-error: true
 
@@ -81,6 +84,5 @@ jobs:
       name: github-pages
       url: https://x-typo.github.io/playwright-hybrid-e2e
     steps:
-      - name: Get the URL of the deployed site
-        id: get_url
+      - name: Output deployed site URL
         run: echo "size=https://x-typo.github.io/playwright-hybrid-e2e" >> $GITHUB_OUTPUT
