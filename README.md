@@ -60,6 +60,29 @@ $ npm install
 
 ### Running Tests
 
+```bash
+# Run all tests in headless mode
+npm run chromeUI
+npm run iosUI
+
+# Run tests with visible browser
+WIP
+
+# Run tests in UI mode for interactive debugging
+npm run chromeDebug
+npm run iosDebug
+
+# Open and show Playwright's HTML report
+npm run report
+
+# Run tests in Playwright's UI Mode
+npm run uiMode
+
+# Run Playwright's Test Generator for desktop/mobile
+npm run codeGenDesktop
+npm run codeGenMobile
+```
+
 ## 🔄 Continuous Integration
 
 This framework is designed to work seamlessly with CI/CD pipelines, supporting:
