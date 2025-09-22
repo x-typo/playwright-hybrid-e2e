@@ -69,7 +69,7 @@ jobs:
           server_port: 465
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
-          from: xtyponemo@gmail.com
+          from: ${{secrets.MAIL_USERNAME}}
           to: x-typo@outlook.com
           subject: Playwright E2E Tests Results (Chrome)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
