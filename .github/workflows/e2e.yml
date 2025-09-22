@@ -17,6 +17,9 @@ env:
   API_BASE_URL: ${{ secrets.API_BASE_URL }}
   UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
   DOTENV_CONFIG_QUIET: true
+  MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+  MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+  MAIL_END_USER: ${{ secrets.MAIL_END_USER }}
 
 jobs:
   desktop-UI:
@@ -67,10 +70,10 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
-          from: ${{secrets.MAIL_USERNAME}}
-          to: x-typo@outlook.com
+          username: ${{ env.MAIL_USERNAME }}
+          password: ${{ env.MAIL_PASSWORD }}
+          from: ${{ env.MAIL_USERNAME }}
+          to: ${{ env.MAIL_END_USER }}
           subject: Playwright E2E Tests Results (Chrome)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -146,10 +149,10 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
-          from: xtyponemo@gmail.com
-          to: x-typo@outlook.com
+          username: ${{ env.MAIL_USERNAME }}
+          password: ${{ env.MAIL_PASSWORD }}
+          from: ${{ env.MAIL_USERNAME }}
+          to: ${{ env.MAIL_END_USER }}
           subject: Playwright E2E Tests Results (iOS)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
