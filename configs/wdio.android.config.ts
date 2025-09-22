@@ -1,11 +1,13 @@
+import "dotenv/config";
 import type { Options } from "@wdio/types";
 import { format } from "date-fns";
 
 export const config: Options.Testrunner = {
-  user: "tyson.illi",
-  key: "PyKUk6aMGP3iCLh0H37SrjV54Ev8KyHvibzTBXcCSLe47UVtsQ",
+  user: process.env.LT_USERNAME,
+  key: process.env.LT_KEY,
   hostname: "mobile-hub.lambdatest.com",
-  port: 80,
+  port: 443,
+  protocol: "https",
   path: "/wd/hub",
   autoCompileOpts: {
     autoCompile: true,
@@ -27,12 +29,11 @@ export const config: Options.Testrunner = {
       platformVersion: "14",
       isRealMobile: true,
       app: "lt://APP10160261801757468749506405",
-      build: `UI Build - Android - ${format(
-        new Date(),
-        "MM-dd-yyyy HH:mm:ss"
-      )}`,
+      build: `UI Build - Android - ${format(new Date(), "MM-dd-yyyy HH:mm:ss")}`,
       autoWebview: "true",
       autoGrantPermissions: true,
+      user: process.env.LT_USERNAME,
+      accessKey: process.env.LT_KEY,
     },
   ],
 
