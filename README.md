@@ -60,4 +60,18 @@ $ npm install
 
 ### Running Tests
 
-TBD
+## 🔄 Continuous Integration
+
+This framework is designed to work seamlessly with CI/CD pipelines, supporting:
+
+- GitHub Actions
+- Jenkins
+
+## 🔧 Framework Extensions
+
+The framework can be easily extended with:
+
+- Visual regression testing
+- Performance testing
+- Accessibility testing
+- Data-driven testing
