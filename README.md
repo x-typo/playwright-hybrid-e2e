@@ -54,7 +54,6 @@ $ npm install
 ├── tests/                  # Contains all the test suites (e.g., smoke, regression)
 ├── visual-snapshots/       # Baseline images for visual regression testing
 ├── package.json            # Lists project dependencies and defines run scripts
-├── playwright.config.ts    # Main configuration for Playwright (timeouts, browsers, etc.)
 ├── README.md               # Main project documentation
 └── tsconfig.json           # TypeScript compiler options
 ```
