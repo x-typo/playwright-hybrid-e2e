@@ -22,3 +22,9 @@ export interface GetAllNotesApiResponse {
   message: string;
   data: Note[][];
 }
+
+export interface DeleteNoteApiResponse {
+  success: boolean;
+  status: number;
+  message: string;
+}
