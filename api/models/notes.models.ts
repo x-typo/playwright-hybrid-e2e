@@ -9,22 +9,14 @@ export interface Note {
   user_id: string;
 }
 
-export interface CreateNewNoteApiResponse {
+export interface ApiResponse<T> {
   success: boolean;
   status: number;
   message: string;
-  data: Note;
+  data?: T;
 }
 
-export interface GetAllNotesApiResponse {
-  success: boolean;
-  status: number;
-  message: string;
-  data: Note[][];
-}
-
-export interface DeleteNoteApiResponse {
-  success: boolean;
-  status: number;
-  message: string;
-}
+export type CreateNewNoteApiResponse = ApiResponse<Note>;
+export type GetAllNotesApiResponse = ApiResponse<Note[]>;
+export type UpdateNoteApiResponse = ApiResponse<Note>;
+export type DeleteNoteApiResponse = ApiResponse<undefined>;
