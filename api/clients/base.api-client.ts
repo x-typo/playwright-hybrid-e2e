@@ -22,6 +22,10 @@ export abstract class BaseApiClient {
     return this.apiContext.put(url, options);
   }
 
+  protected async patch(url: string, options?: any): Promise<APIResponse> {
+    return this.apiContext.fetch(url, { method: "PATCH", ...options });
+  }
+
   protected async delete(url: string, options?: any): Promise<APIResponse> {
     return this.apiContext.delete(url, options);
   }
@@ -35,14 +39,9 @@ export abstract class BaseApiClient {
     const isJson = contentType.includes("application/json");
     const body = isJson ? await response.json() : await response.text();
 
-    if (
-      isJson &&
-      typeof body === "object" &&
-      body !== null &&
-      "success" in body
-    ) {
-      if (!body.success || body.status !== 200) {
-        throw new Error(body.message || "API request failed");
+    if (isJson && typeof body === "object" && body !== null) {
+      if ("success" in body && (body as any).success === false) {
+        throw new Error((body as any).message || "API request failed");
       }
     }
 
