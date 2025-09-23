@@ -1,5 +1,6 @@
+const BASE = "/notes/api/notes";
+
 export const NOTES_ENDPOINTS = {
-  GET_ALL: "/notes/api/notes",
-  CREATE: "/notes/api/notes",
-  DELETE: (noteId: string) => `/notes/api/notes/${noteId}`,
+  BASE,
+  BY_ID: (noteId: string) => `${BASE}/${noteId}`,
 } as const;
