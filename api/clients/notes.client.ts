@@ -4,6 +4,7 @@ import { NOTES_ENDPOINTS } from "../endpoints/notes-endpoints";
 import {
   CreateNewNoteApiResponse,
   GetAllNotesApiResponse,
+  DeleteNoteApiResponse,
   Note as NoteModel,
 } from "../models/notes.models";
 
@@ -24,10 +25,8 @@ export class NotesClient extends BaseApiClient {
     return this.handleResponse<CreateNewNoteApiResponse>(response);
   }
 
-  async deleteNote(
-    noteId: string
-  ): Promise<{ success: boolean; status: number; message: string }> {
+  async deleteNote(noteId: string): Promise<DeleteNoteApiResponse> {
     const response = await this.delete(NOTES_ENDPOINTS.DELETE(noteId));
-    return this.handleResponse(response);
+    return this.handleResponse<DeleteNoteApiResponse>(response);
   }
 }
