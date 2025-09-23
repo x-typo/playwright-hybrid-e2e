@@ -1,43 +1,33 @@
+import { APIRequestContext } from "@playwright/test";
 import { BaseApiClient } from "./base.api-client";
-import { NOTES_ENDPOINTS as API_ENDPOINTS } from "../endpoints/notes-endpoints";
-
-export type Note = {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  completed: boolean;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-};
+import { NOTES_ENDPOINTS } from "../endpoints/notes-endpoints";
+import {
+  CreateNewNoteApiResponse,
+  GetAllNotesApiResponse,
+  Note as NoteModel,
+} from "../models/notes.models";
 
 export class NotesClient extends BaseApiClient {
-  async getAllNotes(): Promise<Note[]> {
-    const res = await this.get(API_ENDPOINTS.GET_ALL);
-    const body = await this.handleResponse<{ data: Note[] | Note[][] }>(res);
-    const data = Array.isArray(body.data) ? body.data.flat() : [];
-    return data as Note[];
+  constructor(apiContext: APIRequestContext) {
+    super(apiContext);
   }
 
-  async deleteNoteById(noteId: string) {
-    const res = await this.delete(API_ENDPOINTS.DELETE(noteId));
-    return this.handleResponse(res);
+  async getAllNotes(): Promise<GetAllNotesApiResponse> {
+    const response = await this.get(NOTES_ENDPOINTS.GET_ALL);
+    return this.handleResponse<GetAllNotesApiResponse>(response);
   }
 
-  async deleteNotesByTitleAndCategory(title: string, category: string) {
-    const notes = await this.getAllNotes();
-    const matches = notes.filter(
-      (note) => note.title === title && note.category === category
-    );
+  async createNote(
+    note: Omit<NoteModel, "id" | "created_at" | "updated_at">
+  ): Promise<CreateNewNoteApiResponse> {
+    const response = await this.post(NOTES_ENDPOINTS.CREATE, { data: note });
+    return this.handleResponse<CreateNewNoteApiResponse>(response);
+  }
 
-    for (const note of matches) {
-      await this.deleteNoteById(note.id);
-    }
-
-    return {
-      deletedCount: matches.length,
-      deletedIds: matches.map((n) => n.id),
-    };
+  async deleteNote(
+    noteId: string
+  ): Promise<{ success: boolean; status: number; message: string }> {
+    const response = await this.delete(NOTES_ENDPOINTS.DELETE(noteId));
+    return this.handleResponse(response);
   }
 }
