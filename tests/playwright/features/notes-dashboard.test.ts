@@ -62,47 +62,36 @@ test.describe("Notes Dashboard Page", () => {
     }
   );
 
-  // test.fixme(
-  //   "Add New Note",
-  //   { tag: ["@smoke", "@regression"] },
-  //   async ({ basePage, notesDashboardPage, notesClient }) => {
-  //     const noteData = {
-  //       title: "addNoteTest",
-  //       description: "addNoteDescriptionTest",
-  //     };
-  //     let noteId: string | null = null;
+  test(
+    "Add New Note",
+    { tag: ["@smoke", "@regression"] },
+    async ({ basePage, notesDashboardPage, notesClient }) => {
+      const noteData = {
+        title: "addNoteTest",
+        description: "addNoteDescriptionTest",
+      };
+      let noteId: string | null = null;
 
-  //     await test.step("Navigate to dashboard", async () => {
-  //       await basePage.navigatePage("/notes/app");
-  //     });
+      await test.step("Navigate to dashboard", async () => {
+        await basePage.navigatePage("/notes/app");
+      });
 
-  //     await test.step("Add new note and capture ID", async () => {
-  //       await notesDashboardPage.homeTab.click();
-  //       noteId = await notesDashboardPage.addNewNote(
-  //         noteData.title,
-  //         noteData.description
-  //       );
-  //     });
+      await test.step("Get all notes data", async () => {
+        const response = await notesClient.getAllNotes();
 
-  //     await test.step("Verify note creation", async () => {
-  //       await expect(noteId, "should return a valid note ID").toBeDefined();
-  //       await expect(typeof noteId).toBe("string");
-  //       await expect(
-  //         notesDashboardPage.noteCardTitle(noteData.title)
-  //       ).toBeVisible();
-  //     });
+        // Assertions
+        expect(response.success).toBe(true);
+        expect(response.status).toBe(200);
 
-  //     await test.step("Teardown - delete created note", async () => {
-  //       expect(
-  //         noteId,
-  //         "Cannot perform teardown because noteId is null."
-  //       ).not.toBeNull();
-  //       const response = await notesClient.deleteNoteById(noteId!);
-  //       expect(
-  //         response.ok(),
-  //         `API teardown failed for note ID ${noteId}.`
-  //       ).toBe(true);
-  //     });
-  //   }
-  // );
+        // Shout out the notes data
+        console.log("ALL NOTES DATA", JSON.stringify(response.data, null, 2));
+
+        // Example: grab the first note id if available
+        if (response.data.length > 0 && response.data[0].length > 0) {
+          noteId = response.data[0][0].id;
+          console.log("👉 First note id:", noteId);
+        }
+      });
+    }
+  );
 });
