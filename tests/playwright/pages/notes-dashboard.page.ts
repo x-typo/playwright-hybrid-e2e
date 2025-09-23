@@ -25,11 +25,17 @@ export class NotesDashboardPage extends BasePage {
   get searchInputBox(): Locator {
     return this.testIdSelector("search-input");
   }
-  get addNoteTitleInputBox(): Locator {
+  get searchButton(): Locator {
+    return this.testIdSelector("search-btn");
+  }
+  get noteTitleInputBox(): Locator {
     return this.testIdSelector("note-title");
   }
-  get addNoteDescriptionInputBox(): Locator {
+  get noteDescriptionInputBox(): Locator {
     return this.testIdSelector("note-description");
+  }
+  get editCardButton(): Locator {
+    return this.testIdSelector("note-edit");
   }
 
   // ===== LOCATOR METHODS =====
@@ -66,21 +72,26 @@ export class NotesDashboardPage extends BasePage {
   // ===== INTERACTIONS =====
   async searchNotes(note: string): Promise<void> {
     await this.searchInputBox.fill(note);
-    await this.testIdSelector("search-btn").click();
-  }
-
-  async updateNotes(description: string): Promise<void> {
-    await this.button("Save").click();
+    await this.searchButton.click();
   }
 
   async selectTab(name: string): Promise<void> {
     await this.tabButton(name).click();
   }
 
+  async fillAndSubmitNoteForm(title: string, description: string) {
+    await this.noteTitleInputBox.fill(title);
+    await this.noteDescriptionInputBox.fill(description);
+    await this.submitButton.click();
+  }
+
   async addNewNote(title: string, description: string) {
     await this.addNoteButton.click();
-    await this.addNoteTitleInputBox.fill(title);
-    await this.addNoteDescriptionInputBox.fill(description);
-    await this.submitButton.click();
+    await this.fillAndSubmitNoteForm(title, description);
+  }
+
+  async updateNote(title: string, description: string) {
+    await this.editCardButton.click();
+    await this.fillAndSubmitNoteForm(title, description);
   }
 }
