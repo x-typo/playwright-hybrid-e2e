@@ -17,7 +17,7 @@ export class ApiClientFactory {
       this.apiContext = await request.newContext({
         baseURL: process.env.API_BASE_URL,
         extraHTTPHeaders: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          "x-auth-token": process.env.API_TOKEN!,
         },
       });
     }
