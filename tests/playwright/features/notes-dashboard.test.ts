@@ -85,12 +85,6 @@ test.describe("Notes Dashboard Page", () => {
 
         // Shout out the notes data
         console.log("ALL NOTES DATA", JSON.stringify(response.data, null, 2));
-
-        // Example: grab the first note id if available
-        if (response.data.length > 0 && response.data[0].length > 0) {
-          noteId = response.data[0][0].id;
-          console.log("👉 First note id:", noteId);
-        }
       });
     }
   );
