@@ -77,32 +77,10 @@ export class NotesDashboardPage extends BasePage {
     await this.tabButton(name).click();
   }
 
-  // async addNewNote(title: string, description: string): Promise<string> {
-  //   const responsePromise = this.page.waitForResponse(
-  //     (response) =>
-  //       response.url().endsWith(API_ENDPOINTS.notes.create) &&
-  //       response.request().method() === "POST"
-  //   );
-
-  //   await this.addNoteButton.click();
-  //   await this.addNoteTitleInputBox.fill(title);
-  //   await this.addNoteDescriptionInputBox.fill(description);
-  //   await this.submitButton.click();
-
-  //   const response = await responsePromise;
-  //   const responseBody = await response.json();
-
-  //   expect(response.ok(), "The 'create note' API call failed.").toBe(true);
-
-  //   const {
-  //     data: { id: noteId },
-  //   } = responseBody;
-
-  //   expect(
-  //     noteId,
-  //     "Could not find 'id' in the API response body."
-  //   ).toBeDefined();
-
-  //   return noteId;
-  // }
+  async addNewNote(title: string, description: string) {
+    await this.addNoteButton.click();
+    await this.addNoteTitleInputBox.fill(title);
+    await this.addNoteDescriptionInputBox.fill(description);
+    await this.submitButton.click();
+  }
 }
