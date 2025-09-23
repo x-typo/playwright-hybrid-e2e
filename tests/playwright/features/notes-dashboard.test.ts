@@ -65,16 +65,12 @@ test.describe("Notes Dashboard Page", () => {
   test(
     "Add New Note",
     { tag: ["@smoke", "@regression"] },
-    async ({ basePage, notesDashboardPage, notesClient }) => {
+    async ({ notesDashboardPage, notesClient }) => {
       const noteData = {
         title: "addNoteTest",
         description: "addNoteDescriptionTest",
       };
       let noteId: string | null = null;
-
-      await test.step("Navigate to dashboard", async () => {
-        await basePage.navigatePage("/notes/app");
-      });
 
       await test.step("Get all notes data", async () => {
         const response = await notesClient.getAllNotes();
