@@ -23,7 +23,7 @@ env:
 
 jobs:
   desktop-UI:
-    name: Chrome - Run ${{ github.run_number }}
+    name: Desktop (Chrome) - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -51,7 +51,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Results (Chrome) - ${{ github.run_number }}
+          name: Results (Desktop) - ${{ github.run_number }}
           path: desktop-junit-reports/junit.xml
           reporter: java-junit
           fail-on-error: false
@@ -74,7 +74,7 @@ jobs:
           password: ${{ env.MAIL_PASSWORD }}
           from: ${{ env.MAIL_USERNAME }}
           to: ${{ env.MAIL_END_USER }}
-          subject: Playwright E2E Tests Results (Chrome)
+          subject: Playwright E2E Tests Results (Desktop)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
@@ -102,7 +102,7 @@ jobs:
 
   mobile-UI:
     needs: desktop-UI
-    name: iOS - Run ${{ github.run_number }}
+    name: Mobile (iOS) - Run ${{ github.run_number }}
     timeout-minutes: 300
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -153,7 +153,7 @@ jobs:
           password: ${{ env.MAIL_PASSWORD }}
           from: ${{ env.MAIL_USERNAME }}
           to: ${{ env.MAIL_END_USER }}
-          subject: Playwright E2E Tests Results (iOS)
+          subject: Playwright E2E Tests Results (Mobile)
           body: Detailed reports - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify MS Teams
