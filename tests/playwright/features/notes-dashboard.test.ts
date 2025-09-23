@@ -90,7 +90,7 @@ test.describe("Notes Dashboard Page", () => {
 
       await test.step("Teardown", async () => {
         const response = await notesClient.getAllNotes();
-        const noteId = getNoteIdByTitle(response.data, noteData.title);
+        const noteId = getNoteIdByTitle(response.data ?? [], noteData.title);
         if (noteId) {
           const deleteResponse = await notesClient.deleteNote(noteId);
           expect(deleteResponse.success).toBe(true);
