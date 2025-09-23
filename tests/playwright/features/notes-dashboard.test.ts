@@ -75,11 +75,9 @@ test.describe("Notes Dashboard Page", () => {
       await test.step("Get all notes data", async () => {
         const response = await notesClient.getAllNotes();
 
-        // Assertions
         expect(response.success).toBe(true);
         expect(response.status).toBe(200);
 
-        // Shout out the notes data
         console.log("ALL NOTES DATA", JSON.stringify(response.data, null, 2));
       });
     }
