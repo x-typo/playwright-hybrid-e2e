@@ -26,7 +26,10 @@ export class NotesClient extends BaseApiClient {
 
   async updateNote(
     noteId: string,
-    updatedFields: Partial<Omit<NoteModel, "id" | "created_at" | "updated_at">>
+    updatedFields: Pick<
+      NoteModel,
+      "title" | "description" | "completed" | "category"
+    >
   ): Promise<UpdateNoteApiResponse> {
     const response = await this.put(NOTES_ENDPOINTS.BY_ID(noteId), {
       data: updatedFields,
