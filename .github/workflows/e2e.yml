@@ -82,7 +82,7 @@ jobs:
         env:
           TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
         run: |
-          npx test-results-reporter publish -c notifyTeamsChrome.cjs
+          npx test-results-reporter publish -c notifyTeamsDesktop.cjs
         working-directory: reporters
 
       # - name: Execute TestRail CLI to upload results and close test run
