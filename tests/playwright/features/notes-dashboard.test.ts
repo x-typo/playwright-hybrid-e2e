@@ -99,4 +99,47 @@ test.describe("Notes Dashboard Page", () => {
       });
     }
   );
+
+  test(
+    "Update Note",
+    { tag: ["@smoke", "@regression"] },
+    async ({ notesDashboardPage, notesClient }) => {
+      const noteId = "68c5dac606ff22028be98c3a";
+      const originalNote = {
+        title: "work2",
+        description: "randomTexts123",
+        completed: false,
+        category: "Work",
+      };
+      const updatedNote = {
+        title: "work2-updated",
+        description: "randomTexts456",
+        completed: false,
+        category: "Work",
+      };
+
+      await test.step("Search for notes", async () => {
+        await notesDashboardPage.searchNotes(originalNote.title);
+      });
+
+      await test.step("Update note", async () => {
+        await notesDashboardPage.updateNote(
+          updatedNote.title,
+          updatedNote.description
+        );
+      });
+
+      await test.step("Verify", async () => {
+        await expect(
+          notesDashboardPage.noteCardTitle(updatedNote.title)
+        ).toBeVisible();
+      });
+
+      await test.step("Teardown", async () => {
+        await notesClient.updateNote(noteId, {
+          ...originalNote,
+        });
+      });
+    }
+  );
 });
