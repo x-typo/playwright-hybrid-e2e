@@ -72,6 +72,15 @@ test.describe("Notes Dashboard Page", () => {
       };
       let noteId: string | null = null;
 
+      await test.step("Create new note", async () => {
+        await notesDashboardPage.addNewNote(
+          noteData.title,
+          noteData.description
+        );
+        await expect(
+          notesDashboardPage.noteCardTitle(noteData.title)
+        ).toBeVisible();
+      });
       await test.step("Get all notes data", async () => {
         const response = await notesClient.getAllNotes();
 
