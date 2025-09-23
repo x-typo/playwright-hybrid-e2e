@@ -1,4 +1,5 @@
 import { test, expect } from "../../../fixtures/automation-fixtures";
+import { getNoteIdByTitle } from "../../../api/utils/notes-helpers";
 
 test.describe("Notes Dashboard Page", () => {
   test.beforeEach("Navigate to page", async ({ notesDashboardPage }) => {
@@ -38,6 +39,7 @@ test.describe("Notes Dashboard Page", () => {
     await test.step("Select tab", async () => {
       await notesDashboardPage.personalTab.click();
     });
+
     await test.step("Verify", async () => {
       await expect(
         notesDashboardPage.text("You don't have any notes in")
@@ -52,9 +54,11 @@ test.describe("Notes Dashboard Page", () => {
       await test.step("Select tab", async () => {
         await notesDashboardPage.workTab.click();
       });
+
       await test.step("Search for notes", async () => {
         await notesDashboardPage.searchNotes("work1");
       });
+
       await test.step("Verify", async () => {
         await expect(notesDashboardPage.noteCardTitle("work1")).toBeVisible();
         await expect(notesDashboardPage.noteCardTitle("work2")).toBeHidden();
@@ -70,24 +74,28 @@ test.describe("Notes Dashboard Page", () => {
         title: "addNoteTest",
         description: "addNoteDescriptionTest",
       };
-      let noteId: string | null = null;
 
       await test.step("Create new note", async () => {
         await notesDashboardPage.addNewNote(
           noteData.title,
           noteData.description
         );
+      });
+
+      await test.step("Verify", async () => {
         await expect(
           notesDashboardPage.noteCardTitle(noteData.title)
         ).toBeVisible();
       });
-      await test.step("Get all notes data", async () => {
+
+      await test.step("Teardown", async () => {
         const response = await notesClient.getAllNotes();
-
-        expect(response.success).toBe(true);
-        expect(response.status).toBe(200);
-
-        console.log("ALL NOTES DATA", JSON.stringify(response.data, null, 2));
+        const noteId = getNoteIdByTitle(response.data, noteData.title);
+        if (noteId) {
+          const deleteResponse = await notesClient.deleteNote(noteId);
+          expect(deleteResponse.success).toBe(true);
+          expect(deleteResponse.status).toBe(200);
+        }
       });
     }
   );
