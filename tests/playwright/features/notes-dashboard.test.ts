@@ -139,9 +139,11 @@ test.describe("Notes Dashboard Page", () => {
       });
 
       await test.step("Teardown", async () => {
-        await notesClient.updateNote(noteId, {
+        const restoreNoteResponse = await notesClient.updateNote(noteId, {
           ...originalNote,
         });
+        expect(restoreNoteResponse.success).toBe(true);
+        expect(restoreNoteResponse.status).toBe(200);
       });
     }
   );
@@ -153,31 +155,36 @@ test.describe("Notes Dashboard Page", () => {
       const noteData = {
         title: "deleteNoteTest",
         description: "deleteNoteDescriptionTest",
+        category: "Personal",
       };
 
+      let noteId: string | undefined;
+
       await test.step("Setup", async () => {
-        const response = await notesClient.getAllNotes();
-        const noteId = getNoteIdByTitle(response.data ?? [], noteData.title);
-        if (noteId) {
-          const deleteResponse = await notesClient.deleteNote(noteId);
-          expect(deleteResponse.success).toBe(true);
-          expect(deleteResponse.status).toBe(200);
-        }
+        const createNoteResponse = await notesClient.createNote(noteData);
+        expect(createNoteResponse.success).toBe(true);
+        expect(createNoteResponse.status).toBe(200);
+        noteId = createNoteResponse.data?.id;
+        expect(noteId).toBeTruthy();
       });
-      await test.step("Create new note", async () => {
-        await notesDashboardPage.addNewNote(
-          noteData.title,
-          noteData.description
-        );
+
+      await test.step("Reload page", async () => {
+        await notesDashboardPage.navigateNotesDashboardPage();
+      });
+
+      await test.step("Search for notes", async () => {
+        await notesDashboardPage.searchNotes(noteData.title);
+      });
+
+      await test.step("Delete Note", async () => {
+        await notesDashboardPage.deleteNote();
       });
 
       await test.step("Verify", async () => {
         await expect(
           notesDashboardPage.noteCardTitle(noteData.title)
-        ).toBeVisible();
+        ).toBeHidden();
       });
-
-      await test.step("Delete Note", async () => {});
     }
   );
 });
