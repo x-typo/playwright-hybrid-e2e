@@ -2,7 +2,7 @@ import { APIRequestContext } from "@playwright/test";
 import { BaseApiClient } from "./base.api-client";
 import { NOTES_ENDPOINTS } from "../endpoints/notes-endpoints";
 import {
-  CreateNewNoteApiResponse,
+  CreateNoteApiResponse,
   GetAllNotesApiResponse,
   DeleteNoteApiResponse,
   UpdateNoteApiResponse,
@@ -19,9 +19,19 @@ export class NotesClient extends BaseApiClient {
     return this.handleResponse<GetAllNotesApiResponse>(response);
   }
 
-  async createNote(note: Omit<NoteModel, "id" | "created_at" | "updated_at">) {
-    const response = await this.post(NOTES_ENDPOINTS.BASE, { data: note });
-    return this.handleResponse<CreateNewNoteApiResponse>(response);
+  async createNote(note: {
+    title: string;
+    description: string;
+    category: string;
+  }) {
+    const response = await this.post(NOTES_ENDPOINTS.BASE, {
+      form: {
+        title: note.title,
+        description: note.description,
+        category: note.category,
+      },
+    });
+    return this.handleResponse<CreateNoteApiResponse>(response);
   }
 
   async updateNote(
