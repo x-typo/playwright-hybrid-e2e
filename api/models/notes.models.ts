@@ -16,7 +16,7 @@ export interface ApiResponse<T> {
   data?: T;
 }
 
-export type CreateNewNoteApiResponse = ApiResponse<Note>;
+export type CreateNoteApiResponse = ApiResponse<Note>;
 export type GetAllNotesApiResponse = ApiResponse<Note[]>;
 export type UpdateNoteApiResponse = ApiResponse<Note>;
 export type DeleteNoteApiResponse = ApiResponse<undefined>;
