@@ -37,6 +37,12 @@ export class NotesDashboardPage extends BasePage {
   get editCardButton(): Locator {
     return this.testIdSelector("note-edit");
   }
+  get deleteCardButton(): Locator {
+    return this.testIdSelector("note-delete");
+  }
+  get confirmDeleteButton(): Locator {
+    return this.testIdSelector("note-delete-confirm");
+  }
 
   // ===== LOCATOR METHODS =====
   noteCardTitle(name: string): Locator {
@@ -98,5 +104,10 @@ export class NotesDashboardPage extends BasePage {
   async updateNote(title: string, description: string) {
     await this.editCardButton.click();
     await this.fillAndSubmitNoteForm(title, description);
+  }
+
+  async deleteNote() {
+    await this.deleteCardButton.click();
+    await this.confirmDeleteButton.click();
   }
 }
