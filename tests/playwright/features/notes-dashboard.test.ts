@@ -133,6 +133,9 @@ test.describe("Notes Dashboard Page", () => {
         await expect(
           notesDashboardPage.noteCardTitle(updatedNote.title)
         ).toBeVisible();
+        await expect(
+          notesDashboardPage.noteCardDescription(updatedNote.description)
+        ).toBeVisible();
       });
 
       await test.step("Teardown", async () => {

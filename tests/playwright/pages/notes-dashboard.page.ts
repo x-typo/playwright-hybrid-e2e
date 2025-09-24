@@ -42,6 +42,11 @@ export class NotesDashboardPage extends BasePage {
   noteCardTitle(name: string): Locator {
     return this.testIdSelector("note-card-title").filter({ hasText: name });
   }
+  noteCardDescription(name: string): Locator {
+    return this.testIdSelector("note-card-description").filter({
+      hasText: name,
+    });
+  }
   tabButton(name: string): Locator {
     return this.testIdSelector(name);
   }
