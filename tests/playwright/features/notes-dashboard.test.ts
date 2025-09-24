@@ -145,4 +145,39 @@ test.describe("Notes Dashboard Page", () => {
       });
     }
   );
+
+  test(
+    "Delete Note",
+    { tag: ["@smoke", "@regression"] },
+    async ({ notesDashboardPage, notesClient }) => {
+      const noteData = {
+        title: "deleteNoteTest",
+        description: "deleteNoteDescriptionTest",
+      };
+
+      await test.step("Setup", async () => {
+        const response = await notesClient.getAllNotes();
+        const noteId = getNoteIdByTitle(response.data ?? [], noteData.title);
+        if (noteId) {
+          const deleteResponse = await notesClient.deleteNote(noteId);
+          expect(deleteResponse.success).toBe(true);
+          expect(deleteResponse.status).toBe(200);
+        }
+      });
+      await test.step("Create new note", async () => {
+        await notesDashboardPage.addNewNote(
+          noteData.title,
+          noteData.description
+        );
+      });
+
+      await test.step("Verify", async () => {
+        await expect(
+          notesDashboardPage.noteCardTitle(noteData.title)
+        ).toBeVisible();
+      });
+
+      await test.step("Delete Note", async () => {});
+    }
+  );
 });
