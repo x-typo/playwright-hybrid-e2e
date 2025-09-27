@@ -19,7 +19,9 @@
     "androidLambdatest": "wdio run ./configs/wdio.android.config.ts",
     "uiMode": "npx playwright test --ui",
     "codeGenDesktop": "npx playwright codegen https://practice.expandtesting.com/notes/app",
-    "codeGenMobile": "npx playwright codegen --device=\"iPhone 14\" https://practice.expandtesting.com/notes/app"
+    "codeGenMobile": "npx playwright codegen --device=\"iPhone 14\" https://practice.expandtesting.com/notes/app",
+    "mcp": "npx @playwright/mcp@latest --config C:\\Users\\x-typ\\Downloads\\automations\\playwright-hybrid-e2e\\playwright-mcp.config.json",
+    "aiTests": "npx playwright test tests/playwright/features/mcp --config C:\\Users\\x-typ\\Downloads"
   },
   "keywords": [],
   "license": "ISC",
